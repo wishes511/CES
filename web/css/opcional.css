@@ -1,0 +1,32 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23/10/2016, 03:07:33 PM
+    Author     : mich
+*/
+
+.espas{
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgb(153, 153, 255);    
+}
+.espascompra{
+    border-radius: 10px; 
+}
+.footers{
+    background-color: #6B6C6E; 
+}
+
+hr{
+    visibility: hidden
+}
+
+ @media screen and (max-width: 720px) {
+
+     hr{
+         visibility: visible
+     }
+    }

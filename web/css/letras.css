@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 10, 2017, 11:15:21 AM
+    Author     : gateway1
+*/
+
+@media ( max-width:1024px) {
+
+label{
+    font-size: 2em;
+    
+}
+.textoboton{
+    font-size: 20px;
+}
+input{
+    font-size: 50em;
+    size: 50em
+}
+li{
+    font-size: 2em
+}
+td{
+    font-size: 2em
+}
+select{
+    font-size: 2em
+}
+}

@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5fc888d5-e5e2-45e7-b9f2-379eaad047f2">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="bbc447c4-b4a5-439d-9738-b55bf8ec6a0e"/>
+	<parameter name="f1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="f2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\Avances\\web\\usuario\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="maq" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="maquila" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select sum(npares) as pares from programa p join avance a on a.id_prog = p.id_prog
+where cormaq=$P{maq} and fechacor between $P{f1} and $P{f2}]]>
+	</queryString>
+	<field name="pares" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="75" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="455" y="0" width="100" height="20" uuid="925a5b83-216c-40f2-a436-498191f7f31c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="150" height="30" uuid="215f0bbd-21fe-4e67-b65a-7ef1c8b8d02a"/>
+				<imageExpression><![CDATA["C:\\Users\\Administrador\\Documents\\NetBeansProjects\\Avances\\web\\images\\AF.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="355" y="0" width="100" height="20" uuid="978cdb24-3e29-4065-a795-53c757315812"/>
+				<text><![CDATA[Fecha de Impresion :]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="77" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="0" width="434" height="23" uuid="378a7877-254a-4af9-94a0-7035804f4c7b"/>
+				<textElement>
+					<font fontName="SansSerif" size="18"/>
+				</textElement>
+				<text><![CDATA[Reporte de pares producidos por departamento ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="219" y="23" width="116" height="23" uuid="ccdf882b-55a5-4d66-abfc-5ba207cbd021"/>
+				<textElement>
+					<font fontName="SansSerif" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{f1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="369" y="23" width="127" height="23" uuid="c54c52b7-c879-419a-bd27-9cea74a84aa2"/>
+				<textElement>
+					<font fontName="SansSerif" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{f2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="335" y="23" width="34" height="23" uuid="8e5a6546-d0a3-444f-a206-a94ac3997991"/>
+				<textElement>
+					<font fontName="SansSerif" size="18"/>
+				</textElement>
+				<text><![CDATA[Al dia ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="23" width="32" height="23" uuid="b5d9e438-7382-466f-87ec-07fed3034810"/>
+				<textElement>
+					<font fontName="SansSerif" size="18"/>
+				</textElement>
+				<text><![CDATA[del]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="90" y="23" width="76" height="23" uuid="ff845d2c-f611-47f6-80b1-3379dc5261f6"/>
+				<textElement>
+					<font fontName="SansSerif" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{maquila}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<rectangle radius="5">
+				<reportElement x="152" y="0" width="249" height="20" backcolor="#0286EA" uuid="b5656f48-c220-41b2-9ec5-8d8eed17ac9a"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="329" y="0" width="64" height="20" forecolor="#FFFFFF" uuid="b65bad6b-5c8d-46d6-b839-f45eab5316f5"/>
+				<textElement>
+					<font size="13" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Pares]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="0" width="107" height="20" forecolor="#FFFFFF" uuid="12e297e2-7bba-481b-a7b8-dc21f1ec1ad1"/>
+				<textElement>
+					<font size="13" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Departamento]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="405" splitType="Stretch">
+			<rectangle radius="5">
+				<reportElement x="152" y="6" width="249" height="209" forecolor="#C0B9B9" uuid="7498394d-ce66-4dea-9617-20c5aa12deab"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="152" y="26" width="143" height="20" uuid="70e16dff-7d18-44cd-8669-b645e735fad0"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Precorte]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="47" width="142" height="20" uuid="a93c9490-c7c9-490b-9bdf-ab286408b063"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Pespunte]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="68" width="142" height="20" uuid="7a3b43b3-aff5-47f2-8189-3b799cf15d62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Deshebrado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="89" width="142" height="20" uuid="e8572c29-2bd8-4861-a5d7-cad3c8c9acc1"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Ojillado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="110" width="142" height="20" uuid="d328cf58-d55d-4c6f-9430-53f82f51d421"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Inspeccion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="131" width="142" height="20" uuid="7ef63a8e-5916-4858-982e-f792d23eba0b"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Preacabado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="153" y="152" width="48" height="20" uuid="c140e7d9-5029-4eb2-bc0e-8bca6fd7bac1"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Montado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="195" width="142" height="20" uuid="def7f9fe-9441-437e-a171-44196d8d35a1"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[PT]]></text>
+			</staticText>
+			<line>
+				<reportElement x="152" y="25" width="249" height="1" uuid="daccee25-a1d9-4707-83b2-afcc355a5629"/>
+			</line>
+			<line>
+				<reportElement x="152" y="46" width="249" height="1" uuid="7d465ffe-9290-47f9-8dac-dd061a835b4f"/>
+			</line>
+			<line>
+				<reportElement x="152" y="67" width="249" height="1" uuid="16ec84ff-4495-4b71-a019-a1466a43ca2b"/>
+			</line>
+			<line>
+				<reportElement x="152" y="88" width="249" height="1" uuid="bd7a9095-bf35-4eab-b3c3-99edad560019"/>
+			</line>
+			<line>
+				<reportElement x="152" y="109" width="249" height="1" uuid="fb4956df-5ef7-4c64-93d8-db82cf81006b"/>
+			</line>
+			<line>
+				<reportElement x="152" y="130" width="249" height="1" uuid="c344f002-7778-43c4-bbbc-517e0cd56310"/>
+			</line>
+			<line>
+				<reportElement x="152" y="151" width="249" height="1" uuid="6f601305-3112-4683-9375-4fc4eed8d9e1"/>
+			</line>
+			<line>
+				<reportElement x="153" y="193" width="249" height="1" uuid="0be4418e-7024-496b-9962-633cf80d8dc6"/>
+			</line>
+			<textField>
+				<reportElement x="343" y="6" width="49" height="19" uuid="eaa6248c-a113-4762-a3de-cff9a3cf472f"/>
+				<textFieldExpression><![CDATA[$F{pares}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="152" y="6" width="143" height="20" uuid="32b030f5-034b-46dc-9376-980f496e05b8"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Corte]]></text>
+			</staticText>
+			<line>
+				<reportElement x="295" y="6" width="1" height="209" uuid="86f8168b-6eb4-411c-a1d6-21ad24739c85"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<subreport>
+				<reportElement x="343" y="152" width="49" height="21" uuid="3d673534-ccbe-47d8-b42d-808370938680"/>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="maq">
+					<subreportParameterExpression><![CDATA[$P{maq}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\Avances\\web\\usuario\\reports\\montadoavan.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="343" y="25" width="49" height="20" uuid="ed6056dd-364e-455a-947b-0b7a151a80da"/>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="maq">
+					<subreportParameterExpression><![CDATA[$P{maq}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\Avances\\web\\usuario\\reports\\precorteavan.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="343" y="47" width="49" height="20" uuid="18d5bda9-7c71-44d6-b160-e8aeb2a5faec"/>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="maq">
+					<subreportParameterExpression><![CDATA[$P{maq}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\Avances\\web\\usuario\\reports\\pespunteavan.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="343" y="68" width="49" height="20" uuid="f0e6b720-fffe-4660-8edf-a5496c833357"/>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="maq">
+					<subreportParameterExpression><![CDATA[$P{maq}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\Avances\\web\\usuario\\reports\\deshebradoavan.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="343" y="90" width="49" height="19" uuid="5fa2bf8c-4b50-4196-9ecb-8bd9fc24387a"/>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="maq">
+					<subreportParameterExpression><![CDATA[$P{maq}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\Avances\\web\\usuario\\reports\\ojilladoavan.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="343" y="110" width="49" height="20" uuid="d5782383-17d8-43f8-b0f0-a62677137341"/>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="maq">
+					<subreportParameterExpression><![CDATA[$P{maq}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\Avances\\web\\usuario\\reports\\inspeccionavan.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="343" y="132" width="49" height="19" uuid="f74a19af-390f-4e5a-9983-a662e67591e8"/>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="maq">
+					<subreportParameterExpression><![CDATA[$P{maq}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\Avances\\web\\usuario\\reports\\preaabadoavan.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="343" y="195" width="49" height="20" uuid="63e1a6a4-5d64-4d01-bcc3-0b72155c6017"/>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="maq">
+					<subreportParameterExpression><![CDATA[$P{maq}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\Avances\\web\\usuario\\reports\\ptavan.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="201" y="160" width="94" height="33" uuid="4ee15f6c-3be1-439e-b01f-af71d99ae886"/>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="maq">
+					<subreportParameterExpression><![CDATA[$P{maq}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\Avances\\web\\usuario\\reports\\banda.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

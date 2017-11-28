@@ -1,0 +1,399 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 12-sep-2016, 3:24:54
+    Author     : mich
+*/
+
+body {
+    background-repeat: repeat;
+    background-image: linear-gradient(rgb(153, 153, 255), rgb(255, 255, 255));
+}
+.body1 {
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgb(1, 139, 211), rgb(255, 255, 255));
+}
+.bodyaf {
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgb(153, 255, 255), rgb(153, 153, 255));
+}
+.body3 {
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgb(73, 180, 37), rgb(255, 255, 255));
+}
+.body2 {
+    background-repeat: no-repeat;
+    
+}
+.cambio{}   
+
+.cambio:hover{
+    color:white
+}
+p{}
+ .azul:hover{
+    
+    border-radius: 10px;
+    background-repeat: repeat;
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(153, 153, 255));
+
+}
+.mov:hover{
+    color:whitesmoke;
+    text-shadow:rgba(0,0,0,1)-1px -2px 0.5em;
+     -o-transition: all 1s;
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+    transition: all 1.0;
+}
+.redondeado{
+     border-radius: 10px;
+    
+}
+.mapa{
+	width:100%;
+	height: 100%;
+	margin:0 auto;
+	overflow:auto;
+}
+.face{
+    overflow:auto;
+}
+
+.esp{
+  padding: 50px 0px; 
+line-height: 3em;  
+}
+.inicio{
+    padding: 17% 0px;
+}
+.final{
+    padding: 10% 0px;
+}
+.medio{
+    padding:5% 0px;
+}
+.tum{
+    padding:40px 0px;
+}
+.esp1{
+    padding:20px 0px
+}
+.lol img:hover{
+     background-image: linear-gradient(rgb(255, 255, 255), rgb(153, 153, 255));
+        -o-transition: all 0.88s;
+    -moz-transition: all 0.8s;
+    -webkit-transition: all 0.8s;
+    transition: all 0.8s;
+}
+.espaciado{
+    padding-left:50px;
+}
+.espacio-md{
+    padding: 20px
+}
+.espacios-lg{
+    padding: 40px
+}
+
+#imageWrapper {
+    display: inline-block;
+    width: 100%;
+    height: 200px;
+    
+    position: relative;
+}
+#imageWrapper img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition-property: opacity;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+}
+#imageWrapper #frontImage, #imageWrapper:hover #backImage {
+    opacity: 1;
+}
+#imageWrapper:hover #frontImage, #imageWrapper #backImage {
+    opacity: 0;
+}
+
+
+.jumbis{
+border-radius: 10px;
+}
+.jumbismini{
+    border-radius:5px;
+}
+.letra{
+    letter-spacing: 0.3em
+}
+.letramod{
+    
+    font: oblique 120% sans-serif bold;
+}
+.inter{
+    line-height: 1.8
+}
+.inter1{
+    line-height: 3.5
+}
+.letracambio{
+    
+}
+.letracambio:hover{
+    font-size: 3em;
+    font-family: fantasy;
+    font-style: italic;
+    transition-property: opacity;
+    transition-duration: 1s;
+    transition-timing-function: linear;   
+}
+.acept{
+    background-color: rgb(51, 122, 183); 
+    background: rgb(51, 122, 183);
+}
+asside{
+    position: absolute;   
+}
+.l1{
+    font-size: 30px
+}
+.ln{
+    font-size: 15px
+}
+.ln-ln{
+    font-size: 40px
+}
+.deep{
+    padding-bottom: 50%    
+}
+.deep-sm{
+    padding: 1%
+}
+.fuera{
+    overflow: auto
+}
+.fondos{
+    background-color: rgb(51, 122, 183); 
+    color: white
+}
+.endchapter{
+    font-size: 25px;
+    background-color: red;
+    color: whitesmoke;
+    display:none;      
+}
+.titulos{
+    font-size: 25px;     
+}
+.shiro{
+    color:whitesmoke;
+    text-decoration:none; 
+}
+.fondowhite{
+    background-color: white;
+    border-radius: 15px
+}
+.fondoviolet{
+    background-color: #DC56E7;
+    border-radius: 15px;
+    padding: 10px;
+   padding-left: 15px;
+}
+.spacetop{
+       padding-top: 15px
+}
+footer{     
+    color:whitesmoke;
+    width:100%;
+    float: right;
+    clear:both;
+    background-color: rgb(2, 117, 234);
+    background-image:linear-gradient (rgb(2, 117, 234), rgb(2, 117, 234));
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+}
+.tablewidth-sm{
+    width: 50%;
+    text-align: center;
+}
+.lateral{
+    padding-left: 15px
+}
+.leftbar{
+   height: 50%;
+   padding-top: 0px;
+   padding-left: 8px
+}
+.navv{
+    background-color: whitesmoke;
+    border-radius: 8px
+}
+.fondobarra{
+    background-color: #750CE9;
+    border-radius: 5px;  
+}
+.fondobarra1{
+    background-color: #FDE482;
+    border-radius: 5px
+}
+.redfont{
+        background-color: black;
+    border-radius: 15px;
+    padding: 10px;
+   padding-left: 15px;
+   color:white
+}
+.stealth{
+    display: none
+}
+.bodypares{
+    background-color: #F8F8F9;
+    color: black
+}
+.bodyheadpares{
+    font-size: 20px
+}
+.ttd{
+    font-family: monospace; 
+    background-color: #F8F8F9;
+}
+.ttd:hover{
+    
+    color: rgb(51, 122, 183);
+    border-radius: 10px
+}
+.espacio-md-up{
+    padding-top: 8%
+}
+.espacio-md-down{
+    padding-bottom: 2%
+}
+.tamanomodal{
+     width: 80%;
+    height: 80%;
+    padding-left: 2%
+}
+/*&nbsp;*/
+@media screen and (max-width: 1000px) {
+     .titulos{
+         font-size: 18px
+         
+     }
+    .l1{
+         font-size:25px
+     }    
+   .ln{
+    font-size: 20px
+}
+.ln-ln{
+    font-size: 25px
+}
+.endchapter{
+    font-size: 20px
+}
+.tablewidth-sm{
+    width: 100%
+}
+.leftbar{
+    display: inline;
+    padding-bottom: 0px;
+    padding-left: 8px
+        
+}
+.tablasize{
+    font-size: 5px;
+    letter-spacing: 1px
+       
+}
+    }
+    
+    @media screen and (max-device-width : 1080px) {
+
+            .titulos{
+         font-size: 18px
+         
+     }
+    .l1{
+         font-size:20px
+     }    
+   .ln{
+    font-size: 15px
+}
+.ln-ln{
+    font-size: 15px
+}
+.endchapter{
+    font-size: 10px
+}
+.tablewidth-sm{
+    width: 100%
+}
+.leftbar{
+    display: inline;
+    padding-bottom: 0px;
+    padding-left: 8px
+        
+}
+}
+
+/*@media screen and (max-width: 1000px) {
+     .titulos{
+         font-size: 25px
+         
+     }
+    .l1{
+         font-size:15px
+     }    
+   .ln{
+    font-size:10px
+}
+.ln-ln{
+    font-size: 25px
+}
+.endchapter{
+    font-size: 11px
+}
+.tablewidth-sm{
+    width: 100%
+}
+.leftbar{
+    display: inline;
+    padding-bottom: 0px;
+    padding-left: 8px
+        
+}
+}*/
+/*@media screen and (max-width:1000) {
+     .titulos{
+         font-size: 35px
+         
+     }
+    .l1{
+         font-size:25px
+     }    
+   .ln{
+    font-size:20px
+}
+.ln-ln{
+    font-size: 35px
+}
+.endchapter{
+    font-size: 20px
+}
+.tablewidth-sm{
+    width: 100%
+}
+.leftbar{
+    display: inline;
+    padding-bottom: 0px;
+    padding-left: 8px
+        
+}
+}*/
+    
