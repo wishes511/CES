@@ -77,6 +77,31 @@ public class Avances {
         
         return u;
     }
+     public ArrayList<String> searchstoppair(String f1, String f2,ArrayList<String> arr) throws ClassNotFoundException, SQLException {
+        
+        String query = "SELECT DISTINCT id, lote, prog, fecha, depar\n" +
+"FROM log_lote\n" +
+"WHERE (fecha between '"+f1+"' and '"+f2+"') AND (prog <> 1) AND (depar <> 'mich1') AND (depar <> 'mich2') AND (depar <> 'mich2') AND (depar <> 'mich3') AND (depar <> 'mich')\n" +
+"GROUP BY depar, prog, fecha, lote, id\n" +
+"ORDER BY prog ";
+        Statement smt;
+        ResultSet df;
+        abrir();
+        smt = conexion.createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {
+            arr.add(df.getString("id"));
+            arr.add(df.getString("prog"));
+            arr.add(df.getString("lote"));
+            arr.add(df.getString("fecha"));
+            arr.add(df.getString("depar"));
+        }
+        //System.out.println(query+"/array size "+arr.size());
+        df.close();
+        smt.close();
+        
+        return arr;
+    }
     public boolean buscarprogram(String prog) throws ClassNotFoundException, SQLException {
         boolean u =false;
         String query = "select id_prog from programa where statuto !='COMPLETO' and prog="+Integer.parseInt(prog);
@@ -222,7 +247,7 @@ public class Avances {
         st.close();
         return arr;  
     }
-        public ArrayList<String> searchfechacompleto(String f1,String f2) throws ClassNotFoundException, SQLException {
+    public ArrayList<String> searchfechacompleto(String f1,String f2) throws ClassNotFoundException, SQLException {
          ArrayList<String> array = new ArrayList<>();
         
          Statement st;
@@ -501,7 +526,7 @@ public class Avances {
     cerrar();
     return arr;
     }
-        public Programa getprogcode(int code) throws SQLException, ClassNotFoundException{
+    public Programa getprogcode(int code) throws SQLException, ClassNotFoundException{
             Programa p = new Programa();
     ArrayList<String> arr= new ArrayList<>();
          Statement st;
@@ -822,8 +847,7 @@ public class Avances {
             }
     }
     }
-    
-        public void modiprogram(Programa p){
+    public void modiprogram(Programa p){
     PreparedStatement st = null;
         try{//modificar status de programa
              abrir();
@@ -844,8 +868,7 @@ public class Avances {
                 System.out.println(o.getMessage());
             }
     }
-    }
-    
+    }  
     public void modiavancestatus(String a){
     PreparedStatement st = null;
         try{//modificar status de programa ultimo departamento
@@ -905,7 +928,7 @@ public class Avances {
         }
         st.close();
     }
-     public void lotesupdate(int a) throws SQLException{
+    public void lotesupdate(int a) throws SQLException{
     PreparedStatement st = null;
         try {
             abrir();

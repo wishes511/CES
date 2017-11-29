@@ -58,6 +58,7 @@
                 
                 <ul class="nav navbar-nav nav-pills">
                     <a class="navbar-brand" href=""><img src="../images/home.png" class="" width="25"></a>
+                    <li class="ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
                     <li class="ln"><a href="verpares.jsp">Ver Pares</a></li>                 
                     <li class="ln"><a href="../Cierresesion">Salir</a></li>
                 </ul>

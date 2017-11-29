@@ -38,7 +38,7 @@
 <html >
     <head>
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-        <meta http-equiv="refresh" content="60">
+        <meta http-equiv="refresh" content="300">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="icon"  href="../images/aff.png" sizes="32x32"/>
         <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">

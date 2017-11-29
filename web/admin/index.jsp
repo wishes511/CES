@@ -33,7 +33,7 @@
 <html >
     <head>
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-        <meta http-equiv="refresh" content="120">
+        <meta http-equiv="refresh" content="500">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="icon"  href="../images/aff.png" sizes="32x32"/>
         <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
@@ -72,18 +72,17 @@
             </nav>
             <div class="container" align="center">
                 <div class="row">
-                     <div class="col-xs-4 tablasize" style="overflow: auto;">
+                     <div class="col-xs-5 tablasize" style="overflow: auto;">
                     <%
                     if(list.isEmpty()){
         System.out.println("vacio");
     }else{
     int cont =0;
-    out.print("<table class=table tablasize>");
+    out.print("<table class=table tablasize style=height:50\\%\\>");
     for(int i=0; i<list.size();i++){
         if(cont==5){
-           out.print("<tr tablasize><td class=tablasize>"+list.get(i-4)+"</td><td>"+list.get(i-3)+"</td><td>"+list.get(i-2)+"</td><td>"+list.get(i-1)+"</td><td>"+list.get(i)+"<a onclick=savelote("+list.get(i-5)+")><button class= btn-success >Ok</button></a></td><tr>");
+           out.print("<tr tablasize><td >"+list.get(i-4)+"</td><td>"+list.get(i-3)+"</td><td>"+list.get(i-2)+"</td><td>"+list.get(i)+"</td><td><a onclick=savelote("+list.get(i-5)+")><button class= btn-success >Ok</button></a></td><tr>");
            cont=0;
-            
         }else{
          cont++;   
         }
@@ -92,7 +91,7 @@
     }
                     %>
                 </div>
-                <div class=" col-xs-8" >
+                <div class=" col-xs-7" >
                     <%
                     if(usuario.equals("leon")){
                     out.println("<label class=l1>Origen:&nbsp;&nbsp;&nbsp;"+usuario.toUpperCase()+"</label>");
@@ -117,6 +116,7 @@
                                             out.print("<option>inspeccion</option>");
                                             out.print("<option>preacabado</option>");
                                             out.print("<option>montado</option>");
+                                            out.print("<option>prodt</option>");
                                             %>
                                         </select><br><br>                
                             </div></div>
@@ -163,6 +163,7 @@
                              <label class="ln">Codigo:</label>
                              <input type="text" name="codigo" id="codigo" class="form-control" onchange="okas()" required><br>
                              <input type="submit" name="ok" id="ok" class="btn btn-danger" onclick="okas()">
+                             <button class="btn btn-success" id="ver" name="ver" onclick="buscalote()">Busca Codigo</button>
                              </div>
                              
                                
@@ -170,6 +171,8 @@
                     </div>
                 </div>
                      <div id="llenado"></div>
+                     <div id="llena"></div>
+                     
                 </div>    
                     
                 </div>
@@ -198,10 +201,6 @@
                 });
             
             }
-                    
-                 /*   function enviaralmodo(){
-                        alert("Funciono!! :)");
-                    }*/
                     function salto(){                        
                 document.getElementById("depmaquila").focus();          
                     }
@@ -216,14 +215,11 @@
                              document.getElementById("divbanda").style.display='none';
                             document.getElementById("codigo").focus();  
                         }
-                        
                     }
                     function salto2(){
                         document.getElementById("codigo").focus();
-                        
                     }
                     function savelote(id){
-                    
                 $.ajax({
                     type: 'post',
                     data: {id:id},
@@ -234,7 +230,19 @@
                  document.getElementById("codigo").value="";    
                     }
                 });
-            
+                    }
+                    function buscalote(){
+                        var f1=$('#codigo').val();
+                        var uso ="check";
+                $.ajax({
+                type: 'post',
+                data: {f1: f1, uso: uso},
+                url: '../Getregslote',
+                success: function (result) {
+                    $('#llena').html(result);
+                   
+                }
+            });
                     }
                 </script>
     </body>

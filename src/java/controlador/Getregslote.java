@@ -75,7 +75,7 @@ public class Getregslote extends HttpServlet {
         String tiposs = (String) objSesion.getAttribute("tipo");
         String ids = String.valueOf(objSesion.getAttribute("i_d"));
         if (usuario != null && tiposs != null ) {
-            if(tiposs.equals("USUARIO")){
+            if(tiposs.equals("USUARIO") || tiposs.equals("ADMIN")){
             }else
                 response.sendRedirect("index.jsp");
         } else {
