@@ -183,7 +183,7 @@ response.sendRedirect("index.jsp");
                         System.out.println("Soy corte de leon .v");
                         respuesta = av.avanceprimerdep(a, fechac, charmaquila, array, array2);
                         if (respuesta) {
-                            av.modiavancestatus(array, k, a);
+                            av.modiavancestatus(array, k, a,fechac,charmaquila.charAt(0));
 //                            out.println("<script type=\"text/javascript\">");
 //                            out.println("alert('AVANCE COMPLETO!!');");
 //                            out.println("location='Cierresesion';");
@@ -209,8 +209,8 @@ response.sendRedirect("index.jsp");
                         }
                         if (av.verificaraiz(array, k, a)) {// inicio de verificacion del usuario con la lista
                             if (av.checkback(array, k, a)){//verifica el departamento anterior
-                                    av.avances(a, fechac, charmaquila, array, k, (array.size() - 1));
-                                    av.modiavancestatus(array, k, a);
+                                    av.avances(a, fechac, charmaquila, array, k, (array.size() - 1),fechac);
+                                    av.modiavancestatus(array, k, a,fechac,charmaquila.charAt(0));
 //                                    out.println("<script type=\"text/javascript\">");
 //                                    out.println("alert('AVANCE COMPLETO!!');");
 //                                   // out.println("location='Cierresesion';");
@@ -248,6 +248,8 @@ response.sendRedirect("index.jsp");
 "                                </div>\n" +
 "                                 <div class=\"col-sm-4\">\n" +
 "                                    <label class=\"ln\">COMBINACION:"+loadprog.get(3)+"</label>\n" +
+"                                </div><div class=\"col-sm-4\">\n" +
+"                                    <label class=\"ln\">TERMINO :"+loadprog.get(6)+"</label>\n" +
 "                                </div> \n" +
 "                                </div>");
             }
@@ -256,7 +258,7 @@ response.sendRedirect("index.jsp");
                 Logger.getLogger(Avances.class.getName()).log(Level.SEVERE, null, e);
             }
             
-        } else if (maquila.equals("PLANTA") && (tipos.equals("BASICO"))|| tipos.equals("MEDIOBASICO")) {
+        } else if (maquila.equals("PLANTA") && (tipos.equals("BASICO"))|| tipos.equals("MEDIOBASICO")) {//planta y capturista
             System.out.println("PLNATA");
             boolean respuesta;
             boolean respuesta1;
@@ -292,7 +294,7 @@ response.sendRedirect("index.jsp");
                         System.out.println("Soy corte .v");
                         respuesta = av.avanceprimerdep(a, fechac, charmaquila, array, array2);
                         if (respuesta) {
-                            av.modiavancestatus(array, k, a);
+                            av.modiavancestatus(array, k, a,fechac,charmaquila.charAt(0));
 //                            out.println("<script type=\"text/javascript\">");
 //                            out.println("alert('AVANCE COMPLETO!!');");
 //                          //  out.println("location='Cierresesion';");
@@ -320,7 +322,7 @@ response.sendRedirect("index.jsp");
                             if (av.checkback(array, k, a) || usuario.equals("preacabado")) {//verifica el departamento anterior
 
                                 if (usuario.equals("preacabado")) {//solo si el usuario es preacabado
-                                    if (av.checkmontado(array, k, a)) {
+                                    if (av.checkmontado(array, k, a)) {// verifica avance en montado
 //                                        out.println("<script type=\"text/javascript\">");
 //                                        out.println("alert('NO SE PUEDE REALIZAR AVANCE DE PREACABADO SI YA SE TIENE MONTADO, CONTACTE A UN ADMINISTRADOR.');");
 //                                     //   out.println("location='planta/index.jsp';");
@@ -341,7 +343,7 @@ response.sendRedirect("index.jsp");
 
                                     if (av.checkpremontado(array, k, a)) {//verifica inspeccion de calidad
                                         av.avancesmontado(a, fechac, charmaquila, array, k, banda);
-                                        av.modiavancestatus(array, k, a);
+                                        av.modiavancestatus(array, k, a,fechac,banda,charmaquila);
 //                                        out.println("<script type=\"text/javascript\">");
 //                                        out.println("alert('AVANCE COMPLETO!');");
 //                                    //    out.println("location='Cierresesion';");
@@ -356,7 +358,7 @@ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fecha
                                         out.println("<label>Falta Captura de Inspeccion de calidad</label>");
                                     }
                                 } else {
-                                    av.avances(a, fechac, charmaquila, array, k, (array.size() - 1));
+                                    av.avances(a, fechac, charmaquila, array, k, (array.size() - 1),fechac);
 //                                    out.println("<script type=\"text/javascript\">");
 //                                    out.println("alert('AVANCE COMPLETO!!');");
 //                                  //  out.println("location='Cierresesion';");
@@ -366,7 +368,7 @@ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fecha
                                     if (array.get(k).equals(array.get(array.size() - 3))) {
                                         av.modiavancestatus(a);
                                     } else {
-                                        av.modiavancestatus(array, k, a);
+                                        av.modiavancestatus(array, k, a,fechac,charmaquila.charAt(0));
                                     }
                                 }
                             } else {
@@ -407,7 +409,9 @@ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fecha
 "                                </div>\n" +
 "                                 <div class=\"col-sm-4\">\n" +
 "                                    <label class=\"ln\">COMBINACION:"+loadprog.get(3)+"</label>\n" +
-"                                </div> \n" +
+"                                </div> <div class=\"col-sm-4\">\n" +
+"                                    <label class=\"ln\">TERMINO :"+loadprog.get(6)+"</label>\n" +
+"                                </div>\n" +
 "                                </div>");
             }
             } catch (Exception e) {
@@ -445,7 +449,7 @@ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fecha
                         System.out.println("Soy corte ");
                         respuesta = av.avanceprimerdep(a, fechac, charmaquila, array, array2);
                         if (respuesta) {
-                            av.modiavancestatus(array, k, a);
+                            av.modiavancestatus(array, k, a,fechac,charmaquila.charAt(0));
                           out.println("<label>Avance Completo Exitosamente :)</label>");
                         } else {
                            out.println("<label>Ya existe Avance de este departamento</label>");
@@ -480,19 +484,19 @@ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fecha
 
                                     if (av.checkpremontado(array, k, a)) {//verifica inspeccion de calidad
                                         av.avancesmontado(a, fechac, charmaquila, array, k, banda);
-                                        av.modiavancestatus(array, k, a);
+                                        av.modiavancestatus(array, k, a,fechac,charmaquila.charAt(0));
                                             out.println("<label>Avance Completo Exitosamente:)</label>");
                                     } else {// si aun no se tiene avance de inspeccion   
                                         av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,usuario+banda);
                                         out.println("<label>Falta Captura de Inspecciond de calidad</label>");
                                     }
                                 } else {
-                                    av.avances(a, fechac, charmaquila, array, k, (array.size() - 1));
+                                    av.avances(a, fechac, charmaquila, array, k, (array.size() - 1),fechac);
                                    out.println("<label>Avance Completo Exitosamente:)</label>");
                                     if (array.get(k).equals(array.get(array.size() - 3))) {
                                         av.modiavancestatus(a);
                                     } else {
-                                        av.modiavancestatus(array, k, a);
+                                        av.modiavancestatus(array, k, a,fechac,charmaquila.charAt(0));
                                     }
                                 }
                             } else {
@@ -517,6 +521,8 @@ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fecha
 "                                </div>\n" +
 "                                 <div class=\"col-sm-4\">\n" +
 "                                    <label class=\"ln\">COMBINACION:"+loadprog.get(3)+"</label>\n" +
+"                                </div><div class=\"col-sm-4\">\n" +
+"                                    <label class=\"ln\">TERMINO :"+loadprog.get(6)+"</label>\n" +
 "                                </div> \n" +
 "                                </div>");
             }

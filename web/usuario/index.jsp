@@ -3,6 +3,7 @@
     Created on : Sep 26, 2017, 2:39:00 PM
     Author     : gateway1
 --%>
+<%@page import="java.util.Calendar"%>
 <%@page import="Modelo.Programa"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="persistencia.Avances"%>
@@ -22,6 +23,9 @@
     } else {
         response.sendRedirect("../index.jsp");
     }
+     Calendar fecha = Calendar.getInstance();
+    int año = fecha.get(Calendar.YEAR);
+    int mes = fecha.get(Calendar.MONTH) + 1;
     Avances bd = new Avances();
     // estado = bd.alerta();
 %>
@@ -30,7 +34,7 @@
 <html >
     <head>
         
-        <meta http-equiv="refresh" content="180">
+        <meta http-equiv="refresh" content="800">
         <link rel="icon"  href="../images/aff.png" sizes="32x32"/>
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -72,11 +76,27 @@
                     <label class="ln-ln fuera">Busquedas</label><br>
                     <div class="row" align="center">
                         <div class="col-sm-offset-5 col-sm-2">
-                                <label class="ln">Lote</label><input class="form-control" type="text" name="lote" id="lote" onchange="nprograma()" maxlength="6" value=""><br>
+                                <label class="ln">Lote</label><input class="form-control" type="text" name="lote" id="lote" onchange="jumpto()" maxlength="6" value=""><br>
+                        </div>
+                        <div class="col-sm-offset-5 col-sm-2">
+                                <select id="mes" name="mes" onclick="saltok()" class="form-control" value="">
+                                    <%
+                                        for (int i = 1; i <= 12; i++) {
+                                            if (i == mes) {
+                                                out.print("<option selected>" + i + "</option>");
+                                            } else {
+                                                out.print("<option>" + i + "</option>");
+                                            }
+
+                                        }
+                                    %>
+                                </select>
                         </div>
                     </div>
                     <br><div class="row">
-                        <div align="center"> <br><button class="btn btn-success ln" id="boton" onclick="nprograma()">Aceptar</button> <button class="btn btn-success ln" id="boton" onclick="busqueda()">Historial de Lotes</button></div>
+                        <div align="center"> <br><button class="btn btn-success ln" id="boton" onclick="nprograma()">Aceptar</button> 
+                            <button class="btn btn-success ln" id="boton2" onclick="busqueda()">Historial de Lotes</button>
+                        <button class="btn btn-success ln" id="boton3" onclick="lotes()">Generar reporte</button></div>
                          
                     </div>
                 </div>
@@ -85,10 +105,13 @@
             </div><br>
         </div> 
     <script>
-       
+       function jumpto(){
+           document.getElementById("mes").focus();
+       }
         function nprograma() {
             var lote ="";
             lote=$('#lote').val();
+        var mes =$('#mes').val();
            if(lote===""){
                
            }else{
@@ -100,7 +123,7 @@
                var uso = "check";
             $.ajax({
                 type: 'post',
-                data: {f1: lote, uso: uso},
+                data: {f1: lote, uso: uso,mes:mes},
                 url: '../Getregslote',
                 success: function (result) {
                     $('#respuesta').html(result);
@@ -110,6 +133,11 @@
                 }    
            }
         }
+        function lotes(){
+            var prog =$('#lote').val();
+            var mes =$('#mes').val();
+            window.location="programadetallado.jsp?prog="+prog+"&mes="+mes;
+        }
         function busqueda(){
              var programa = '0';
                 var lote = $('#lote').val();
@@ -117,7 +145,7 @@
                 var pares = '0';
                 var corrida = '0';
                 var combinacion = '0';
-                var mes ='0';
+                var mes =$("#mes").val();
 
                 var uso = "buscar";
                 $.ajax({
@@ -132,7 +160,10 @@
                 });
             }
             
-        
+        function saltok(){
+            document.getElementById("boton").focus();
+            
+        }
     </script>
 </body>
 </html>

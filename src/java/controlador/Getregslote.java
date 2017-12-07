@@ -86,6 +86,7 @@ public class Getregslote extends HttpServlet {
             // tomar datos del html
             String f1 = request.getParameter("f1");
             String uso = request.getParameter("uso");
+            String mes = request.getParameter("mes");
             // verificar que accion hara el servlet
             if (uso.equals("check")) {
                
@@ -93,11 +94,14 @@ public class Getregslote extends HttpServlet {
                 Avances a = new Avances();
                 Programa p = new Programa();
                 p.setLote(Integer.parseInt(f1));
-                 ArrayList<String> arr =a.getprog(Integer.parseInt(f1));
+                 ArrayList<String> arr =a.getprog(Integer.parseInt(f1),Integer.parseInt(mes));
                 //p.setFechae(f7);
-                avan= a.getfechas(a.getprog(Integer.parseInt(f1)));
+                avan= a.getfechas(a.getprog(Integer.parseInt(f1),Integer.parseInt(mes)));
                 if(arr.isEmpty()){
-                
+                    System.out.println("vacio");
+                out.println("<script type=\"text/javascript\">");
+                    out.println("location='index.jsp';");
+                    out.println("</script>");
                 }else{
                 out.println("<div class=fondowhite><div class=row><div class=\"col-sm-2\">\n" +
 "                                <label class=\"ln\">Programa</label><label class=\"form-control\">"+arr.get(0)+"</label>\n" +

@@ -33,7 +33,7 @@
 <html >
     <head>
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-        <meta http-equiv="refresh" content="500">
+        <meta http-equiv="refresh" content="1000">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="icon"  href="../images/aff.png" sizes="32x32"/>
         <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
@@ -64,6 +64,7 @@
                 <ul class="nav navbar-nav nav-pills">
                     <li><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li>
                     <li class="active"><a  href="">Avance General</a></li>
+                    <li class=""><a  href="../Dateupdate">actualizar fechas</a></li>
                     <li><a href="../Cierresesion">Salir</a></li>
                 </ul>
                 <div style="float:right" class="nav nav-pills">
@@ -127,8 +128,6 @@
                 %>
                 
                 <div class="row espacios-lg">
-
-                    
                     <div class="col-md-8" align="center">
                     <div class="col-md-offset-6" align="center">
                        
@@ -143,8 +142,6 @@
                             <div style=" <% if(!usuario.equals("leon") && !usuario.equals("avancemaquila") && !tipos.equals("ADMIN")){out.print("display: block");}else{out.print("display: none");}%>">
                                 <label  style="color:black" class="l1" onchange="salto()" disabled >ORIGEN:&nbsp;&nbsp;&nbsp;&nbsp;PLANTA</label>
                                 <div class="stealth"><input name="marcas" id="marcas" value="PLANTA"></div>
-                                
-                                    
                                 <br><br>
                             </div>
                                 <div>
@@ -156,29 +153,21 @@
                                         </select><br><br>
                             </div>
                                 </div>
-                            
-                            
                              <br><br>
                              <div>
                              <label class="ln">Codigo:</label>
                              <input type="text" name="codigo" id="codigo" class="form-control" onchange="okas()" required><br>
                              <input type="submit" name="ok" id="ok" class="btn btn-danger" onclick="okas()">
                              <button class="btn btn-success" id="ver" name="ver" onclick="buscalote()">Busca Codigo</button>
-                             </div>
-                             
-                               
+                             </div>  
                     </div>
                     </div>
                 </div>
                      <div id="llenado"></div>
                      <div id="llena"></div>
-                     
                 </div>    
-                    
-                </div>
-                           
+                </div> 
             </div>
-            
         </div>
                 <script>
                     

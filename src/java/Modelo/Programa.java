@@ -11,6 +11,15 @@ package Modelo;
  */
 public class Programa {
     int programa,lote,estilo,pares,mes,id;
+    String fecha;
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 
     public int getId() {
         return id;

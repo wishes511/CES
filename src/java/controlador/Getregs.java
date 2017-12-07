@@ -10,6 +10,7 @@ import persistencia.Avances;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -88,6 +89,11 @@ private String codigo(String estilo){
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        Calendar fecha = Calendar.getInstance();
+        int año = fecha.get(Calendar.YEAR);
+        int mes1 = fecha.get(Calendar.MONTH) + 1;
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        String fechac = año + "/" + mes1 + "/" + dia;
          HttpSession objSesion = request.getSession(true);
         char arr [] =new char[5];
 //i_d
@@ -121,7 +127,7 @@ private String codigo(String estilo){
                  lista = (ArrayList<String>) objSesion.getAttribute("cap");
             
             // verificar que accion hara el servlet
-            if (uso.equals("nuevo")) {
+            if (uso.equals("nuevo")) {// nuevo programa
                 ArrayList<String> listas= new ArrayList<>();
                 objSesion.setAttribute("cap", listas);
                 Avances a = new Avances();
@@ -133,10 +139,10 @@ private String codigo(String estilo){
                 p.setCorrida(f4);
                 p.setCombinacion(f5);
                 p.setMes(Integer.parseInt(f6));
-                
+                p.setFecha(fechac);
                 p.setCodigo(codigo(f1));
                 if(regularexp(f,f1,f2,f3,f4,f5)){
-                a.nuevoprog(p);
+                a.nuevoprog(p);//ejecutar insercion
                 out.print("<div class=container-fluid><div class=container><div class=row espacios-lg fondos jumbis><div class=row><div class=col-sm-2> "
                         + "<label class=ln>Programa</label><input class=form-control type=text name=programa id=programa disabled value="+p.getPrograma()+"></div></div><div class=row>"
                         + "<div class=\"col-sm-2\">\n"
@@ -164,44 +170,46 @@ private String codigo(String estilo){
                 }
 
 
-            }else if(uso.equals("buscar")){
+            }else if(uso.equals("buscar")){//busqueda de lote
                  
                 ArrayList<String> array = new ArrayList<>();
                 Avances a = new Avances(); 
                 int cont =0;
                 if(explote(f1)){
-                    objSesion.setAttribute("cap",a.getprog(Integer.parseInt(f1)));
-                    array=a.getallprog(array, f1);
+                    objSesion.setAttribute("cap",a.getprog(Integer.parseInt(f1),Integer.parseInt(f6)));
+                    array=a.getallprog(array, f1,Integer.parseInt(f6));
                     if(array.isEmpty()){
                         System.out.print("Vacio");
                    }else{
                         System.out.print("prog total"+array.size());
                     for(int i =0;i<(array.size());i++){
                         System.out.print("i="+i+"arr="+array.get(i));
-                        if(cont==7){
+                        if(cont==8){
                            
                           out.print("<div class=container><div class=row  fondos jumbis align=center><div align=center class=row ><div class=col-sm-2 > "
-                        + "<label class=ln>Programa</label><br><label class=ln>"+array.get(i-7)+"</div></div><div class=row>"
-                        + "<div class=\"col-sm-2 espacio-md-down\">\n"
-                        + "<label class=\"ln\">Lote</label><br><label class=ln form-control>"+array.get(i-6)+"</label>\n"
-                        + "</div>\n"
-                        + "<div class=\"col-sm-2 \">\n"
-                        + "<label class=\"ln\">Estilo</label><br><label class=ln>"+array.get(i-5)+"</label>\n"
-                        + "</div>\n"
-                        + "<div class=\"col-sm-1\">\n"
-                        + "<label class=\"ln\">Pares</label><br><label class=ln>"+array.get(i-4)+"</label>\n"
-                        + "</div>\n"
-                        + "<div class=\"col-sm-2\">\n"
-                        + "<label class=\"ln\">Combinacion</label><br><label class=ln>"+array.get(i-3)+"</label>\n"
-                        + "</div>\n"
-                        + "<div class=\"col-sm-2 \">\n"
-                        + "<label class=\"ln\">Corrida</label><br><label class=ln>"+array.get(i-2)+"</label>\n"
+                        + "<label class=ln>Programa</label><br><label class=ln>"+array.get(i-8)+"</div></div><div class=row>"
+                        + "<div class=\"col-sm-1 espacio-md-down\">\n"
+                        + "<label class=\"ln\">Lote</label><br><label class=ln form-control>"+array.get(i-7)+"</label>\n"
                         + "</div>\n"
                         + "<div class=\"col-sm-1 \">\n"
-                        + "<label class=\"ln\">mes</label><br><label class=ln>"+array.get(i-1)+"</label><br><br>\n"
+                        + "<label class=\"ln\">Estilo</label><br><label class=ln>"+array.get(i-6)+"</label>\n"
+                        + "</div>\n"
+                        + "<div class=\"col-sm-1\">\n"
+                        + "<label class=\"ln\">Pares</label><br><label class=ln>"+array.get(i-5)+"</label>\n"
                         + "</div>\n"
                         + "<div class=\"col-sm-2\">\n"
-                        + "<label class=\"ln\">Status</label><br><label class=ln>"+array.get(i)+"</label><br><br>\n"
+                        + "<label class=\"ln\">Combinacion</label><br><label class=ln>"+array.get(i-4)+"</label>\n"
+                        + "</div>\n"
+                        + "<div class=\"col-sm-2 \">\n"
+                        + "<label class=\"ln\">Corrida</label><br><label class=ln>"+array.get(i-3)+"</label>\n"
+                        + "</div>\n"
+                        + "<div class=\"col-sm-1 \">\n"
+                        + "<label class=\"ln\">mes</label><br><label class=ln>"+array.get(i-2)+"</label><br><br>\n"
+                        + "</div>\n"
+                        + "<div class=\"col-sm-2\">\n"
+                        + "<label class=\"ln\">Status</label><br><label class=ln>"+array.get(i-1)+"</label><br><br>\n"
+                        + "</div><div class=\"col-sm-2\">\n"
+                        + "<label class=\"ln\">Fecha</label><br><label class=ln>"+array.get(i)+"</label><br><br>\n"
                         + "</div>\n"
                         + "</div>\n"
                         + "</div></div>");

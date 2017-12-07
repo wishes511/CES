@@ -20,13 +20,12 @@
     if (usuario != null && tipos != null && tipos.equals("BASICO") || tipos.equals("MEDIOBASICO") || tipos.equals("PREINTERMEDIO")) {
        // out.println(usuario);
     } else {
-        response.sendRedirect("../index.jsp");
+        out.println("<script type=\"text/javascript\">");
+                    out.println("location='../index.jsp';");
+                    out.println("</script>");
     }
    
-        }catch(Exception e){
-            //out.print("Exception");
-        response.sendRedirect("../index.jsp");
-        }
+        
  Avances bd = new Avances();
     ArrayList<String> array = array = bd.getmaquila();
 %>
@@ -66,6 +65,7 @@
             <div></div>
             
             <a href="../Cierresesion"><img src="../images/home.png" alt="" class="btn img-responsive" ></a>
+            
             <div class="container" align="center">
                 <div class="espacio-md-up">
                     <%
@@ -141,12 +141,7 @@
                 </div>
                                 <div id="llenado"></div>
                     
-                </div>
-                
-                           
-                                
-                                 
-                                
+                </div>      
             </div>
             
         </div>
@@ -169,7 +164,6 @@
                  document.getElementById("codigo").value="";    
                     }
                 });
-            
             }
                     
                  /*   function enviaralmodo(){
@@ -181,3 +175,10 @@
                 </script>
     </body>
 </html>
+<%
+}catch(Exception e){
+        out.println("<script type=\"text/javascript\">");
+                    out.println("location='../index.jsp';");
+                    out.println("</script>");
+        }
+%>

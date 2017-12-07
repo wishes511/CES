@@ -81,7 +81,7 @@
                     <li>
                         <a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a>
                     </li>
-                    <li class="ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
+                   <li class="ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
                     <li class="active ln"><a href="verpares.jsp">Ver Pares</a></li>  
                     <li class="ln"><a href="../Cierresesion">Salir</a></li>
                 </ul>
@@ -129,7 +129,7 @@
                     <div class=" esp1 ln" align="center">
                         <br><button type="submit" name="envio" class="btn btn-success ln" id="envio" value="Ver Pares" onclick="okas()">Ver Pares</button>
                         <a target="_blank"><button type="submit" name="envio" class="btn btn-success ln" id="envio" value="Generar Reporte" onclick="avances()">Generar reporte</button></a>
-                        <button name="completo" class="btn btn-success ln" id="completo" value="" onclick="okas1()">Lote completo</button>
+                        <button name="completo" class="btn btn-success ln" id="completo" value="" onclick="okas1()" style="display: none">Lote completo</button>
                         <div><input type="checkbox" name="detallado" id="detallado" value="detallado"  />Detallado</div>
                     </div>
                 </div>

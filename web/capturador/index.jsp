@@ -15,10 +15,10 @@
 try{
 
     if (usuario == null) {
-        System.out.println("zom");
+       // System.out.println("zom");
         response.sendRedirect("../index.jsp");
     } else {
-        System.out.println("inter");
+       // System.out.println("inter");
         if (tipos.equals("INTERMEDIO")) {
         } else {
             response.sendRedirect("../index.jsp");

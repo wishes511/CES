@@ -95,7 +95,7 @@ public class Validar extends HttpServlet {
                 //System.out.println("e.e"+tipo);
                 switch (tipo) {
                     case "ADMIN":
-                        objSesion.setMaxInactiveInterval(interv+500);
+                        objSesion.setMaxInactiveInterval(interv+1000);
                         objSesion.setAttribute("usuario", nombre);
                         objSesion.setAttribute("tipo", tipo);
                         objSesion.setAttribute("i_d", u.getId_usuario());

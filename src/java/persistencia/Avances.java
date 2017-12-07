@@ -28,7 +28,7 @@ public class Avances {
 //    String url = "jdbc:sqlserver://192.168.6.75:9205;"
 //            + "databaseName=avances;user=mich; password=mich;";
 //    jdbc:sqlserver://192.168.6.75\SQLEXPRESS:9205;databaseName=avances
-    String url ="jdbc:sqlserver://192.168.6.8\\datos65:9205;databaseName=Avances;";
+   String url ="jdbc:sqlserver://192.168.6.8\\datos65:9205;databaseName=Avances;";
    String drive = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     // Declaramos los sioguientes objetos
     Connection conexion = null;
@@ -77,7 +77,62 @@ public class Avances {
         
         return u;
     }
-     public ArrayList<String> searchstoppair(String f1, String f2,ArrayList<String> arr) throws ClassNotFoundException, SQLException {
+    
+       public void dateupdate(ArrayList arr,String fecha) throws ClassNotFoundException, SQLException {
+           int cont=0;
+        String query = "select id_prog from programa where ultima_fecha is NULL";
+        Statement smt;
+        ResultSet df;
+        abrir();
+        smt = conexion.createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {
+            //System.out.println(arr.get(0));
+            for(int i =arr.size()-1;i>=0;i--){
+            if(cont ==2){
+                
+                    System.out.println(df.getString("id_prog")+"/"+arr.get(i)+"/"+arr.get(i+1)+"/"+arr.get(i+2));
+                
+            String fechas= dateupdatebusca(arr,i,df.getInt("id_prog"));
+                if(!fechas.equals(" ")){
+                    Updatedate(Integer.parseInt(df.getString("id_prog")),fechas);
+                    System.out.println("Actualiza: ultfecha="+fechas+" id="+df.getString("id_prog"));
+                    cont=arr.size();
+                }else{
+                    cont =0;
+                }
+           }else{
+                cont++;
+           }
+           }
+            cont=0;
+        }
+        
+        df.close();
+        smt.close();
+        
+    }
+        public String dateupdatebusca(ArrayList arr,int i,int id) throws ClassNotFoundException, SQLException {
+        int cont=0;
+        String fecha=" ";
+        String query = "select "+arr.get(i+1)+" from avance where "+arr.get(i)+" != 0 and id_prog="+id;
+        System.out.println(query);
+        Statement smt;
+        ResultSet st;
+        abrir();
+//        System.out.println(arr.get(i)+"/"+arr.get(i+1)+"/"+arr.get(i+2));
+//        System.out.println(query);
+        smt = conexion.createStatement();
+        st = smt.executeQuery(query);
+        while (st.next()) {
+            fecha=st.getString(""+arr.get(i+1));
+        }
+        
+        st.close();
+        smt.close();
+        return fecha;
+    }
+    public ArrayList<String> searchstoppair(String f1, String f2,ArrayList<String> arr) throws ClassNotFoundException, SQLException {
         
         String query = "SELECT DISTINCT id, lote, prog, fecha, depar\n" +
 "FROM log_lote\n" +
@@ -471,6 +526,7 @@ public class Avances {
         arr.add(rs.getString("combinacion"));
         arr.add(rs.getString("corrida"));
         arr.add(rs.getString("lote"));
+        arr.add(rs.getString("statuto"));
         }
         for(int i =0; i<arr.size();i++){
             System.out.println(arr.get(i));
@@ -481,12 +537,12 @@ public class Avances {
         }
     return arr;
     }
-    public ArrayList<String> getprog(int lote) throws SQLException, ClassNotFoundException{
+    public ArrayList<String> getprog(int lote,int mes) throws SQLException, ClassNotFoundException{
     ArrayList<String> arr= new ArrayList<>();
          Statement st;
         ResultSet rs;
         int id=0;
-        String query = "SELECT max(id_prog) as id_prog FROM programa where statuto != 'COMPLETO' and lote="+lote;
+        String query = "SELECT max(id_prog) as id_prog FROM programa where mes="+mes+" and statuto != 'COMPLETO' and lote="+lote;
         abrir();
         st = conexion.createStatement();
         rs = st.executeQuery(query);
@@ -499,7 +555,7 @@ public class Avances {
            
             System.out.println("Soy cero :(");
         }else{
-            query="select * from programa where id_prog="+id;
+            query="select * from programa where mes="+mes+" and id_prog="+id;
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while(rs.next()){
@@ -660,11 +716,11 @@ public class Avances {
         cerrar();
         return flag;
     }  
-    public ArrayList<String> getallprog(ArrayList<String> arr,String lote) throws ClassNotFoundException, SQLException {
+    public ArrayList<String> getallprog(ArrayList<String> arr,String lote,int mes) throws ClassNotFoundException, SQLException {
         int prog=0;
         Statement st;
         ResultSet rs;
-        String query = "select prog from programa where statuto !='COMPLETO' and lote ="+Integer.parseInt(lote);
+        String query = "select prog from programa where mes="+mes+" and statuto !='COMPLETO' and lote ="+Integer.parseInt(lote);
         System.out.println(query+"+");
         abrir();
         st = conexion.createStatement();
@@ -672,7 +728,7 @@ public class Avances {
         while (rs.next()) {
             prog=rs.getInt("prog");
         }
-        query ="select * from programa where prog="+prog;
+        query ="select * from programa where mes="+mes+" and prog="+prog;
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while(rs.next()){
@@ -684,6 +740,7 @@ public class Avances {
         arr.add(rs.getString("corrida"));
         arr.add(rs.getString("mes"));
         arr.add(rs.getString("statuto"));
+        arr.add(rs.getString("ultima_fecha"));
         }
         for(int i=0;i<arr.size();i++){
             System.out.println("contenido: "+arr.get(i));
@@ -702,7 +759,7 @@ public class Avances {
         try {
             abrir();
             conexion.setAutoCommit(false);
-            String s = "insert into programa values(" + p.getPrograma() + "," + p.getLote() + "," + p.getEstilo() + "," + p.getPares() + ",'" + p.getCombinacion() + "','" + p.getCorrida() + "'," + p.getMes() + ",'" + p.getFechae() + "','NO TERMINADO','" + p.getCodigo() + "')";
+            String s = "insert into programa values(" + p.getPrograma() + "," + p.getLote() + "," + p.getEstilo() + "," + p.getPares() + ",'" + p.getCombinacion() + "','" + p.getCorrida() + "'," + p.getMes() + ",'" + p.getFechae() + "','NO TERMINADO','" + p.getCodigo() + "','"+p.getFecha()+"')";
             st = conexion.prepareStatement(s);
             st.executeUpdate();
             //-----------------------------------
@@ -798,7 +855,7 @@ public class Avances {
         }
         return retorno;
     }
-    public void avances(String a, String fecha, String m, ArrayList<String> arr, int k, int tamano) throws SQLException{
+    public void avances(String a, String fecha, String m, ArrayList<String> arr, int k, int tamano, String f) throws SQLException{
     PreparedStatement st = null;
         try {// realizar avances
             abrir();
@@ -815,7 +872,7 @@ public class Avances {
             st.executeUpdate();
              conexion.commit();
             }else{
-              modiavancestatus(arr,k,a);
+              modiavancestatus(arr,k,a,f,m.charAt(0));
             }
            st.close();
         } catch (Exception e) {
@@ -827,12 +884,32 @@ public class Avances {
             }
         }    
     }
-    public void modiavancestatus(ArrayList<String> arr, int k,String a){
+    public void modiavancestatus(ArrayList<String> arr, int k,String a,String fechas,char maq){
     PreparedStatement st = null;
         try{//modificar status de programa
              abrir();
             conexion.setAutoCommit(false);
-            String s = "update programa set statuto='"+arr.get(k).toUpperCase()+"' where id_prog="+a;
+            String s = "update programa set statuto='"+arr.get(k).toUpperCase()+" "+maq+"', ultima_fecha='"+fechas+"' where id_prog="+a;
+            st = conexion.prepareStatement(s);
+            st.executeUpdate();
+            System.out.println("Status modificado");
+            conexion.commit();
+            st.close();
+    }catch(Exception e){
+        Logger.getLogger(Avances.class.getName()).log(Level.SEVERE, null, e);
+            try {
+                conexion.rollback();
+            } catch (Exception o) {
+                System.out.println(o.getMessage());
+            }
+    }
+    }
+    public void modiavancestatus(ArrayList<String> arr, int k,String a,String fechas,String banda,String maqbanda){
+    PreparedStatement st = null;
+        try{//modificar status de programa
+             abrir();
+            conexion.setAutoCommit(false);
+            String s = "update programa set statuto='"+arr.get(k).toUpperCase()+" "+banda+" "+maqbanda+"', ultima_fecha='"+fechas+"' where id_prog="+a;
             st = conexion.prepareStatement(s);
             st.executeUpdate();
             System.out.println("Status modificado");
@@ -868,7 +945,27 @@ public class Avances {
                 System.out.println(o.getMessage());
             }
     }
-    }  
+    }
+     public void Updatedate(int id, String fecha) throws ClassNotFoundException, SQLException {
+            PreparedStatement st = null;
+            try {
+                abrir();
+                conexion.setAutoCommit(false);
+                String s = "update programa set ultima_fecha='"+fecha+"' where id_prog="+id;
+                st = conexion.prepareStatement(s);
+                st.executeUpdate();
+                conexion.commit();
+            } catch (Exception e) {
+                Logger.getLogger(Avances.class.getName()).log(Level.SEVERE, null, e);
+                try {
+                    conexion.rollback();
+                } catch (Exception o) {
+                    System.out.println(o.getMessage());
+
+                }
+            }
+            st.close();
+    }
     public void modiavancestatus(String a){
     PreparedStatement st = null;
         try{//modificar status de programa ultimo departamento
