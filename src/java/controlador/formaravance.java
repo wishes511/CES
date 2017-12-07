@@ -320,7 +320,6 @@ response.sendRedirect("index.jsp");
                         }
                         if (av.verificaraiz(array, k, a)) {// inicio de verificacion del usuario con la lista
                             if (av.checkback(array, k, a) || usuario.equals("preacabado")) {//verifica el departamento anterior
-
                                 if (usuario.equals("preacabado")) {//solo si el usuario es preacabado
                                     if (av.checkmontado(array, k, a)) {// verifica avance en montado
 //                                        out.println("<script type=\"text/javascript\">");
