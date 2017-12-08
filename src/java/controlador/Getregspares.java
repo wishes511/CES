@@ -101,10 +101,12 @@ public class Getregspares extends HttpServlet {
                 if (uso.equals("fechas")) {
 
                     int con = 0;
+                    
                     if (maq.equals("TODOS")) {
                         arr = a.searchfecha(f1, f2);
                         banda = a.getbanda(f1, f2);
                     } else {
+                        System.out.println(maq);
                         maq = String.valueOf(maq.charAt(0));
                         banda = a.getbanda(f1, f2, maq);
                         arr = a.searchfecha(f1, f2, maq);
@@ -113,7 +115,7 @@ public class Getregspares extends HttpServlet {
 
                     System.out.println("mmmm " + arr.size() + "/ banda " + banda.size());
                     while (con < 9) {
-                        System.out.println("mmmmta " + con);
+                       // System.out.println("mmmmta " + con);
                         if (depa.get(con).equals("montado")) {
                             switch (banda.size()) {
                                 case 6:
@@ -140,6 +142,7 @@ public class Getregspares extends HttpServlet {
                 }else if(uso.equals("detalle")){
                     System.out.println("Detalle");
                     int cont =0;
+                    String maquila = request.getParameter("maq");
                 String dep = request.getParameter("dep");
                 depa=avan.alldepcharge(arr);
                 for(int i =0;i<depa.size();i++){
@@ -148,7 +151,12 @@ public class Getregspares extends HttpServlet {
                         i=depa.size();
                     }
                 }
+                if(maquila.equals("TODOS")){
                 arr=a.getdetalledep(f1, f2, arr, (cont+1));
+                }else{
+                arr=a.getdetalledep(f1, f2, arr, (cont+1),String.valueOf(maquila.charAt(0)));
+                }
+                
                 cont=0;
                 int pares =0;
                 for(int i =0;i<arr.size();i++){
