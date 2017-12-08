@@ -136,7 +136,7 @@ public class Avances {
         
         String query = "SELECT DISTINCT id, lote, prog, fecha, depar\n" +
 "FROM log_lote\n" +
-"WHERE (fecha between '"+f1+"' and '"+f2+"') AND (prog <> 1) AND (depar <> 'mich1') AND (depar <> 'mich2') AND (depar <> 'mich2') AND (depar <> 'mich3') AND (depar <> 'mich')\n" +
+"WHERE (fecha between '"+f1+"' and '"+f2+"') AND (prog <> -1) AND (depar <> 'mich1') AND (depar <> 'mich2') AND (depar <> 'mich2') AND (depar <> 'mich3') AND (depar <> 'mich')\n" +
 "GROUP BY depar, prog, fecha, lote, id\n" +
 "ORDER BY prog ";
         Statement smt;
@@ -343,6 +343,7 @@ public class Avances {
             System.out.println(rs.getString("corte"));
           corte+= rs.getInt("corte");
         }//fin corte
+        System.out.println(query);
         query = " select SUM(p.npares) as 'precorte'\n" +
         " from programa p join avance a on a.id_prog = p.id_prog\n" +
         " where  a.precormaq='"+maq+"' and a.fechaprecor between '"+f1+"' and '"+f2+"'\n";
@@ -352,6 +353,7 @@ public class Avances {
             System.out.println(rs.getString("precorte"));
           precorte+= rs.getInt("precorte");
         }//fin precorte
+        System.out.println(query);
         query = " select SUM(p.npares) as 'pespunte'\n" +
         " from programa p join avance a on a.id_prog = p.id_prog\n" +
         " where a.pesmaq='"+maq+"' and a.fechapes between '"+f1+"' and '"+f2+"'\n";
@@ -362,6 +364,7 @@ public class Avances {
            
           pes+= rs.getInt("pespunte");
         }//fin pespunte
+        System.out.println(query);
         query = " select SUM(p.npares) as 'deshebrado'\n" +
         " from programa p join avance a on a.id_prog = p.id_prog\n" +
         " where a.desmaq='"+maq+"' and a.fechades between '"+f1+"' and '"+f2+"'\n";
@@ -438,11 +441,12 @@ public class Avances {
             System.out.println(id);
         }
         
-        System.out.println(query);
+        System.out.println(query+"-"+id);
         rs.close();
         st.close();
         return id;
     }
+    // modificar detalle !!!! 14:31
     public ArrayList<String> getdetalledep(String f1, String f2, ArrayList<String> arr, int cont) throws ClassNotFoundException, SQLException {
         ArrayList<String> array= new ArrayList<>();
         Statement st;
@@ -451,7 +455,7 @@ public class Avances {
 " where a."+arr.get(cont)+" between '"+f1+"' and '"+f2+"'\n" +
 " order by prog";
                 
-        System.out.println(query);
+        //System.out.println(query);
         abrir();
         st = conexion.createStatement();
         rs = st.executeQuery(query);
@@ -464,8 +468,35 @@ public class Avances {
             array.add((rs.getString("mes")));
             array.add((rs.getString("combinacion")));
             array.add((rs.getString("statuto")));
-            
         }
+        System.out.println("detalle :"+query);
+        rs.close();
+        st.close();
+        return array;
+    }
+        public ArrayList<String> getdetalledep(String f1, String f2, ArrayList<String> arr, int cont,String maq) throws ClassNotFoundException, SQLException {
+        ArrayList<String> array= new ArrayList<>();
+        Statement st;
+        ResultSet rs;
+        String query = "select p.prog,p.lote,p.estilo,p.npares,p.corrida,p.mes,p.combinacion,p.statuto from programa p join avance a on a.id_prog = p.id_prog\n" +
+" where a."+arr.get(cont+1)+"='"+maq+"' and a."+arr.get(cont)+" between '"+f1+"' and '"+f2+"'\n" +
+" order by prog";
+                
+        //System.out.println(query);
+        abrir();
+        st = conexion.createStatement();
+        rs = st.executeQuery(query);
+        while (rs.next()) {
+            array.add((rs.getString("prog")));
+            array.add((rs.getString("lote")));
+            array.add((rs.getString("estilo")));
+            array.add((rs.getString("npares")));
+            array.add((rs.getString("corrida")));
+            array.add((rs.getString("mes")));
+            array.add((rs.getString("combinacion")));
+            array.add((rs.getString("statuto")));
+        }
+        System.out.println("detalle :"+query);
         rs.close();
         st.close();
         return array;
@@ -501,6 +532,7 @@ public class Avances {
         arr.add(rs.getString("montado"));
         arr.add(rs.getString("pares"));
         }
+        System.out.println(query);
     rs.close();
     st.close();
     cerrar();
@@ -600,7 +632,7 @@ public class Avances {
        if(flag){
        }else{
            p.setLote(0);
-           p.setPrograma(1);
+           p.setPrograma(-1);
        }
         
 
@@ -926,12 +958,16 @@ public class Avances {
     }
     public void modiprogram(Programa p){
     PreparedStatement st = null;
-        try{//modificar status de programa
+        try{//modificar programa y avance
              abrir();
             conexion.setAutoCommit(false);
             String s = "update programa set prog="+p.getPrograma()+",lote="+p.getLote()+",estilo="+p.getEstilo()+
                        ",npares="+p.getPares()+",combinacion='"+p.getCombinacion()+"',corrida='"+p.getCorrida()+"',mes="+
                        p.getMes()+",fechaentrega='"+p.getFechae()+"',codigo='"+codigo(p.getCodigo())+"' where id_prog="+p.getId();
+            st = conexion.prepareStatement(s);
+            st.executeUpdate();
+            System.out.println("programa modificado/"+s);
+            s = "update avance set lote="+p.getLote()+" where id_prog="+p.getId();
             st = conexion.prepareStatement(s);
             st.executeUpdate();
             System.out.println("programa modificado/"+s);

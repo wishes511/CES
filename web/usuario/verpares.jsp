@@ -32,7 +32,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="refresh" content="800">
+        <meta http-equiv="refresh" content="1200">
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ver Pares</title>
@@ -115,6 +115,7 @@
                                     <br><div class="col-sm-offset-5 col-sm-2">
                                         <select class="form-control" name="maq" id="maq" onclick="okas()">
                                             <option class="form-control">TODOS</option>
+                                            <option class="form-control">CRUZ</option>
                                             <option class="form-control">PLANTA</option>
                                             <option class="form-control">LEON</option>
                                             <option class="form-control">ESTEBAN</option>
@@ -237,6 +238,7 @@
                 var depo=dep;
                 var f1 = $('#f1').val();
                 var f2 = $('#f2').val();
+                var maq= $('#maq').val();
                 var ventana = document.getElementById("miVentana");
                 //ventana.style.marginTop = "100px";
                 //ventana.style.left = ((document.body.clientWidth) / 2) +  "px";
@@ -245,7 +247,7 @@
                 var uso="detalle";
                 $.ajax({
                     type: 'post',
-                    data: {f1: f1, f2: f2,uso:uso,dep:depo},
+                    data: {f1: f1, f2: f2,uso:uso,dep:depo,maq:maq},
                     url: '../Getregspares',
                     success: function (result) {
                         $('#llenadodetalle').html(result);
