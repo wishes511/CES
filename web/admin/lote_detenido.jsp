@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Verpares
-    Created on : 05/10/2017, 02:01:15 PM
+    Document   : lote_detenido.jsp
+    Created on : 29/11/2017, 10:01:15 AM
     Author     : mich
 --%>
 <%@page import="java.sql.ResultSet"%>
@@ -15,7 +15,7 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 
-    if (usuario != null && tipos != null && tipos.equals("USUARIO")) {
+    if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
 
     } else {
         response.sendRedirect("../index.jsp");
@@ -32,7 +32,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="refresh" content="1200">
+        <meta http-equiv="refresh" content="800">
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ver Pares</title>
@@ -77,20 +77,31 @@
             <nav class="navbar navbar-default">
 
                 <ul class="nav navbar-nav nav-pills">
+                    <li><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li>
+                    <li class="dropdown ln active">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
+                            Usuario<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="#90" role="menu">
 
-                    <li>
-                        <a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a>
+                            <li class="ln"><a href="buscalote.jsp">Busqueda</a></li>
+                            <li class="ln active"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
+                            <li class="ln"><a href="verpares.jsp">Ver pares</a></li>
+                            
+                        </ul>
                     </li>
-                   <li class="ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
-                    <li class="active ln"><a href="verpares.jsp">Ver Pares</a></li>  
+                    <li class="ln"><a  href="../Dateupdate">actualizar fechas</a></li>
                     <li class="ln"><a href="../Cierresesion">Salir</a></li>
                 </ul>
 
             </nav>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12 " >
+                    <div class="col-md-12 " align="">
+                        <div align="center"> <label class="titulos espacio-md-down">Lotes con desfase de departamento</label><br></div>
+                       
                         <div class="col-sm-offset-3" >
+                            
                             <form name="forma" >
                                 <div class="col-sm-3" align="center">
                                     <label class="ln">Inicial</label><input class="form-control input-sm chat-input ln" type="text" name="f1" id="f1" value="<%=fechac%>" onchange="okas()" maxlength="10"  required/>
@@ -111,28 +122,12 @@
                         </div>
                     </div>
                 </div>
-                                 <div class="row">
-                                    <br><div class="col-sm-offset-5 col-sm-2">
-                                        <select class="form-control" name="maq" id="maq" onclick="okas()">
-                                            <option class="form-control">TODOS</option>
-                                            <option class="form-control">CRUZ</option>
-                                            <option class="form-control">INOCENCIO</option>
-                                            <option class="form-control">LEON</option>
-                                            <option class="form-control">ESTEBAN</option>
-                                            <option class="form-control">PLANTA</option>
-                                        </select>
-                                        <div class="col-sm-2">
-                                            
-                                    </div>
-                                    </div>
-                                    
-                                </div>
+                                 
                 <div class="row">
                     <div class=" esp1 ln" align="center">
-                        <br><button type="submit" name="envio" class="btn btn-success ln" id="envio" value="Ver Pares" onclick="okas()">Ver Pares</button>
-                        <a target="_blank"><button type="submit" name="envio" class="btn btn-success ln" id="envio" value="Generar Reporte" onclick="avances()">Generar reporte</button></a>
-                        <button name="completo" class="btn btn-success ln" id="completo" value="" onclick="okas1()" style="display: none">Lote completo</button>
-                        <div><input type="checkbox" name="detallado" id="detallado" value="detallado"  />Detallado</div>
+                        <br><button type="submit" name="envio" class="btn btn-success ln" id="envio" value="Ver Pares" onclick="okas()">Ver Lotes</button>
+                        <a target="_blank" style="display: none"><button type="submit" name="envio" class="btn btn-success ln" id="envio" value="Generar Reporte" onclick="avances()">Generar reporte</button></a>
+                        
                     </div>
                 </div>
 
@@ -149,8 +144,11 @@
                     <div class="col-md-12" style="overflow: auto;">
                         <table  id="tablesorter-demo" class="table table-hover table-responsive table-condensed table-hover jumbis" style="overflow: auto;">
                             <thead class="redondeado jumbis bodyheadpares fondos " style="overflow: auto;">
+                            <td class="ln">Programa</td>
+                            <td class="ln">Lote</td>
+                            <td class="ln">Fecha</td>
                             <td class="ln">Departamento</td>
-                            <td class="ln">Pares Reportados</td>
+                            
                             </thead>
                             <tbody id="llenar" class="bodypares" style="overflow: auto;">
                             </tbody> 
@@ -177,48 +175,19 @@
                 } else {
                     var pro = $('#f1').val();
                     var pro1 = $('#f2').val();
-                    var maq=$('#maq').val();
                     var uso = "fechas";
                     $.ajax({
                         type: 'post',
-                        data: {f1: pro, f2: pro1,maq:maq, uso: uso},
-                        url: '../Getregspares',
+                        data: {f1: pro, f2: pro1, uso: uso},
+                        url: '../Getstopairs',
                         success: function (result) {
                             $('#llenar').html(result);
-                            var pro = $('#f1').val();
-                    var pro1 = $('#f2').val();
-                    var maq=$('#maq').val();
-                    var uso = "completo";
-                                
+   
                         }
                     });
                 }
             }
-             function okas1() {
-                var valor = $('#f1').val();
-                var valor1 = $('#f2').val();
-                if (!(/^\d{2}|\d{1}\-\d{2}\-\d{4}\$/i.test(valor)) && !(/^\d{2}|\d{1}\-\d{2}\-\d{4}\$/i.test(valor1))) {
-                    alert("fecha invalida invalido");
-                    //document.forma.f1.focus();
-                    document.getElementById("f1").value = "<%=fechac%>";
-                    document.getElementById("f2").value = "<%=fechac%>";
-                    return 0;
-                } else {
-                    var pro = $('#f1').val();
-                    var pro1 = $('#f2').val();
-                    var maq=$('#maq').val();
-                    var uso = "completo";
-                    $.ajax({
-                        type: 'post',
-                        data: {f1: pro, f2: pro1,maq:maq, uso: uso},
-                        url: '../Getregspares',
-                        success: function (result1) {
-                            document.getElementById("contener").innerHTML=result1;
-                            //$('#contener').html(result1);
-                        }
-                    });
-                }
-            }
+             
 
             function avances() {
                 var f1 = $('#f1').val();
@@ -239,7 +208,6 @@
                 var depo=dep;
                 var f1 = $('#f1').val();
                 var f2 = $('#f2').val();
-                var maq= $('#maq').val();
                 var ventana = document.getElementById("miVentana");
                 //ventana.style.marginTop = "100px";
                 //ventana.style.left = ((document.body.clientWidth) / 2) +  "px";
@@ -248,7 +216,7 @@
                 var uso="detalle";
                 $.ajax({
                     type: 'post',
-                    data: {f1: f1, f2: f2,uso:uso,dep:depo,maq:maq},
+                    data: {f1: f1, f2: f2,uso:uso,dep:depo},
                     url: '../Getregspares',
                     success: function (result) {
                         $('#llenadodetalle').html(result);

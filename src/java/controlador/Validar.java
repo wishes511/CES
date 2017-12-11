@@ -33,6 +33,7 @@ public class Validar extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession objSesion = request.getSession(true);
+        try {
         String nombre = request.getParameter("nombrelog");
         String contrasena = request.getParameter("contrasenalog");
         //System.out.println("," + nombre + "," + contrasena + ",");
@@ -81,7 +82,7 @@ public class Validar extends HttpServlet {
         Usuario u = new Usuario();
         // Consultar Base de datos
         Avances a = new Avances();
-        try {
+        
             u = a.buscar(nombre, contrasena);
             System.out.println(u.getTipo());
             
@@ -139,13 +140,13 @@ public class Validar extends HttpServlet {
                         break;
                 }
             }
+        
+        }
         } catch (SQLException ex) {
             System.out.println(ex+" error "+ex.getMessage());
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Validar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        }
-        
 
         // Redireccionar a una pagina de respuesta
     }

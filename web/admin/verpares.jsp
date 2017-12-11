@@ -15,7 +15,7 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 
-    if (usuario != null && tipos != null && tipos.equals("USUARIO")) {
+    if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
 
     } else {
         response.sendRedirect("../index.jsp");
@@ -77,12 +77,20 @@
             <nav class="navbar navbar-default">
 
                 <ul class="nav navbar-nav nav-pills">
+                    <li><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li>
+                    <li class="dropdown ln active">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
+                            Usuario<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="#90" role="menu">
 
-                    <li>
-                        <a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a>
+                            <li class="ln"><a href="buscalote.jsp">Busqueda</a></li>
+                            <li class="ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
+                            <li class="ln active"><a href="">Ver pares</a></li>
+                            
+                        </ul>
                     </li>
-                   <li class="ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
-                    <li class="active ln"><a href="verpares.jsp">Ver Pares</a></li>  
+                    <li class="ln"><a  href="../Dateupdate">actualizar fechas</a></li>
                     <li class="ln"><a href="../Cierresesion">Salir</a></li>
                 </ul>
 

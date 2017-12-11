@@ -102,7 +102,7 @@ private String codigo(String estilo){
         String tiposs = (String) objSesion.getAttribute("tipo");
         System.out.println(tiposs);
         if (usuario != null && tiposs != null ) {
-            if(tiposs.equals("INTERMEDIO") || tiposs.equals("USUARIO")){
+            if(tiposs.equals("INTERMEDIO") || tiposs.equals("USUARIO") || tiposs.equals("ADMIN")){
             }else{
                 response.sendRedirect("../index.jsp");
             }

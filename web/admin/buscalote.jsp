@@ -17,7 +17,7 @@
     //out.print(carrito.size());
     // out.println("" + tipos+"/"+ids);
     if (usuario != null && tipos != null) {
-        if(tipos.equals("USUARIO")){
+        if(tipos.equals("ADMIN")){
         }else
             response.sendRedirect("../index.jsp");
     } else {
@@ -48,6 +48,7 @@
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+
         <script>
            
             $(document).ready(function () {
@@ -59,14 +60,24 @@
     <body class="body1">
         <div class="container-fluid">
                 <nav class="navbar navbar-default">
-                
                 <ul class="nav navbar-nav nav-pills">
-                    <a class="navbar-brand" href=""><img src="../images/home.png" class="" width="25"></a>
-                    <li class="ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
-                    <li class="ln"><a href="verpares.jsp">Ver Pares</a></li>                 
+                    <li><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li>
+                    <li class="dropdown ln active">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
+                            Usuario<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="#90" role="menu">
+
+                            <li class="ln active"><a href="">Busqueda</a></li>
+                            <li class="ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
+                            <li class="ln"><a href="verpares.jsp">Ver pares</a></li>
+                            
+                        </ul>
+                    </li>
+                    <li class="ln"><a  href="../Dateupdate">actualizar fechas</a></li>
                     <li class="ln"><a href="../Cierresesion">Salir</a></li>
                 </ul>
-                    <div style="float:right" class="nav nav-pills">
+                <div style="float:right" class="nav nav-pills">
                     <li > <label class="ln">Online: <%=usuario%></label></li>
                 </div>
             </nav>

@@ -45,7 +45,7 @@
         <script type="text/javascript" src="../js/bootstrap.js"></script>
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
-        <script type="text/javascript" src="http://librosweb.es/ejemplos/bootstrap_3/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <script>
             $(document).ready(function () {
                 document.getElementById("maquila").focus();
@@ -62,10 +62,21 @@
             
             <nav class="navbar navbar-default">
                 <ul class="nav navbar-nav nav-pills">
-                    <li><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li>
-                    <li class="active"><a  href="">Avance General</a></li>
-                    <li class=""><a  href="../Dateupdate">actualizar fechas</a></li>
-                    <li><a href="../Cierresesion">Salir</a></li>
+                    <li><a class="navbar-brand" href=""><img src="../images/home.png" class="" width="25"></a></li>
+                    <li class="dropdown ln">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
+                            Usuario<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="#90" role="menu">
+
+                            <li class="ln"><a href="buscalote.jsp">Busqueda</a></li>
+                            <li class="ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
+                            <li class="ln"><a href="verpares.jsp">Ver pares</a></li>
+                            
+                        </ul>
+                    </li>
+                    <li class="ln"><a  href="../Dateupdate">actualizar fechas</a></li>
+                    <li class="ln"><a href="../Cierresesion">Salir</a></li>
                 </ul>
                 <div style="float:right" class="nav nav-pills">
                     <li > <label class="ln">Online: <%=usuario%></label></li>
@@ -119,7 +130,7 @@
                                             out.print("<option>montado</option>");
                                             out.print("<option>prodt</option>");
                                             %>
-                                        </select><br><br>                
+                                        </select>            
                             </div></div>
                     <%
                         
@@ -153,8 +164,8 @@
                                         </select><br><br>
                             </div>
                                 </div>
-                             <br><br>
-                             <div>
+                             
+                             <div class=" col-sm-12">
                              <label class="ln">Codigo:</label>
                              <input type="text" name="codigo" id="codigo" class="form-control" onchange="okas()" required><br>
                              <input type="submit" name="ok" id="ok" class="btn btn-danger" onclick="okas()">
