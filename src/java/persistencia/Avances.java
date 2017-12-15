@@ -829,6 +829,10 @@ public class Avances {
     }
  public void loglote(String lote, String prog, String fecha,String depar, String id) throws ClassNotFoundException, SQLException {
      String oldstatus="";
+     
+     if(id.equals("0")){
+     
+     }else{
      Statement st;
         ResultSet rs;
         String query = "select statuto from programa where id_prog="+id;
@@ -841,7 +845,9 @@ public class Avances {
         }
         System.out.println(oldstatus);
      
-        PreparedStatement smt = null;
+       
+     }
+          PreparedStatement smt = null;
         try {
            abrir();
            conexion.setAutoCommit(false);

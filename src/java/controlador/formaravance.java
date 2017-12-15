@@ -436,7 +436,7 @@ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fecha
                 pr=av.getprogcode(b);
                 // verifica que nos haya devuelto un id distinto a cero
                  if (b == 0) {
-                     av.loglote(codigo, String.valueOf(pr.getPrograma()), fechac,usuario+banda,a);
+                     av.loglote(codigo, String.valueOf(pr.getPrograma()), fechac,usuario+banda,String.valueOf(b));
                     out.println("<label>LOTE NO ENCONTRADO, VUELVA A INTERNTARLO O LLAME A UN ADMINISTRADOR</label>");
 
                 } else {

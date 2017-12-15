@@ -169,7 +169,7 @@
                              <label class="ln">Codigo:</label>
                              <input type="text" name="codigo" id="codigo" class="form-control" onchange="okas()" required><br>
                              <input type="submit" name="ok" id="ok" class="btn btn-danger" onclick="okas()">
-                             <button class="btn btn-success" id="ver" name="ver" onclick="buscalote()">Busca Codigo</button>
+                             
                              </div>  
                     </div>
                     </div>
@@ -231,19 +231,7 @@
                     }
                 });
                     }
-                    function buscalote(){
-                        var f1=$('#codigo').val();
-                        var uso ="check";
-                $.ajax({
-                type: 'post',
-                data: {f1: f1, uso: uso},
-                url: '../Getregslote',
-                success: function (result) {
-                    $('#llena').html(result);
-                   
-                }
-            });
-                    }
+                    
                 </script>
     </body>
 </html>
