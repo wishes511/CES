@@ -126,7 +126,7 @@
                 <div class="row">
                     <div class=" esp1 ln" align="center">
                         <br><button type="submit" name="envio" class="btn btn-success ln" id="envio" value="Ver Pares" onclick="okas()">Ver Lotes</button>
-                        <a target="_blank" style="display: none"><button type="submit" name="envio" class="btn btn-success ln" id="envio" value="Generar Reporte" onclick="avances()">Generar reporte</button></a>
+                        <a target="_blank" ><button type="submit" name="envio" class="btn btn-success ln" id="envio" value="Generar Reporte" onclick="reporte_lotes()">Generar reporte</button></a>
                         
                     </div>
                 </div>
@@ -148,6 +148,7 @@
                             <td class="ln">Lote</td>
                             <td class="ln">Fecha</td>
                             <td class="ln">Departamento</td>
+                            <td class="ln">Status anterior</td>
                             
                             </thead>
                             <tbody id="llenar" class="bodypares" style="overflow: auto;">
@@ -189,18 +190,10 @@
             }
              
 
-            function avances() {
+function reporte_lotes() {
                 var f1 = $('#f1').val();
                 var f2 = $('#f2').val();
-                var d=$('#detallado').val();
-                if(document.getElementById("detallado").checked){
-                    d="detalle";
-                }else{
-                    d="vacio";
-                }
-                
-                var maq=$('#maq').val();
-                location = 'avancespares.jsp?f1=' + f1 + '&f2=' + f2+'&maq='+maq;
+                location = 'lotes_detenidos.jsp?f1=' + f1 + '&f2=' + f2;
             }
             
             function mostrarVentanas(dep)

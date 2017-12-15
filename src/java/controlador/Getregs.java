@@ -247,7 +247,7 @@ private String codigo(String estilo){
                 }
             }else if(uso.equals("buscarp")){
                 Avances a = new Avances();
-                if(a.buscarprogram(f)){
+                if(a.buscarprogram(f,mes1)){
                     System.out.println("entre a ok");
                     out.print("ok");
                 }else{

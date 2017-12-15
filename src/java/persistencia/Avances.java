@@ -134,11 +134,11 @@ public class Avances {
     }
     public ArrayList<String> searchstoppair(String f1, String f2,ArrayList<String> arr) throws ClassNotFoundException, SQLException {
         
-        String query = "SELECT DISTINCT id, lote, prog, fecha, depar\n" +
+        String query = "SELECT DISTINCT id, lote, prog, fecha, depar, dep_anterior\n" +
 "FROM log_lote\n" +
 "WHERE (fecha between '"+f1+"' and '"+f2+"') AND (prog <> -1) AND (depar <> 'mich1') AND (depar <> 'mich2') AND (depar <> 'mich2') AND (depar <> 'mich3') AND (depar <> 'mich')\n" +
-"GROUP BY depar, prog, fecha, lote, id\n" +
-"ORDER BY prog ";
+"GROUP BY fecha,depar, prog, lote, id, dep_anterior\n" +
+"ORDER BY fecha ";
         Statement smt;
         ResultSet df;
         abrir();
@@ -150,16 +150,17 @@ public class Avances {
             arr.add(df.getString("lote"));
             arr.add(df.getString("fecha"));
             arr.add(df.getString("depar"));
+            arr.add(df.getString("dep_anterior"));
         }
-        //System.out.println(query+"/array size "+arr.size());
+        System.out.println(query);
         df.close();
         smt.close();
         
         return arr;
     }
-    public boolean buscarprogram(String prog) throws ClassNotFoundException, SQLException {
+    public boolean buscarprogram(String prog,int mes) throws ClassNotFoundException, SQLException {
         boolean u =false;
-        String query = "select id_prog from programa where statuto !='COMPLETO' and prog="+Integer.parseInt(prog);
+        String query = "select id_prog from programa where statuto !='COMPLETO' and prog="+Integer.parseInt(prog)+" and mes="+mes;
         Statement smt;
         ResultSet df;
         abrir();
@@ -175,7 +176,7 @@ public class Avances {
     public int buscarprogramm(String prog) throws ClassNotFoundException, SQLException {
         int u =0;
          
-        String query = "select min(mes) as 'mes' from programa where statuto != 'COMPLETO' and prog="+Integer.parseInt(prog);
+        String query = "select max(mes) as 'mes' from programa where statuto != 'COMPLETO' and prog="+Integer.parseInt(prog);
        
         Statement smt;
         ResultSet df;
@@ -826,12 +827,25 @@ public class Avances {
         st.close();
         return p;
     }
- public void loglote(String lote, String prog, String fecha,String depar) throws ClassNotFoundException, SQLException {
+ public void loglote(String lote, String prog, String fecha,String depar, String id) throws ClassNotFoundException, SQLException {
+     String oldstatus="";
+     Statement st;
+        ResultSet rs;
+        String query = "select statuto from programa where id_prog="+id;
+        System.out.println(query+"+");
+        abrir();
+        st = conexion.createStatement();
+        rs = st.executeQuery(query);
+        while (rs.next()) {
+            oldstatus=rs.getString("statuto");
+        }
+        System.out.println(oldstatus);
+     
         PreparedStatement smt = null;
         try {
            abrir();
            conexion.setAutoCommit(false);
-        String s = "insert into log_lote values('"+lote+"','"+prog+"','"+fecha+"','1','"+depar+"')";
+        String s = "insert into log_lote values('"+lote+"','"+prog+"','"+fecha+"','1','"+depar+"','"+oldstatus+"')";
        smt = conexion.prepareStatement(s);
             smt.executeUpdate();
         //+++++++++++++++++
@@ -1130,6 +1144,7 @@ public class Avances {
            arr.add(rs.getString("fecha"));
            arr.add(rs.getString("statuto"));
            arr.add(rs.getString("depar"));
+           arr.add(rs.getString("dep_anterior"));
         }
         rs.close();
         st.close();

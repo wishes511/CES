@@ -283,7 +283,7 @@ response.sendRedirect("index.jsp");
 //                    //out.println("location='planta/index.jsp';");
 //                    out.println("</script>");
                     System.out.println("Entro a error");
-                    av.loglote(codigo, String.valueOf(pr.getPrograma()), fechac,usuario+banda);
+                    av.loglote(codigo, String.valueOf(pr.getPrograma()), fechac,usuario+banda,a);
                     out.println("<label>Lote inexistente, intentelo de nuevo</label>");
 
                 } else {
@@ -326,7 +326,7 @@ response.sendRedirect("index.jsp");
 //                                        out.println("alert('NO SE PUEDE REALIZAR AVANCE DE PREACABADO SI YA SE TIENE MONTADO, CONTACTE A UN ADMINISTRADOR.');");
 //                                     //   out.println("location='planta/index.jsp';");
 //                                        out.println("</script>");
- av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,usuario+banda);
+ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,usuario+banda,a);
                                         out.println("<label>No se puede realizar avance de preacabado si ya se tiene montado, Contacte a un administrador</label>");
                                     //    System.out.println("No puedes hacer preacabado si ya se ha hecho montado");
                                     } else {
@@ -353,7 +353,7 @@ response.sendRedirect("index.jsp");
 //                                        out.println("alert('FALTA AVANCE DEL DEPARTAMENTO DE INSPECCION DE CALIDAD');");
 //                                      //  out.println("location='planta/index.jsp';");
 //                                        out.println("</script>");
-av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,(usuario+banda));
+av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,(usuario+banda),a);
                                         out.println("<label>Falta Captura de Inspeccion de calidad</label>");
                                     }
                                 } else {
@@ -375,7 +375,7 @@ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fecha
 //                                out.println("alert('FALTA LA CAPTURA DE AVANCE DEL DEPARTAMENTO ANTERIOR');");
 //                              // out.println("location='planta/index.jsp';");
 //                                out.println("</script>");
-av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,usuario+banda);
+av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,usuario+banda,a);
                                 out.println("<label>Falta captura del departamento anterior</label>");
                               //  System.out.println("Gomene... falta el avance del departamento anterior :C");
                             }
@@ -436,7 +436,7 @@ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fecha
                 pr=av.getprogcode(b);
                 // verifica que nos haya devuelto un id distinto a cero
                  if (b == 0) {
-                     av.loglote(codigo, String.valueOf(pr.getPrograma()), fechac,usuario+banda);
+                     av.loglote(codigo, String.valueOf(pr.getPrograma()), fechac,usuario+banda,a);
                     out.println("<label>LOTE NO ENCONTRADO, VUELVA A INTERNTARLO O LLAME A UN ADMINISTRADOR</label>");
 
                 } else {
@@ -467,7 +467,8 @@ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fecha
 
                                 if (depmaquila.equals("preacabado")) {//solo si el usuario es preacabado
                                     if (av.checkmontado(array, k, a)) {
-                                        av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,usuario+banda);
+                                        
+                                        av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,usuario+banda,a);
                                         out.println("<label>No se puede realizar avance de preacabado si ya se tiene montado, Contacte a un administrador</label>");
                                     //    System.out.println("No puedes hacer preacabado si ya se ha hecho montado");
                                     } else {
@@ -486,7 +487,7 @@ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fecha
                                         av.modiavancestatus(array, k, a,fechac,charmaquila.charAt(0));
                                             out.println("<label>Avance Completo Exitosamente:)</label>");
                                     } else {// si aun no se tiene avance de inspeccion   
-                                        av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,usuario+banda);
+                                        av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,usuario+banda,a);
                                         out.println("<label>Falta Captura de Inspecciond de calidad</label>");
                                     }
                                 } else {
@@ -499,7 +500,7 @@ av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fecha
                                     }
                                 }
                             } else {
-                                av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,usuario+banda);
+                                av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac,usuario+banda,a);
                                 out.println("<label>Falta captura del departamento anterior</label>");
                             }
                         } else {

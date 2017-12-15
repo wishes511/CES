@@ -104,9 +104,9 @@ public class Getstopairs extends HttpServlet {
             arr=a.searchstoppair(f1, f2,arr);
             int cont =0;
             for(int i =0;i<arr.size();i++){
-                if(cont==4){                    
-                out.print("<tr class=ttd style=overflow:auto><td>"+arr.get(i-3)+"</td><td>"+arr.get(i-2)+"</td><td>"
-                             +arr.get(i-1)+"</td><td>"+arr.get(i)+"</td></tr>");
+                if(cont==5){                    
+                out.print("<tr class=ttd style=overflow:auto><td>"+arr.get(i-4)+"</td><td>"+arr.get(i-3)+"</td><td>"
+                             +arr.get(i-2)+"</td><td>"+arr.get(i-1)+"</td><td>"+arr.get(i)+"</td></tr>");
                     cont=0;
                 }else{
                 cont++;

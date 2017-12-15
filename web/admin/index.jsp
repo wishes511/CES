@@ -92,8 +92,8 @@
     int cont =0;
     out.print("<table class=table tablasize style=height:50\\%\\>");
     for(int i=0; i<list.size();i++){
-        if(cont==5){
-           out.print("<tr tablasize><td >"+list.get(i-4)+"</td><td>"+list.get(i-3)+"</td><td>"+list.get(i-2)+"</td><td>"+list.get(i)+"</td><td><a onclick=savelote("+list.get(i-5)+")><button class= btn-success >Ok</button></a></td><tr>");
+        if(cont==6){
+           out.print("<tr tablasize><td >"+list.get(i-5)+"</td><td>"+list.get(i-4)+"</td><td>"+list.get(i-3)+"</td><td>"+list.get(i-2)+"</td><td>"+list.get(i-1)+"</td><td>"+list.get(i)+"</td><td><a onclick=savelote("+list.get(i-6)+")><button class= btn-success >Ok</button></a></td><tr>");
            cont=0;
         }else{
          cont++;   

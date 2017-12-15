@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="928d2604-8dec-45b5-a958-861be187b7de">
+	<property name="ireport.zoom" value="1.464100000000001"/>
+	<property name="ireport.x" value="20"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="f1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="f2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT id, lote, prog, fecha, depar, dep_anterior
+FROM log_lote
+WHERE (fecha between $P{f1} and $P{f2}) AND (prog <> -1) AND (depar <> 'mich1') AND (depar <> 'mich2') AND (depar <> 'mich2') AND (depar <> 'mich3') AND (depar <> 'mich')
+GROUP BY fecha,depar, prog, lote, id, dep_anterior
+ORDER BY fecha]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="lote" class="java.lang.String"/>
+	<field name="prog" class="java.lang.String"/>
+	<field name="fecha" class="java.lang.String"/>
+	<field name="depar" class="java.lang.String"/>
+	<field name="dep_anterior" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="455" y="0" width="100" height="20" uuid="26cc53c6-3519-4ca4-9e3a-c0cee7a14248"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="108" height="35" uuid="15e32457-df52-49a7-a206-ff049b081510"/>
+				<imageExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\Avances\\web\\images\\AF.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="58" y="35" width="447" height="27" uuid="cfb854ce-dea6-43ef-a197-9cdf91af863b"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lotes detenidos por desfase de departamento]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="4" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="69" height="20" uuid="f85e79be-d19d-4c66-a504-224c9d9cd136"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Programa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="98" y="2" width="76" height="20" uuid="0a6efbb2-4dd9-4e82-8b5c-e21d3c50e256"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lote]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="198" y="0" width="68" height="20" uuid="d1b11951-5ca1-43d1-b83e-2a74cad73d44"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="2" width="100" height="20" uuid="05e8fdd6-2e17-4390-a857-d3f5dde260cc"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="2" width="100" height="20" uuid="f576247a-4af8-43e6-9b5d-ddeb1a30f02b"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dep. Anterior]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="b5a1a854-667e-4ef8-a5d2-3df6a693a3c9"/>
+				<graphicElement>
+					<pen lineWidth="4.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="69" height="13" uuid="7a690a49-bab4-40bf-8f77-7a32ab9a8ac8"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prog}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="98" y="0" width="76" height="13" uuid="92871826-679d-4054-a2e6-a3d537d0934c"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lote}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="0" width="68" height="13" uuid="f04aa885-471b-43dc-8c61-cd7a8be30d86"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="0" width="100" height="13" uuid="3e7d7314-0fa8-4097-a841-d265eb1dd289"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{depar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="0" width="100" height="13" uuid="f89ecd5b-1395-4494-8837-dfc1697207d8"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dep_anterior}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="16" width="555" height="1" uuid="1eb85fd4-b9c6-4f63-92d1-8ae96bae8fef"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="18" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="217" y="0" width="80" height="20" uuid="76b52205-edc4-408e-9909-a705b1699b4b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="297" y="0" width="40" height="20" uuid="ff727419-7778-49fc-b456-3865b86ca0eb"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="19bac348-23c3-4696-bb60-730bd308b2d9"/>
+				<graphicElement>
+					<pen lineWidth="4.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>
