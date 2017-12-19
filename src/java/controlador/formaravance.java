@@ -283,7 +283,7 @@ response.sendRedirect("index.jsp");
 //                    //out.println("location='planta/index.jsp';");
 //                    out.println("</script>");
                     System.out.println("Entro a error");
-                    av.loglote(codigo, String.valueOf(pr.getPrograma()), fechac,usuario+banda,a);
+                    av.loglote(codigo, String.valueOf(pr.getPrograma()), fechac,usuario+banda,String.valueOf(b));
                     out.println("<label>Lote inexistente, intentelo de nuevo</label>");
 
                 } else {

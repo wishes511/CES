@@ -829,7 +829,7 @@ public class Avances {
     }
  public void loglote(String lote, String prog, String fecha,String depar, String id) throws ClassNotFoundException, SQLException {
      String oldstatus="";
-     
+     System.out.println(id);
      if(id.equals("0")){
      
      }else{
