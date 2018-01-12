@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b684b2d4-93eb-4508-952d-b93a3c718f6a">
 	<property name="ireport.zoom" value="1.9487171000000156"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="93"/>
+	<property name="ireport.y" value="69"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -30,8 +30,11 @@
 	<parameter name="program" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="years" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select prog,lote,estilo,npares,combinacion,corrida,mes,statuto,ultima_fecha,SUM(npares) as pares from programa where mes=$P{mes} and prog=$P{program}
+		<![CDATA[select prog,lote,estilo,npares,combinacion,corrida,mes,statuto,ultima_fecha,SUM(npares) as pares from programa where mes=$P{mes} and prog=$P{program} and years =$P{years}
 group by prog, lote,estilo,combinacion,corrida,mes,statuto,ultima_fecha,npares]]>
 	</queryString>
 	<field name="prog" class="java.lang.String"/>

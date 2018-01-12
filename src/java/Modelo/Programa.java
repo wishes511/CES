@@ -10,7 +10,15 @@ package Modelo;
  * @author gateway1
  */
 public class Programa {
-    int programa,lote,estilo,pares,mes,id;
+    int programa,lote,estilo,pares,mes,id,year;
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
     String fecha;
 
     public String getFecha() {

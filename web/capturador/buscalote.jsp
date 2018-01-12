@@ -17,7 +17,7 @@
     //out.print(carrito.size());
     // out.println("" + tipos+"/"+ids);
     if (usuario != null && tipos != null) {
-        if(tipos.equals("USUARIO")){
+        if(tipos.equals("INTERMEDIO")){
         }else
             response.sendRedirect("../index.jsp");
     } else {
@@ -26,7 +26,6 @@
      Calendar fecha = Calendar.getInstance();
     int year = fecha.get(Calendar.YEAR);
     int mes = fecha.get(Calendar.MONTH) + 1;
-    
     Avances bd = new Avances();
     // estado = bd.alerta();
 %>
@@ -49,6 +48,7 @@
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+
         <script>
            
             $(document).ready(function () {
@@ -60,14 +60,13 @@
     <body class="body1">
         <div class="container-fluid">
                 <nav class="navbar navbar-default">
-                
                 <ul class="nav navbar-nav nav-pills">
-                    <a class="navbar-brand" href=""><img src="../images/home.png" class="" width="25"></a>
-                    <li class="ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
-                    <li class="ln"><a href="verpares.jsp">Ver Pares</a></li>                 
+                    <li><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li>
+                      <li class="ln active"><a href="">Reporte Programa</a></li>
+                      <li class="ln"><a href="avancegeneral.jsp">Avance General</a></li>
                     <li class="ln"><a href="../Cierresesion">Salir</a></li>
                 </ul>
-                    <div style="float:right" class="nav nav-pills">
+                <div style="float:right" class="nav nav-pills">
                     <li > <label class="ln">Online: <%=usuario%></label></li>
                 </div>
             </nav>
@@ -80,7 +79,7 @@
                                 <label class="ln">Lote</label><input class="form-control" type="text" name="lote" id="lote" onchange="jumpto()" maxlength="6" value=""><br>
                         </div>
                         <div class="col-sm-offset-5 col-sm-2">
-                                <select id="mes" name="mes" onclick="jumpto1()" class="form-control" value="">
+                                <select id="mes" name="mes" onclick="saltok()" class="form-control" value="">
                                     <%
                                         for (int i = 1; i <= 12; i++) {
                                             if (i == mes) {
@@ -93,14 +92,12 @@
                                     %>
                                 </select>
                         </div>
-                        <div class="col-sm-offset-5 col-sm-2">
+                                <div class="col-sm-offset-5 col-sm-2">
                             <label class="ln">Año</label><input class="form-control" type="text" name="year" id="year" onchange="saltok()" maxlength="4" value="<%=year%>"><br>
-                        </div>        
-                                
+                        </div>  
                     </div>
                     <br><div class="row">
-                        <div align="center"> <br><button class="btn btn-success ln" id="boton" onclick="nprograma()">Aceptar</button> 
-                            <button class="btn btn-success ln" id="boton2" onclick="busqueda()">Historial de Lotes</button>
+                        <div align="center"> <br>
                         <button class="btn btn-success ln" id="boton3" onclick="lotes()">Generar reporte</button></div>
                          
                     </div>
@@ -112,9 +109,6 @@
     <script>
        function jumpto(){
            document.getElementById("mes").focus();
-       }
-       function jumpto1(){
-           document.getElementById("year").focus();
        }
         function nprograma() {
             var lote ="";
@@ -156,7 +150,6 @@
                 var corrida = '0';
                 var combinacion = '0';
                 var mes =$("#mes").val();
-                
 
                 var uso = "buscar";
                 $.ajax({

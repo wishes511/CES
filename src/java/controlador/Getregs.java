@@ -28,7 +28,11 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "Getregs", urlPatterns = {"/Getregs"})
 public class Getregs extends HttpServlet {
-
+     Calendar fecha = Calendar.getInstance();
+    int year = fecha.get(Calendar.YEAR);
+    int mes = fecha.get(Calendar.MONTH) + 1;
+    int dia = fecha.get(Calendar.DAY_OF_MONTH);
+    String fechac = dia + "-" + mes + "-" + year;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.o
@@ -141,8 +145,12 @@ private String codigo(String estilo){
                 p.setMes(Integer.parseInt(f6));
                 p.setFecha(fechac);
                 p.setCodigo(codigo(f1));
+                p.setYear(year);
                 if(regularexp(f,f1,f2,f3,f4,f5)){
-                a.nuevoprog(p);//ejecutar insercion
+                    if(a.checkprograma(p)){
+                        out.print("<div class=container-fluid><div class=container><label class=ln>Registro repetido, Favor de modificar el registro anterior</label></div></div>");
+                    }else{
+                     a.nuevoprog(p);//ejecutar insercion
                 out.print("<div class=container-fluid><div class=container><div class=row espacios-lg fondos jumbis><div class=row><div class=col-sm-2> "
                         + "<label class=ln>Programa</label><input class=form-control type=text name=programa id=programa disabled value="+p.getPrograma()+"></div></div><div class=row>"
                         + "<div class=\"col-sm-2\">\n"
@@ -165,8 +173,9 @@ private String codigo(String estilo){
                         + "</div>\n"
                         + "</div>\n"
                         + "</div></div></div>");
+                    }
                 }else{
-                System.out.println("nada nadita nadota");
+                out.print("Insercion cancelada, Revise sus datos");
                 }
 
 
@@ -275,8 +284,8 @@ private String codigo(String estilo){
             System.out.println("trycatch " +e.getMessage()+"/"+e);
                     Logger.getLogger(Avances.class.getName()).log(Level.SEVERE, null, e);
 
-            out.print("<label class=l1>NO SE PUDO modificar</label>");
-            response.sendRedirect("index.jsp");
+            out.print("<label class=l1>NO SE PUDO modificar, favor de revisar sus datos</label>");
+            //response.sendRedirect("index.jsp");
             
         }
     }

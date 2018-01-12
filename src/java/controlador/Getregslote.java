@@ -75,7 +75,7 @@ public class Getregslote extends HttpServlet {
         String tiposs = (String) objSesion.getAttribute("tipo");
         String ids = String.valueOf(objSesion.getAttribute("i_d"));
         if (usuario != null && tiposs != null ) {
-            if(tiposs.equals("USUARIO") || tiposs.equals("ADMIN")){
+            if(tiposs.equals("USUARIO") || tiposs.equals("ADMIN") || tiposs.equals("INTERMEDIO")){
             }else
                 response.sendRedirect("index.jsp");
         } else {
@@ -87,6 +87,7 @@ public class Getregslote extends HttpServlet {
             String f1 = request.getParameter("f1");
             String uso = request.getParameter("uso");
             String mes = request.getParameter("mes");
+            String year = request.getParameter("year");
             // verificar que accion hara el servlet
             if (uso.equals("check")) {
                
@@ -94,14 +95,9 @@ public class Getregslote extends HttpServlet {
                 Avances a = new Avances();
                 Programa p = new Programa();
                 p.setLote(Integer.parseInt(f1));
-                 ArrayList<String> arr =a.getprog(Integer.parseInt(f1),Integer.parseInt(mes));
-                //p.setFechae(f7);
-                avan= a.getfechas(a.getprog(Integer.parseInt(f1),Integer.parseInt(mes)));
+                ArrayList<String> arr =a.getprog(Integer.parseInt(f1),Integer.parseInt(mes),Integer.parseInt(year));
+                avan= a.getfechas(a.getprog(Integer.parseInt(f1),Integer.parseInt(mes),Integer.parseInt(year)));
                 if(arr.isEmpty()){
-                    System.out.println("vacio");
-                out.println("<script type=\"text/javascript\">");
-                    out.println("location='index.jsp';");
-                    out.println("</script>");
                 }else{
                 out.println("<div class=fondowhite><div class=row><div class=\"col-sm-2\">\n" +
 "                                <label class=\"ln\">Programa</label><label class=\"form-control\">"+arr.get(0)+"</label>\n" +

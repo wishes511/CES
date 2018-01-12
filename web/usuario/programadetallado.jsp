@@ -33,6 +33,7 @@
             }
             String f1 = request.getParameter("prog");
             String mes = request.getParameter("mes");
+            String year = request.getParameter("year");
             String patt = "\\d{0,7}";
             Pattern pat = Pattern.compile(patt);
             Matcher match = pat.matcher(f1);
@@ -45,6 +46,7 @@
                     Map para = new HashMap();
                     para.put("program", new String(f1));
                     para.put("mes", new String(mes));
+                    para.put("years", new String(year));
                     byte[] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), para, db.getConexion());
                     response.setContentType("application/pdf");
                     response.setContentLength(bytes.length);

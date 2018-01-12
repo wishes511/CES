@@ -24,7 +24,7 @@
         response.sendRedirect("../index.jsp");
     }
      Calendar fecha = Calendar.getInstance();
-    int año = fecha.get(Calendar.YEAR);
+    int year = fecha.get(Calendar.YEAR);
     int mes = fecha.get(Calendar.MONTH) + 1;
     Avances bd = new Avances();
     // estado = bd.alerta();
@@ -103,6 +103,9 @@
                                     %>
                                 </select>
                         </div>
+                                <div class="col-sm-offset-5 col-sm-2">
+                            <label class="ln">Año</label><input class="form-control" type="text" name="year" id="year" onchange="saltok()" maxlength="4" value="<%=year%>"><br>
+                        </div>  
                     </div>
                     <br><div class="row">
                         <div align="center"> <br><button class="btn btn-success ln" id="boton" onclick="nprograma()">Aceptar</button> 
@@ -123,6 +126,7 @@
             var lote ="";
             lote=$('#lote').val();
         var mes =$('#mes').val();
+        var year =$('#year').val();
            if(lote===""){
                
            }else{
@@ -134,7 +138,7 @@
                var uso = "check";
             $.ajax({
                 type: 'post',
-                data: {f1: lote, uso: uso,mes:mes},
+                data: {f1: lote, uso: uso,mes:mes,year:year},
                 url: '../Getregslote',
                 success: function (result) {
                     $('#respuesta').html(result);
@@ -147,7 +151,8 @@
         function lotes(){
             var prog =$('#lote').val();
             var mes =$('#mes').val();
-            window.location="programadetallado.jsp?prog="+prog+"&mes="+mes;
+            var year =$('#year').val();
+            window.location="programadetallado.jsp?prog="+prog+"&mes="+mes+"&year="+year;
         }
         function busqueda(){
              var programa = '0';

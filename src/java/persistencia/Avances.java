@@ -77,7 +77,24 @@ public class Avances {
         
         return u;
     }
-    
+    public boolean checkprograma(Programa p) throws ClassNotFoundException, SQLException {
+        boolean u=false ;
+        String query = "select id_prog,prog from programa where prog="+p.getPrograma()+
+        " and mes="+p.getMes()+" and lote ="+p.getLote()+" and years="+p.getYear();
+        Statement smt;
+        ResultSet df;
+        abrir();
+        smt = conexion.createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {
+           u=true;
+        }
+
+        df.close();
+        smt.close();
+        
+        return u;
+    }
        public void dateupdate(ArrayList arr,String fecha) throws ClassNotFoundException, SQLException {
            int cont=0;
         String query = "select id_prog from programa where ultima_fecha is NULL";
@@ -570,7 +587,52 @@ public class Avances {
         }
     return arr;
     }
-    public ArrayList<String> getprog(int lote,int mes) throws SQLException, ClassNotFoundException{
+    public ArrayList<String> getprog(int lote,int mes, int year) throws SQLException, ClassNotFoundException{
+    ArrayList<String> arr= new ArrayList<>();
+         Statement st;
+        ResultSet rs;
+        int id=0;
+        String query = "SELECT max(id_prog) as id_prog FROM programa where mes="+mes+" and statuto != 'COMPLETO' and lote="+lote+" and years="+year;
+        abrir();
+        st = conexion.createStatement();
+        rs = st.executeQuery(query);
+        while (rs.next()) {
+            id = (rs.getInt("id_prog"));
+            System.out.println(id);
+        }
+        System.out.println(query+"//"+id);
+        if(id ==0){
+           
+            System.out.println("Soy cero :(");
+        }else{
+            query="select * from programa where mes="+mes+" and id_prog="+id;
+        st = conexion.createStatement();
+        rs = st.executeQuery(query);
+        while(rs.next()){
+             System.out.println(rs.getString("prog"));
+        arr.add(rs.getString("prog"));
+        arr.add(rs.getString("estilo"));
+        arr.add(rs.getString("npares"));
+        arr.add(rs.getString("combinacion"));
+        arr.add(rs.getString("corrida"));
+        arr.add(rs.getString("mes"));
+        arr.add(rs.getString("fechaentrega"));
+        arr.add(rs.getString("statuto"));
+        arr.add(rs.getString("lote"));
+        arr.add(rs.getString("id_prog"));
+        }
+        for(int i =0; i<arr.size();i++){
+            System.out.println(arr.get(i));
+        }
+    System.out.println(arr.size()+"/"+query);
+        }
+
+    rs.close();
+    st.close();
+    cerrar();
+    return arr;
+    }
+        public ArrayList<String> getprog(int lote,int mes) throws SQLException, ClassNotFoundException{
     ArrayList<String> arr= new ArrayList<>();
          Statement st;
         ResultSet rs;
@@ -792,7 +854,7 @@ public class Avances {
         try {
             abrir();
             conexion.setAutoCommit(false);
-            String s = "insert into programa values(" + p.getPrograma() + "," + p.getLote() + "," + p.getEstilo() + "," + p.getPares() + ",'" + p.getCombinacion() + "','" + p.getCorrida() + "'," + p.getMes() + ",'" + p.getFechae() + "','NO TERMINADO','" + p.getCodigo() + "','"+p.getFecha()+"')";
+            String s = "insert into programa(prog,lote,estilo,npares,combinacion,corrida,mes,fechaentrega,statuto,codigo,ultima_fecha,years) values(" + p.getPrograma() + "," + p.getLote() + "," + p.getEstilo() + "," + p.getPares() + ",'" + p.getCombinacion() + "','" + p.getCorrida() + "'," + p.getMes() + ",'" + p.getFechae() + "','NO TERMINADO','" + p.getCodigo() + "','"+p.getFecha()+"',"+p.getYear()+")";
             st = conexion.prepareStatement(s);
             st.executeUpdate();
             //-----------------------------------
@@ -802,7 +864,7 @@ public class Avances {
         System.out.println(query);
         sts = conexion.createStatement();
         rs = sts.executeQuery(query);
-        while (rs.next()) {
+        while (rs.next()) {        
             
           a=rs.getInt("id_prog");
         }
@@ -1103,7 +1165,7 @@ public class Avances {
     }
     public ArrayList<String> getcoms() throws SQLException, ClassNotFoundException{
     ArrayList<String> arr = new ArrayList<>();
-    String query="select distinct combinacion from programa";
+    String query="select distinct combinacion from programa order by combinacion";
     ResultSet rs;
     Statement st;
     abrir();

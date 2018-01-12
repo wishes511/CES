@@ -14,9 +14,6 @@
        String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 
-    //out.print(carrito.size());
-   // out.println("+++++" + tipos+"/"+usuario);
-   
     if (usuario != null && tipos != null && tipos.equals("INTERMEDIO")) {
        // out.println(usuario);
     } else {
@@ -65,9 +62,10 @@
             
             <nav class="navbar navbar-default">
                 <ul class="nav navbar-nav nav-pills">
-                    <li><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li>
-                    <li class="active"><a  href="">Avance General</a></li>
-                    <li><a href="../Cierresesion">Salir</a></li>
+                    <li ><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li>
+                    <li class="ln"><a href="buscalote.jsp">Reporte Programa</a></li>
+                    <li class="ln active"><a  href="">Avance General</a></li>
+                    <li class="ln"><a href="../Cierresesion">Salir</a></li>
                 </ul>
                 <div style="float:right" class="nav nav-pills">
                     <li > <label class="ln">Online: <%=usuario%></label></li>

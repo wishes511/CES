@@ -138,15 +138,17 @@ try{
                 document.forma1.programa.focus();
             });
         </script>
-        <title>Planta</title>
+        <title>Capturista</title>
     </head>
     <body class="body1">
         <div class="container-fluid">
             <nav class="navbar navbar-default">
                 <ul class="nav navbar-nav nav-pills">
                     <li class="active"><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li>
-                    <li><a href="avancegeneral.jsp">Avance General</a></li>
-                    <li><a href="../Cierresesion">Salir</a></li>
+
+                    <li class="ln"><a href="buscalote.jsp">Reporte Programa</a></li>
+                    <li class="ln"><a href="avancegeneral.jsp">Avance General</a></li>
+                    <li class="ln"><a href="../Cierresesion">Salir</a></li>
                 </ul>
                 <div style="float:right" class="nav nav-pills">
                     <li > <label class="ln">Online: <%=usuario%></label></li>
@@ -168,7 +170,7 @@ try{
                     <form name="forma1" method="post" action="">
                         <div class="row ">
                             <div class="col-sm-2">
-                                <label class="ln">Programa</label><input class="form-control" type="text" name="programa" id="programa" onchange="searchprog()" maxlength="2" value="<%=pro.getPrograma()%>">
+                                <label class="ln">Programa</label><input class="form-control" type="text" name="programa" id="programa" onchange="saltoa()" maxlength="2" value="<%=pro.getPrograma()%>">
                             </div>
                             <div class="col-sm-2" id="getsmes">             
                                 <label class="ln">Mes</label><br>
@@ -268,7 +270,7 @@ try{
             }
             function saltoa() {
                 document.forma1.mes.focus();
-                validar();
+               // validar();
             }
             function salto() {
                 document.forma1.estilo.focus();
