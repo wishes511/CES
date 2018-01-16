@@ -146,10 +146,11 @@ private String codigo(String estilo){
                 p.setFecha(fechac);
                 p.setCodigo(codigo(f1));
                 p.setYear(year);
-                if(regularexp(f,f1,f2,f3,f4,f5)){
+                
                     if(a.checkprograma(p)){
                         out.print("<div class=container-fluid><div class=container><label class=ln>Registro repetido, Favor de modificar el registro anterior</label></div></div>");
                     }else{
+                        if(regularexp(f,f1,f2,f3,f4,f5)){
                      a.nuevoprog(p);//ejecutar insercion
                 out.print("<div class=container-fluid><div class=container><div class=row espacios-lg fondos jumbis><div class=row><div class=col-sm-2> "
                         + "<label class=ln>Programa</label><input class=form-control type=text name=programa id=programa disabled value="+p.getPrograma()+"></div></div><div class=row>"
@@ -173,9 +174,9 @@ private String codigo(String estilo){
                         + "</div>\n"
                         + "</div>\n"
                         + "</div></div></div>");
-                    }
-                }else{
+                    }else{
                 out.print("Insercion cancelada, Revise sus datos");
+                }
                 }
 
 
