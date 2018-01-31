@@ -8,14 +8,7 @@
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-
-    // out.println("" + tipos+"/"+ids);
-    int idprodu = 0;
-    int idprodu1 = 0;
     String tipo = "";
-    int stoc = 0;
-
-
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -30,7 +23,6 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/opcional.css">
         <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <script>
              $(document).ready(function () {
                 document.form.nombrelog.focus();

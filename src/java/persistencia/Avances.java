@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author gateway1
+ * @author mich
  */
 public class Avances {
     //servidor local de pruebas
@@ -47,7 +47,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         Class.forName(drive);
         conexion = DriverManager.getConnection(url, "mich", "mich");
 //        conexion = DriverManager.getConnection(url, "sa", "Prok2001");
-        // System.out.println("hecho :]");
     }
 
     public void cerrar() throws SQLException {
@@ -55,6 +54,22 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
     }
 
     // Busquedas--------------
+public String buscardepa(ArrayList<String> arr,int i,int a) throws ClassNotFoundException, SQLException {
+        String ids="0";
+        String query = "select "+arr.get(i)+" from avance where id_prog="+a;
+        //System.out.println(query);
+        Statement smt;
+        ResultSet df;
+        abrir();
+        smt = conexion.createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {
+            ids=df.getString(arr.get(i));
+        }
+        df.close();
+        smt.close();
+        return ids;
+    }
     public Usuario buscar(String user, String pass) throws ClassNotFoundException, SQLException {
         Usuario u = new Usuario();
         String query = "select * from usuarios where usuario='" + user + "' and contrasena ='" + pass + "'";
@@ -74,7 +89,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         }
         df.close();
         smt.close();
-        
         return u;
     }
     public boolean checkprograma(Programa p) throws ClassNotFoundException, SQLException {
@@ -96,10 +110,8 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         while (df.next()) {
            u=true;
         }
-
         df.close();
         smt.close();
-        
         return u;
     }
        public void dateupdate(ArrayList arr,String fecha) throws ClassNotFoundException, SQLException {
@@ -111,16 +123,12 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         smt = conexion.createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
-            //System.out.println(arr.get(0));
             for(int i =arr.size()-1;i>=0;i--){
             if(cont ==2){
-                
-                    System.out.println(df.getString("id_prog")+"/"+arr.get(i)+"/"+arr.get(i+1)+"/"+arr.get(i+2));
-                
             String fechas= dateupdatebusca(arr,i,df.getInt("id_prog"));
                 if(!fechas.equals(" ")){
                     Updatedate(Integer.parseInt(df.getString("id_prog")),fechas);
-                    System.out.println("Actualiza: ultfecha="+fechas+" id="+df.getString("id_prog"));
+                   // System.out.println("Actualiza: ultfecha="+fechas+" id="+df.getString("id_prog"));
                     cont=arr.size();
                 }else{
                     cont =0;
@@ -140,18 +148,15 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         int cont=0;
         String fecha=" ";
         String query = "select "+arr.get(i+1)+" from avance where "+arr.get(i)+" != 0 and id_prog="+id;
-        System.out.println(query);
+        //System.out.println(query);
         Statement smt;
         ResultSet st;
         abrir();
-//        System.out.println(arr.get(i)+"/"+arr.get(i+1)+"/"+arr.get(i+2));
-//        System.out.println(query);
         smt = conexion.createStatement();
         st = smt.executeQuery(query);
         while (st.next()) {
             fecha=st.getString(""+arr.get(i+1));
         }
-        
         st.close();
         smt.close();
         return fecha;
@@ -176,7 +181,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
             arr.add(df.getString("depar"));
             arr.add(df.getString("dep_anterior"));
         }
-        System.out.println(query);
         df.close();
         smt.close();
         
@@ -199,9 +203,7 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
     }
     public int buscarprogramm(String prog) throws ClassNotFoundException, SQLException {
         int u =0;
-         
         String query = "select max(mes) as 'mes' from programa where statuto != 'COMPLETO' and prog="+Integer.parseInt(prog);
-       
         Statement smt;
         ResultSet df;
         abrir();
@@ -212,7 +214,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         }
        smt.close();
        df.close();
-       System.out.println("buscaprogramm: "+query+"/mes "+u);
         return u;
     }
     public ArrayList<String> viewdepa() throws ClassNotFoundException, SQLException {
@@ -242,7 +243,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while (rs.next()) {//corte
-            System.out.println(rs.getString("corte"));
           corte+= rs.getInt("corte");
         }//fin corte
         query = " select SUM(p.npares) as 'precorte'\n" +
@@ -251,17 +251,14 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while (rs.next()) {//precorte
-            System.out.println(rs.getString("precorte"));
           precorte+= rs.getInt("precorte");
         }//fin precorte
         query = " select SUM(p.npares) as 'pespunte'\n" +
         " from programa p join avance a on a.id_prog = p.id_prog\n" +
         " where a.fechapes between '"+f1+"' and '"+f2+"'\n";
-  
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while (rs.next()) {//pespunte
-           
           pes+= rs.getInt("pespunte");
         }//fin pespunte
         query = " select SUM(p.npares) as 'deshebrado'\n" +
@@ -322,14 +319,12 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         arr.add(String.valueOf(prea));
         arr.add(String.valueOf(mont));
         arr.add(String.valueOf(pt));
-        System.out.println(query);
         rs.close();
         st.close();
         return arr;  
     }
     public ArrayList<String> searchfechacompleto(String f1,String f2) throws ClassNotFoundException, SQLException {
          ArrayList<String> array = new ArrayList<>();
-        
          Statement st;
         ResultSet rs;
         String query = "select p.prog,p.lote,p.estilo,p.npares,p.corrida,p.mes,p.combinacion \n" +
@@ -339,7 +334,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while (rs.next()) {//corte
-            System.out.println();
           array.add((rs.getString("prog")));
             array.add((rs.getString("lote")));
             array.add((rs.getString("estilo")));
@@ -350,7 +344,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         }//fin corte
         rs.close();
         st.close();
-        System.out.println(query);
         return array;  
     }
     public ArrayList<String> searchfecha(String f1,String f2, String maq) throws ClassNotFoundException, SQLException {
@@ -365,31 +358,24 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while (rs.next()) {//corte
-            System.out.println(rs.getString("corte"));
           corte+= rs.getInt("corte");
         }//fin corte
-        System.out.println(query);
         query = " select SUM(p.npares) as 'precorte'\n" +
         " from programa p join avance a on a.id_prog = p.id_prog\n" +
         " where  a.precormaq='"+maq+"' and a.fechaprecor between '"+f1+"' and '"+f2+"'\n";
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while (rs.next()) {//precorte
-            System.out.println(rs.getString("precorte"));
           precorte+= rs.getInt("precorte");
         }//fin precorte
-        System.out.println(query);
         query = " select SUM(p.npares) as 'pespunte'\n" +
         " from programa p join avance a on a.id_prog = p.id_prog\n" +
         " where a.pesmaq='"+maq+"' and a.fechapes between '"+f1+"' and '"+f2+"'\n";
-  
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while (rs.next()) {//pespunte
-           
           pes+= rs.getInt("pespunte");
         }//fin pespunte
-        System.out.println(query);
         query = " select SUM(p.npares) as 'deshebrado'\n" +
         " from programa p join avance a on a.id_prog = p.id_prog\n" +
         " where a.desmaq='"+maq+"' and a.fechades between '"+f1+"' and '"+f2+"'\n";
@@ -397,13 +383,11 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while (rs.next()) {//deshebrado
-         
           des+= rs.getInt("deshebrado");
         }//fin deshebrado
         query = " select SUM(p.npares) as 'ojillado'\n" +
         " from programa p join avance a on a.id_prog = p.id_prog\n" +
         " where a.ojimaq='"+maq+"' and a.fechaoji between '"+f1+"' and '"+f2+"'\n";
-
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while (rs.next()) {//ojillado
@@ -448,7 +432,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         arr.add(String.valueOf(prea));
         arr.add(String.valueOf(mont));
         arr.add(String.valueOf(pt));
-        System.out.println(query);
         rs.close();
         st.close();
         return arr;  
@@ -463,10 +446,7 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         rs = st.executeQuery(query);
         while (rs.next()) {
             id = (rs.getInt("id_prog"));
-            System.out.println(id);
         }
-        
-        System.out.println(query+"-"+id);
         rs.close();
         st.close();
         return id;
@@ -479,8 +459,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         String query = "select p.prog,p.lote,p.estilo,p.npares,p.corrida,p.mes,p.combinacion,p.statuto from programa p join avance a on a.id_prog = p.id_prog\n" +
 " where a."+arr.get(cont)+" between '"+f1+"' and '"+f2+"'\n" +
 " order by prog";
-                
-        //System.out.println(query);
         abrir();
         st = conexion.createStatement();
         rs = st.executeQuery(query);
@@ -494,7 +472,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
             array.add((rs.getString("combinacion")));
             array.add((rs.getString("statuto")));
         }
-        System.out.println("detalle :"+query);
         rs.close();
         st.close();
         return array;
@@ -506,8 +483,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         String query = "select p.prog,p.lote,p.estilo,p.npares,p.corrida,p.mes,p.combinacion,p.statuto from programa p join avance a on a.id_prog = p.id_prog\n" +
 " where a."+arr.get(cont+1)+"='"+maq+"' and a."+arr.get(cont)+" between '"+f1+"' and '"+f2+"'\n" +
 " order by prog";
-                
-        //System.out.println(query);
         abrir();
         st = conexion.createStatement();
         rs = st.executeQuery(query);
@@ -521,7 +496,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
             array.add((rs.getString("combinacion")));
             array.add((rs.getString("statuto")));
         }
-        System.out.println("detalle :"+query);
         rs.close();
         st.close();
         return array;
@@ -557,7 +531,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         arr.add(rs.getString("montado"));
         arr.add(rs.getString("pares"));
         }
-        System.out.println(query);
     rs.close();
     st.close();
     cerrar();
@@ -568,15 +541,11 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
          Statement st;
         ResultSet rs;
         abrir();
-        if(id.equals("")){
-           
-            System.out.println("Soy cero :(");
-        }else{
+        if(id.equals("")){}else{
            String query="select * from programa where id_prog="+id;
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while(rs.next()){
-             System.out.println(rs.getString("prog"));
         arr.add(rs.getString("prog"));
         arr.add(rs.getString("estilo"));
         arr.add(rs.getString("npares"));
@@ -585,10 +554,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         arr.add(rs.getString("lote"));
         arr.add(rs.getString("statuto"));
         }
-        for(int i =0; i<arr.size();i++){
-            System.out.println(arr.get(i));
-        }
-    System.out.println(arr.size()+"/"+query);
         rs.close();
     st.close();
         }
@@ -605,18 +570,12 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         rs = st.executeQuery(query);
         while (rs.next()) {
             id = (rs.getInt("id_prog"));
-            System.out.println(id);
         }
-        System.out.println(query+"//"+id);
-        if(id ==0){
-           
-            System.out.println("Soy cero :(");
-        }else{
+        if(id ==0){}else{
             query="select * from programa where mes="+mes+" and id_prog="+id;
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while(rs.next()){
-             System.out.println(rs.getString("prog"));
         arr.add(rs.getString("prog"));
         arr.add(rs.getString("estilo"));
         arr.add(rs.getString("npares"));
@@ -628,12 +587,8 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         arr.add(rs.getString("lote"));
         arr.add(rs.getString("id_prog"));
         }
-        for(int i =0; i<arr.size();i++){
-            System.out.println(arr.get(i));
+        for(int i =0; i<arr.size();i++){}
         }
-    System.out.println(arr.size()+"/"+query);
-        }
-
     rs.close();
     st.close();
     cerrar();
@@ -650,18 +605,13 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         rs = st.executeQuery(query);
         while (rs.next()) {
             id = (rs.getInt("id_prog"));
-            System.out.println(id);
         }
-        System.out.println(query+"//"+id);
         if(id ==0){
-           
-            System.out.println("Soy cero :(");
         }else{
             query="select * from programa where mes="+mes+" and id_prog="+id;
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while(rs.next()){
-             System.out.println(rs.getString("prog"));
         arr.add(rs.getString("prog"));
         arr.add(rs.getString("estilo"));
         arr.add(rs.getString("npares"));
@@ -673,12 +623,7 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         arr.add(rs.getString("lote"));
         arr.add(rs.getString("id_prog"));
         }
-        for(int i =0; i<arr.size();i++){
-            System.out.println(arr.get(i));
         }
-    System.out.println(arr.size()+"/"+query);
-        }
-
     rs.close();
     st.close();
     cerrar();
@@ -704,8 +649,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
            p.setLote(0);
            p.setPrograma(-1);
        }
-        
-
     rs.close();
     st.close();
     cerrar();
@@ -715,9 +658,7 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
     Avance avan = new Avance();
      Statement st;
         ResultSet rs;
-        System.out.println("tamano "+arr.size());
         if(arr.isEmpty()){
-        
         }else{
         String query = "select p.statuto,p.fechaentrega,a.fechacor,a.fechaprecor,a.fechapes,a.fechades,a.fechaoji,a.fechainsp,a.fechaprea,a.fechamont,a.fechapt,"
                 + "a.cormaq,a.precormaq,a.pesmaq,a.desmaq,a.ojimaq, a.inspmaq, a.preamaq, a.montmaq, a.ptmaq"
@@ -739,7 +680,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
            avan.setFechamontado(rs.getString("fechamont")+" "+rs.getString("montmaq"));
            avan.setFechapt(rs.getString("fechapt")+" "+rs.getString("ptmaq"));
         }
-        System.out.println(query);
         rs.close();
         st.close();
         cerrar();
@@ -751,12 +691,10 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         Statement st;
         ResultSet rs;
         String query = "SELECT id_prog FROM avance where " + arr.get(k) + "=0 and id_prog=" + id;
-        System.out.println(query);
         abrir();
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while (rs.next()) {
-            System.out.println("true en raiz");
             flag = true;
         }
         rs.close();
@@ -770,7 +708,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         Statement st;
         ResultSet rs;
         String query = "select id_prog from avance where "+arr.get(k2)+" !=0 and id_prog="+id;
-        System.out.println(query);
         abrir();
         st = conexion.createStatement();
         rs = st.executeQuery(query);
@@ -788,7 +725,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         Statement st;
         ResultSet rs;
         String query = "select id_prog from avance where "+arr.get(k2)+" !=0 and id_prog="+id;
-        System.out.println(query);
         abrir();
         st = conexion.createStatement();
         rs = st.executeQuery(query);
@@ -806,7 +742,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         Statement st;
         ResultSet rs;
         String query = "select id_prog from avance where "+arr.get(k2)+" !=0 and id_prog="+id;
-        System.out.println(query+"+"+arr.get(k2));
         abrir();
         st = conexion.createStatement();
         rs = st.executeQuery(query);
@@ -823,7 +758,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         Statement st;
         ResultSet rs;
         String query = "select prog from programa where mes="+mes+" and statuto !='COMPLETO' and lote ="+Integer.parseInt(lote);
-        System.out.println(query+"+");
         abrir();
         st = conexion.createStatement();
         rs = st.executeQuery(query);
@@ -845,7 +779,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         arr.add(rs.getString("ultima_fecha"));
         }
         for(int i=0;i<arr.size();i++){
-            System.out.println("contenido: "+arr.get(i));
         }
         rs.close();
         st.close();
@@ -868,7 +801,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
             Statement sts;
         ResultSet rs;
         String query = "select MAX(id_prog) as id_prog from programa";
-        System.out.println(query);
         sts = conexion.createStatement();
         rs = sts.executeQuery(query);
         while (rs.next()) {        
@@ -898,23 +830,17 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
     }
  public void loglote(String lote, String prog, String fecha,String depar, String id) throws ClassNotFoundException, SQLException {
      String oldstatus="";
-     System.out.println(id);
      if(id.equals("0")){
-     
      }else{
      Statement st;
         ResultSet rs;
         String query = "select statuto from programa where id_prog="+id;
-        System.out.println(query+"+");
         abrir();
         st = conexion.createStatement();
         rs = st.executeQuery(query);
         while (rs.next()) {
             oldstatus=rs.getString("statuto");
         }
-        System.out.println(oldstatus);
-     
-       
      }
           PreparedStatement smt = null;
         try {
@@ -923,8 +849,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         String s = "insert into log_lote values('"+lote+"','"+prog+"','"+fecha+"','1','"+depar+"','"+oldstatus+"')";
        smt = conexion.prepareStatement(s);
             smt.executeUpdate();
-        //+++++++++++++++++
-        
         smt.close();
             conexion.commit();    
         } catch (Exception e) {
@@ -933,10 +857,8 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
                 conexion.rollback();
             } catch (Exception o) {
                 System.out.println(o.getMessage());
-
             }
         }
-       
     }
     //Actualizaciones o avances
     public boolean avanceprimerdep(String a, String fecha, String m, ArrayList<String> arr, ArrayList<String> arr2) throws ClassNotFoundException, SQLException {
@@ -950,7 +872,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         while (df.next()) {
             flag = true;
         }
-        System.out.println(query);
         df.close();
         smt.close();
         if (flag) {
@@ -968,7 +889,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
                     conexion.rollback();
                 } catch (Exception o) {
                     System.out.println(o.getMessage());
-
                 }
             }
             st.close();
@@ -985,9 +905,7 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
             st = conexion.prepareStatement(s);
             st.executeUpdate();
              conexion.commit();
-            //
             if(arr.get(k).equals(arr.get(tamano-2))){
-            System.out.println("Es el ultimo :]");
             s = "update programa set statuto ='COMPLETO' where id_prog="+a;
             st = conexion.prepareStatement(s);
             st.executeUpdate();
@@ -1013,7 +931,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
             String s = "update programa set statuto='"+arr.get(k).toUpperCase()+" "+maq+"', ultima_fecha='"+fechas+"' where id_prog="+a;
             st = conexion.prepareStatement(s);
             st.executeUpdate();
-            System.out.println("Status modificado");
             conexion.commit();
             st.close();
     }catch(Exception e){
@@ -1033,7 +950,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
             String s = "update programa set statuto='"+arr.get(k).toUpperCase()+" "+banda+" "+maqbanda+"', ultima_fecha='"+fechas+"' where id_prog="+a;
             st = conexion.prepareStatement(s);
             st.executeUpdate();
-            System.out.println("Status modificado");
             conexion.commit();
             st.close();
     }catch(Exception e){
@@ -1055,11 +971,9 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
                        p.getMes()+",fechaentrega='"+p.getFechae()+"',codigo='"+codigo(p.getCodigo())+"' where id_prog="+p.getId();
             st = conexion.prepareStatement(s);
             st.executeUpdate();
-            System.out.println("programa modificado/"+s);
             s = "update avance set lote="+p.getLote()+" where id_prog="+p.getId();
             st = conexion.prepareStatement(s);
             st.executeUpdate();
-            System.out.println("programa modificado/"+s);
             conexion.commit();
             st.close();
     }catch(Exception e){
@@ -1099,7 +1013,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
             String s = "update programa set statuto='COMPLETO' where id_prog="+a;
             st = conexion.prepareStatement(s);
             st.executeUpdate();
-            System.out.println("Status modificado");
             conexion.commit();
             st.close();
     }catch(Exception e){
@@ -1139,7 +1052,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
             st = conexion.prepareStatement(s);
             st.executeUpdate();
             conexion.commit();
-            System.out.println("update de montados: "+s);
         } catch (Exception e) {
             Logger.getLogger(Avances.class.getName()).log(Level.SEVERE, null, e);
             try {
@@ -1159,7 +1071,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
             st = conexion.prepareStatement(s);
             st.executeUpdate();
             conexion.commit();
-            System.out.println("update lotes: "+s);
         } catch (Exception e) {
             Logger.getLogger(Avances.class.getName()).log(Level.SEVERE, null, e);
             try {
@@ -1224,7 +1135,6 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
         rs.close();
         st.close();
         cerrar();
-        
     return arr;
     }
     public static void main (String args []){
@@ -1258,4 +1168,28 @@ private String codigo(String estilo){
      }
     return cod;
 }
+    public void Autoupdate_lotes(int a, String fecha, ArrayList<String> arr, int i,String banda) throws SQLException{
+    PreparedStatement st = null;
+    String s="";   
+    try {// realizar avances
+            abrir();
+            conexion.setAutoCommit(false);
+            if(arr.get(i).equals("montado")){
+            s = "update avance set "+arr.get(i)+"="+banda+","+arr.get(i+1)+"='"+fecha+"',"+arr.get(i+2)+"='P' where id_prog="+a;
+            }else{
+            s = "update avance set "+arr.get(i)+"=1,"+arr.get(i+1)+"='"+fecha+"',"+arr.get(i+2)+"='P' where id_prog="+a;
+            }
+            st = conexion.prepareStatement(s);
+            st.executeUpdate();
+             conexion.commit();
+           st.close();
+        } catch (Exception e) {
+            Logger.getLogger(Avances.class.getName()).log(Level.SEVERE, null, e);
+            try {
+                conexion.rollback();
+            } catch (Exception o) {
+                System.out.println(o.getMessage());
+            }
+        }    
+    }
 }

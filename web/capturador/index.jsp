@@ -68,8 +68,6 @@ try{
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../js/dhtmlgoodies_calendar.js?random=20171118"></script>
-        <link type="text/css" rel="stylesheet" href="../css/dhtmlgoodies_calendar.css?random=20171118" media="screen"></link>
         <script script language="JavaScript" type="text/javascript" >
             function validar() {
                 var valor = $("#programa").val();
