@@ -86,23 +86,22 @@ public class Getstopairs extends HttpServlet {
             String uso = request.getParameter("uso");
             // verificar que accion hara el servlet
             ArrayList<String> arr = new ArrayList<>();
-            Avance avan = new Avance();
             Avances a = new Avances();
             Programa p = new Programa();
             String f1 = request.getParameter("f1");
             String f2 = request.getParameter("f2");
+            String bl = request.getParameter("bl");
             String patt = "\\d{1,2}\\-\\d{1,2}\\-\\d{4}";
             Pattern pat = Pattern.compile(patt);
             Matcher match = pat.matcher(f1);
             if (match.matches()) {
-                
             } else {
                 System.out.println("No es fecha");
                 response.sendRedirect("../index.jsp");
             }// lotes detenidos
-            
-            arr=a.searchstoppair(f1, f2,arr);
+            arr=a.searchstoppair(f1, f2,arr,bl);
             int cont =0;
+            
             for(int i =0;i<arr.size();i++){
                 if(cont==5){                    
                 out.print("<tr class=ttd style=overflow:auto><td>"+arr.get(i-4)+"</td><td>"+arr.get(i-3)+"</td><td>"
@@ -112,18 +111,14 @@ public class Getstopairs extends HttpServlet {
                 cont++;
                 }
             }
-
-//                
         } catch (NullPointerException ex) {
             System.out.println(ex.getMessage());
             response.sendRedirect("../index.jsp");
-
         } catch (Exception e) {
             System.out.println(e);
             response.sendRedirect("../index.jsp");
         }
     }
-
     /**
      * Returns a short description of the servlet.
      *

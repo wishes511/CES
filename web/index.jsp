@@ -20,7 +20,7 @@
         <link rel="icon"  href="images/aff.png" sizes="32x32"/>
         <link rel="stylesheet" type="text/css" href="css/fondos.css">
         <link rel="stylesheet" type="text/css" href="css/loginn.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/opcional.css">
         <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
         <script>
@@ -103,7 +103,7 @@
                     <label>Derechos reservados, Athletic Footwear S.A de C.V</label><br>
                     <label class="shiro">01 (476) 743 1552 | 743 0448</label><br>
                     <label class="shiro">Descarga app android</label><br>
-                    <!--<a href=""><img src="images/android.png" width="150" height="50" alt="" class="img-responsive"></a>-->
+                    <a href="Avances.apk"><img src="images/android.png" width="150" height="50" alt="" class="img-responsive"></a>
                     <hr style="">
                 </div>
                 <div class="col-sm-3 espacio">

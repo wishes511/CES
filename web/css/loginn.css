@@ -8,11 +8,10 @@ and open the template in the editor.
     Author     : mich
 */
 
-@import url(http://fonts.googleapis.com/css?family=Roboto:400);
 body {
   background-color:#fff;
   -webkit-font-smoothing: antialiased;
-  font: normal 14px Roboto,arial,sans-serif;
+  font:arial,sans-serif;
 }
 
 

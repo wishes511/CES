@@ -58,8 +58,6 @@
     </head>
     <body class="body1" >
         <div class="container-fluid">
-            <div></div>
-            
             <nav class="navbar navbar-default">
                 <ul class="nav navbar-nav nav-pills">
                     <li><a class="navbar-brand" href=""><img src="../images/home.png" class="" width="25"></a></li>
@@ -68,11 +66,9 @@
                             Usuario<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="#90" role="menu">
-
                             <li class="ln"><a href="buscalote.jsp">Busqueda</a></li>
                             <li class="ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
                             <li class="ln"><a href="verpares.jsp">Ver pares</a></li>
-                            
                         </ul>
                     </li>
                     <li class="ln"><a  href="../Dateupdate">actualizar fechas</a></li>
@@ -84,16 +80,16 @@
             </nav>
             <div class="container" align="center">
                 <div class="row">
-                     <div class="col-xs-5 tablasize" style="overflow: auto;">
+                     <div class="col-xs-6 tablasize" style="overflow: auto;">
                     <%
                     if(list.isEmpty()){
         System.out.println("vacio");
     }else{
     int cont =0;
-    out.print("<table class=table tablasize style=height:50\\%\\>");
+    out.print("<table class=table table-hover table-responsive table-condensed >");
     for(int i=0; i<list.size();i++){
         if(cont==6){
-           out.print("<tr tablasize><td >"+list.get(i-5)+"</td><td>"+list.get(i-4)+"</td><td>"+list.get(i-3)+"</td><td>"+list.get(i-2)+"</td><td>"+list.get(i-1)+"</td><td>"+list.get(i)+"</td><td><a onclick=savelote("+list.get(i-6)+")><button class= btn-success >Ok</button></a></td><tr>");
+           out.print("<tr tablasize><td >"+list.get(i-5)+"</td><td>"+list.get(i-4)+"</td><td>"+list.get(i-3)+"</td><td>"+list.get(i-2)+"</td><td>"+list.get(i-1)+"</td><td>"+list.get(i).toLowerCase()+"</td><td><a onclick=savelote("+list.get(i-6)+")><button class= btn-success >Ok</button></a></td><tr>");
            cont=0;
         }else{
          cont++;   
@@ -103,7 +99,7 @@
     }
                     %>
                 </div>
-                <div class=" col-xs-7" >
+                <div class=" col-xs-6" >
                     <%
                     if(usuario.equals("leon")){
                     out.println("<label class=l1>Origen:&nbsp;&nbsp;&nbsp;"+usuario.toUpperCase()+"</label>");

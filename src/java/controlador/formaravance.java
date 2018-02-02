@@ -92,8 +92,7 @@ public class formaravance extends HttpServlet {
         for(int i =0;i<k;i++){
             //System.out.println(arr.get(i)+"-"+a+"-"+k);
            if(avan.buscardepa(arr, i, a).equals("0")){
-               avan.Autoupdate_lotes(a, fecha, arr, i,banda);
-               
+               avan.Autoupdate_lotes(a, fecha, arr, i,banda,charmaquila);
               i+=2; 
            }else i+=2;
         }
@@ -171,80 +170,6 @@ public class formaravance extends HttpServlet {
         ArrayList<String> array2 = new ArrayList<>();
         PrintWriter out = response.getWriter();
         System.out.println(maquila + "/" + codigo + "/montado banda: " + banda);
-//        if (usuario.equals("leon")) {//maquila de leon
-//            charmaquila="L";
-//             ArrayList<String> loadprog = new ArrayList<>();
-//            try{
-//            boolean respuesta =false;
-//            array = alldepcharge(array);
-//            array2 = depaload(array2);
-//            Avances av = new Avances();
-//            b= av.searchcod(codigo);
-//            
-//            System.out.println(depar);
-//            if (b ==0) {
-////                    out.println("<script type=\"text/javascript\">");
-////                    out.println("alert('No se han encontrado registros o ya esta completado el proceso con ese codigo');");
-////                  //  out.println("location='planta/index.jsp';");
-////                    out.println("</script>");
-//            out.println("<label>No se han encontrado registros o ya esta completado el proceso con este lote</label>");
-//            }else{
-//                a=String.valueOf(b);
-//                loadprog=av.getprogavances(a);
-//               if (array2.get(0).equals(depar)) {
-//                        System.out.println("Soy corte de leon .v");
-//                        respuesta = av.avanceprimerdep(a, fechac, charmaquila, array, array2);
-//                        if (respuesta) {
-//                            av.modiavancestatus(array, k, a,fechac,charmaquila.charAt(0));
-//                          out.println("<label>Avance Completo Exitosamente:)</label>");
-//                        } else {
-//                            out.println("<label>Ya existe Avance de este departamento</label>");
-//                        }
-//                    } else {
-//                        // de precorte en adelante esto es lo que prosigue\
-//                        //Establecer punto donde se encuentra el departamento en la lista
-//                        for (int i = 0; i < array.size(); i++) {
-//                            if (array.get(i).equals(depar)) {
-//                                k = i;
-//                                i = array.size();
-//                            }
-//                        }
-//                        if (av.verificaraiz(array, k, a)) {// inicio de verificacion del usuario con la lista
-//                            if (av.checkback(array, k, a)){//verifica el departamento anterior
-//                                    av.avances(a, fechac, charmaquila, array, k, (array.size() - 1),fechac);
-//                                    av.modiavancestatus(array, k, a,fechac,charmaquila.charAt(0));
-//                                    out.println("<label>Avance Completo exitosamente!!</label>");                       
-//                            } else {
-//                              out.println("<label>Falta la Captura del departamento anterior</label>");
-//                            }
-//                        } else {
-//                            out.println("<label>Ya existe Avance de este departamento</label>");
-//                        }
-//                    }
-//                        if(loadprog.isEmpty()){
-//            }else{
-//                out.println(" <div class=\"row\" style=\"padding-top: 15px\">\n" +
-//"                                   <div class=\"col-sm-4\">\n" +
-//"                                    <label class=\"ln\">PROGRAMA:"+loadprog.get(0)+"</label><br>\n" +
-//"                                    <label class=\"ln\">LOTE:"+loadprog.get(5)+"</label> \n" +
-//"                                </div>\n" +
-//"                                 <div class=\"col-sm-4\">\n" +
-//"                                    <label class=\"ln\">ESTILO:"+loadprog.get(1)+"</label><br>\n" +
-//"                                    <label class=\"ln\">PARES:"+loadprog.get(2)+"</label> \n" +
-//"                                </div>\n" +
-//"                                 <div class=\"col-sm-4\">\n" +
-//"                                    <label class=\"ln\">COMBINACION:"+loadprog.get(3)+"</label>\n" +
-//"                                </div><div class=\"col-sm-4\">\n" +
-//"                                    <label class=\"ln\">TERMINO :"+loadprog.get(6)+"</label>\n" +
-//"                                </div> \n" +
-//"                                </div>");
-//            }
-//            }
-//            }catch (Exception e) {
-//                Logger.getLogger(Avances.class.getName()).log(Level.SEVERE, null, e);
-//            }
-//            
-//        } else
         if (maquila.equals("PLANTA") && (tipos.equals("BASICO")) || tipos.equals("MEDIOBASICO")) {//planta y capturista
             System.out.println("PLANTA");
             boolean respuesta;
@@ -260,19 +185,17 @@ public class formaravance extends HttpServlet {
                 pr = av.getprogcode(b);
                 // verifica que nos haya devuelto un id distinto a cero
                 if (b == 0) {
-                    System.out.println("Entro a error");
                     av.loglote(codigo, String.valueOf(pr.getPrograma()), fechac, usuario + banda, String.valueOf(b));
-                    out.println("<label>Lote inexistente, intentelo de nuevo</label>");
+                    out.println("<label style=color:red>Lote inexistente, intentelo de nuevo</label>");
                 } else {// Inicio de verificacion y actualizacion de avances
                     a = String.valueOf(b);
                     loadprog = av.getprogavances(a);
                     //inicio es corte
                     if (array2.get(0).equals(usuario)) {
-                        System.out.println("Soy corte .v");
                         respuesta = av.avanceprimerdep(a, fechac, charmaquila, array, array2);
                         if (respuesta) {
                             av.modiavancestatus(array, k, a, fechac, charmaquila.charAt(0));
-                            out.println("<label>Avance Completo Exitosamente:)</label>");
+                            out.println("<label style=color:green>Avance Completo Exitosamente:)</label>");
                         } else {
                             out.println("<label>Ya existe Avance de este departamento</label>");
                         }
@@ -290,24 +213,24 @@ public class formaravance extends HttpServlet {
                                 if (usuario.equals("preacabado")) {//solo si el usuario es preacabado
                                     if (av.checkmontado(array, k, a)) {// verifica avance en montado
                                         av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac, usuario + banda, a);
-                                        out.println("<label>No se puede realizar avance de preacabado si ya se tiene montado, Contacte a un administrador</label>");
+                                        out.println("<label style=color:red>No se puede realizar avance de preacabado si ya se tiene montado, Contacte a un administrador</label>");
                                     } else {
                                         av.avancespreaca(a, fechac, charmaquila, array, k);
-                                        out.println("<label>Avance Completo Exitosamente:)</label>");
+                                        out.println("<label style=color:green>Avance Completo Exitosamente:)</label>");
                                     }
                                 } else if (usuario.equals("montado")) {//entra a usuariomontado
                                     if (av.checkpremontado(array, k, a)) {//verifica inspeccion de calidad
                                         av.avancesmontado(a, fechac, charmaquila, array, k, banda);
                                         av.modiavancestatus(array, k, a, fechac, banda, charmaquila);
-                                        out.println("<label>Avance Completo Exitosamente:)</label>");
+                                        out.println("<label style=color:green>Avance Completo Exitosamente:)</label>");
                                     } else {
                                         av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac, (usuario + banda), a);
-                                        Autoupdate_Stoplote(array,k,Integer.parseInt(a+2),fechac,av,banda,charmaquila);
-                                        out.println("<label>Falta Captura de Inspeccion de calidad</label>");
+                                        Autoupdate_Stoplote(array,k,Integer.parseInt(a),fechac,av,banda,charmaquila);
+                                        out.println("<label style=color:red>Falta Captura de Inspeccion de calidad</label>");
                                     }
                                 } else {
                                     av.avances(a, fechac, charmaquila, array, k, (array.size() - 1), fechac);
-                                    out.println("<label>Avance Completo Exitosamente:)</label>");
+                                    out.println("<label style=color:green>Avance Completo Exitosamente:)</label>");
                                     if (array.get(k).equals(array.get(array.size() - 3))) {
                                         av.modiavancestatus(a);
                                     } else {
@@ -316,8 +239,8 @@ public class formaravance extends HttpServlet {
                                 }
                             } else {
                                 av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac, usuario + banda, a);
-                                out.println("<label>Falta captura del departamento anterior</label>");
-                                Autoupdate_Stoplote(array,k,Integer.parseInt(a+2),fechac,av,banda,charmaquila);
+                                out.println("<label style=color:red>Falta captura del departamento anterior</label>");
+                                Autoupdate_Stoplote(array,k,Integer.parseInt(a),fechac,av,banda,charmaquila);
                             }
                         } else {
                             out.println("<label>Ya existe Avance de este departamento</label>");
@@ -347,11 +270,10 @@ public class formaravance extends HttpServlet {
                 Logger.getLogger(Avances.class.getName()).log(Level.SEVERE, null, e);
             }
         } else if (tipos.equals("PREINTERMEDIO") || tipos.equals("INTERMEDIO") || tipos.equals("ADMIN")) {
-            System.out.println("usuario PREINTERMEDIO");
+            //System.out.println("usuario PREINTERMEDIO");
             String maquilas = request.getParameter("maquila");
             String depmaquila = request.getParameter("depmaquila");
             boolean respuesta;
-            boolean respuesta1;
             try {
                 ArrayList<String> loadprog = new ArrayList<>();
                 Avances av = new Avances();
@@ -361,13 +283,11 @@ public class formaravance extends HttpServlet {
                 array2 = depaload(array2);
                 b = av.searchcod(codigo);
                 Programa pr = new Programa();
-
                 pr = av.getprogcode(b);
                 // verifica que nos haya devuelto un id distinto a cero
                 if (b == 0) {
                     av.loglote(codigo, String.valueOf(pr.getPrograma()), fechac, usuario + banda, String.valueOf(b));
                     out.println("<label>LOTE NO ENCONTRADO, VUELVA A INTERNTARLO O LLAME A UN ADMINISTRADOR</label>");
-
                 } else {
                     a = String.valueOf(b);
                     loadprog = av.getprogavances(a);
@@ -408,7 +328,7 @@ public class formaravance extends HttpServlet {
                                         out.println("<label>Avance Completo Exitosamente:)</label>");
                                     } else {// si aun no se tiene avance de inspeccion   
                                         av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac, usuario + banda, a);
-                                        out.println("<label>Falta Captura de Inspecciond de calidad</label>");
+                                        out.println("<label>Falta Captura de Inspeccion de calidad</label>");
                                         Autoupdate_Stoplote(array,k,Integer.parseInt(a),fechac,av,banda,charmaquila);
                                     }
                                 } else {
@@ -422,8 +342,13 @@ public class formaravance extends HttpServlet {
                                 }
                             } else {
                                 av.loglote(String.valueOf(pr.getLote()), String.valueOf(pr.getPrograma()), fechac, usuario + banda, a);
+                                if(tipos.equals("INTERMEDIO") && (charmaquila.equals("E")||charmaquila.equals("C")) && k<=6){
+                                   out.println("<label>Falta captura de corte o precorte de PLANTA, revisalo</label>"); 
+                                }else{
                                 Autoupdate_Stoplote(array,k,Integer.parseInt(a),fechac,av,banda,charmaquila);
                                 out.println("<label>Falta captura del departamento anterior</label>");
+                                }
+                                
                             }
                         } else {
                             out.println("<label>Ya existe Avance de este departamento</label>");

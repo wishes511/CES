@@ -24,11 +24,11 @@ import java.util.logging.Logger;
  */
 public class Avances {
     //servidor local de pruebas
-String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=avances;user=mich; password=mich;";
+//String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=avances;user=mich; password=mich;";
 //    String url = "jdbc:sqlserver://192.168.6.75:9205;"
 //            + "databaseName=avances;user=mich; password=mich;";
 //    jdbc:sqlserver://192.168.6.75\SQLEXPRESS:9205;databaseName=avances
-//   String url ="jdbc:sqlserver://192.168.6.8\\datos65:9205;databaseName=Avances;";
+   String url ="jdbc:sqlserver://192.168.6.8\\datos65:9205;databaseName=Avances;";
    String drive = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     // Declaramos los sioguientes objetos
     Connection conexion = null;
@@ -45,8 +45,8 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
 
     public void abrir() throws ClassNotFoundException, SQLException {
         Class.forName(drive);
-        conexion = DriverManager.getConnection(url, "mich", "mich");
-//        conexion = DriverManager.getConnection(url, "sa", "Prok2001");
+//        conexion = DriverManager.getConnection(url, "mich", "mich");
+        conexion = DriverManager.getConnection(url, "sa", "Prok2001");
     }
 
     public void cerrar() throws SQLException {
@@ -161,11 +161,11 @@ public String buscardepa(ArrayList<String> arr,int i,int a) throws ClassNotFound
         smt.close();
         return fecha;
     }
-    public ArrayList<String> searchstoppair(String f1, String f2,ArrayList<String> arr) throws ClassNotFoundException, SQLException {
+    public ArrayList<String> searchstoppair(String f1, String f2,ArrayList<String> arr,String bl) throws ClassNotFoundException, SQLException {
         
         String query = "SELECT DISTINCT id, lote, prog, fecha, depar, dep_anterior\n" +
 "FROM log_lote\n" +
-"WHERE (fecha between '"+f1+"' and '"+f2+"') AND (prog <> -1) AND (depar <> 'mich1') AND (depar <> 'mich2') AND (depar <> 'mich2') AND (depar <> 'mich3') AND (depar <> 'mich')\n" +
+"WHERE (fecha between '"+f1+"' and '"+f2+"')AND dep_anterior LIKE '"+bl+"%' AND (prog <> -1) AND (depar <> 'mich1') AND (depar <> 'mich2') AND (depar <> 'mich2') AND (depar <> 'mich3') AND (depar <> 'mich')\n" +
 "GROUP BY fecha,depar, prog, lote, id, dep_anterior\n" +
 "ORDER BY fecha ";
         Statement smt;
@@ -183,7 +183,6 @@ public String buscardepa(ArrayList<String> arr,int i,int a) throws ClassNotFound
         }
         df.close();
         smt.close();
-        
         return arr;
     }
     public boolean buscarprogram(String prog,int mes) throws ClassNotFoundException, SQLException {
@@ -1168,20 +1167,21 @@ private String codigo(String estilo){
      }
     return cod;
 }
-    public void Autoupdate_lotes(int a, String fecha, ArrayList<String> arr, int i,String banda) throws SQLException{
+    public void Autoupdate_lotes(int a, String fecha, ArrayList<String> arr, int i,String banda,String charmaquila) throws SQLException{
     PreparedStatement st = null;
     String s="";   
     try {// realizar avances
             abrir();
             conexion.setAutoCommit(false);
             if(arr.get(i).equals("montado")){
-            s = "update avance set "+arr.get(i)+"="+banda+","+arr.get(i+1)+"='"+fecha+"',"+arr.get(i+2)+"='P' where id_prog="+a;
+            s = "update avance set "+arr.get(i)+"="+banda+","+arr.get(i+1)+"='"+fecha+"',"+arr.get(i+2)+"='"+charmaquila+"' where id_prog="+a;
             }else{
-            s = "update avance set "+arr.get(i)+"=1,"+arr.get(i+1)+"='"+fecha+"',"+arr.get(i+2)+"='P' where id_prog="+a;
+            s = "update avance set "+arr.get(i)+"=1,"+arr.get(i+1)+"='"+fecha+"',"+arr.get(i+2)+"='"+charmaquila+"' where id_prog="+a;
             }
             st = conexion.prepareStatement(s);
             st.executeUpdate();
              conexion.commit();
+            System.out.println(s); 
            st.close();
         } catch (Exception e) {
             Logger.getLogger(Avances.class.getName()).log(Level.SEVERE, null, e);
