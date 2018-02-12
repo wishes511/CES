@@ -10,7 +10,7 @@ package Modelo;
  * @author gateway1
  */
 public class log_lote {
-    String lote,prog,fecha,statuto,depar;
+    private String lote,prog,fecha,statuto,depar;
 
     public String getLote() {
         return lote;

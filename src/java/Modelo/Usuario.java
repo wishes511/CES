@@ -10,7 +10,7 @@ package Modelo;
  * @author gateway1
  */
 public class Usuario {
-    String contrasena,tipo,usuario,nombre;
+    private String contrasena,tipo,usuario,nombre;
 
     public String getNombre() {
         return nombre;
@@ -19,7 +19,7 @@ public class Usuario {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    int id_usuario;
+    private int id_usuario;
 
     public int getId_usuario() {
         return id_usuario;

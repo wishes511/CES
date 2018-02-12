@@ -439,7 +439,13 @@ public String buscardepa(ArrayList<String> arr,int i,int a) throws ClassNotFound
         int id = 0;
         Statement st;
         ResultSet rs;
-        String query = "SELECT max(id_prog) as id_prog FROM programa where statuto != 'COMPLETO' and codigo='" + ids+"'";
+        String query="";
+        if(ids.length()==6){
+        query = "SELECT max(id_prog) as id_prog FROM programa where statuto != 'COMPLETO' and codigo='" + ids+"'";
+        }else{
+        query = "SELECT max(id_prog) as id_prog FROM programa where statuto != 'COMPLETO' and convert(int,codigo)=" + Integer.parseInt(ids);
+        }
+        
         abrir();
         st = conexion.createStatement();
         rs = st.executeQuery(query);
@@ -940,13 +946,16 @@ public String buscardepa(ArrayList<String> arr,int i,int a) throws ClassNotFound
                 System.out.println(o.getMessage());
             }
     }
-    }
+    }//
     public void modiavancestatus(ArrayList<String> arr, int k,String a,String fechas,String banda,String maqbanda){
     PreparedStatement st = null;
         try{//modificar status de programa
              abrir();
             conexion.setAutoCommit(false);
-            String s = "update programa set statuto='"+arr.get(k).toUpperCase()+" "+banda+" "+maqbanda+"', ultima_fecha='"+fechas+"' where id_prog="+a;
+            String s="";
+            if(arr.get(k).equals("montado")){
+                s = "update programa set statuto='"+arr.get(k).toUpperCase()+""+banda+" "+maqbanda+"', ultima_fecha='"+fechas+"' where id_prog="+a;
+            }else s = "update programa set statuto='"+arr.get(k).toUpperCase()+" "+maqbanda+"', ultima_fecha='"+fechas+"' where id_prog="+a;
             st = conexion.prepareStatement(s);
             st.executeUpdate();
             conexion.commit();

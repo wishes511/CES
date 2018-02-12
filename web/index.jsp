@@ -1,6 +1,5 @@
 <%-- 
     Document   : Log
-    Created on : 19-ago-2016, 12:51:49
     Author     : mich
 --%>
 <%

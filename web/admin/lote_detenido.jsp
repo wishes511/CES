@@ -46,10 +46,6 @@
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../js/dhtmlgoodies_calendar.js?random=20171118"></script>
-        <link type="text/css" rel="stylesheet" href="../css/dhtmlgoodies_calendar.css?random=20171118" media="screen"></link>
-		
-
     </head>
     <body class="body1">
         <script type="text/javascript">
@@ -77,26 +73,16 @@
             <nav class="navbar navbar-default">
 
                 <ul class="nav navbar-nav nav-pills">
-                    <li><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li>
-                    <li class="dropdown ln active">
-                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
-                            Usuario<span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" id="#90" role="menu">
 
-                            <li class="ln"><a href="buscalote.jsp">Busqueda</a></li>
-                            <li class="ln active"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
-                            <li class="ln"><a href="verpares.jsp">Ver pares</a></li>
-                            
-                        </ul>
-                    </li>
-                    <li class="ln"><a  href="../Dateupdate">actualizar fechas</a></li>
+                    
+                    <li><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li> <li class="active ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
+                    <li class="ln"><a href="verpares.jsp">Ver Pares</a></li>  
                     <li class="ln"><a href="../Cierresesion">Salir</a></li>
                 </ul>
 
             </nav>
             <div class="container">
-                <div class="row">
+                <div class="row ">
                     <div class="col-md-12 " align="">
                         <div align="center"> <label class="titulos espacio-md-down">Lotes con desfase de departamento</label><br></div>
                        
@@ -122,12 +108,23 @@
                         </div>
                     </div>
                 </div>
-                                 
+                 
+                <div class="row">
+                    <div class="col-md-offset-4">
+                       <div class=" esp1 ln col-sm-4" align="center">
+                       <label>Busqueda por status anterior: </label>
+                     </div>
+                    <div class=" esp1 ln col-sm-3" align="center">
+                        <input type="text" class="form-control input-sm  ln" name="bl" id="bl" onchange="okas()"/>
+                     </div> 
+                    </div>
+                    
+                </div>                
+                                
                 <div class="row">
                     <div class=" esp1 ln" align="center">
-                        <br><button type="submit" name="envio" class="btn btn-success ln" id="envio" value="Ver Pares" onclick="okas()">Ver Lotes</button>
+                        <button type="submit" name="envio" class="btn btn-success ln" id="envio" value="Ver Pares" onclick="okas()">Ver Lotes</button>
                         <a target="_blank" ><button type="submit" name="envio" class="btn btn-success ln" id="envio" value="Generar Reporte" onclick="reporte_lotes()">Generar reporte</button></a>
-                        
                     </div>
                 </div>
 
@@ -167,30 +164,30 @@
             function okas() {
                 var valor = $('#f1').val();
                 var valor1 = $('#f2').val();
-                if (!(/^\d{2}|\d{1}\-\d{2}\-\d{4}\$/i.test(valor)) && !(/^\d{2}|\d{1}\-\d{2}\-\d{4}\$/i.test(valor1))) {
-                    alert("fecha invalida invalido");
+                if (!(/^\d{2}|\d{1}\-\d{2}|\d{1}\-\d{4}\$/i.test(valor)) && !(/^\d{2}|\d{1}\-\d{2}|\d{1}\-\d{4}\$/i.test(valor1))) {
+                    alert("fecha invalida");
                     //document.forma.f1.focus();
                     document.getElementById("f1").value = "<%=fechac%>";
                     document.getElementById("f2").value = "<%=fechac%>";
                     return 0;
                 } else {
+                    var bl=$('#bl').val();
                     var pro = $('#f1').val();
                     var pro1 = $('#f2').val();
                     var uso = "fechas";
                     $.ajax({
                         type: 'post',
-                        data: {f1: pro, f2: pro1, uso: uso},
+                        data: {f1: pro, f2: pro1, uso: uso,bl:bl},
                         url: '../Getstopairs',
                         success: function (result) {
                             $('#llenar').html(result);
-   
                         }
                     });
                 }
             }
              
 
-function reporte_lotes() {
+            function reporte_lotes() {
                 var f1 = $('#f1').val();
                 var f2 = $('#f2').val();
                 location = 'lotes_detenidos.jsp?f1=' + f1 + '&f2=' + f2;

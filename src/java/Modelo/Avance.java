@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author gateway1
  */
 public class Avance {
-    String fechaentrega="",fechacorte="",fechaprecorte="",fechapespunte="",fechadeshebrado="",fechaojillado="",
+    private String fechaentrega="",fechacorte="",fechaprecorte="",fechapespunte="",fechadeshebrado="",fechaojillado="",
             fechainspeccion="",fechapreacabado="",fechamontado="",fechapt="",status="";
 
     public String getStatus() {

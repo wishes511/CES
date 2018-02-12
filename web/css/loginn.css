@@ -4,7 +4,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 08-feb-2016, 21:45:22
+    Created on : 08-mar-2017, 09:45:22
     Author     : mich
 */
 
@@ -13,9 +13,6 @@ body {
   -webkit-font-smoothing: antialiased;
   font:arial,sans-serif;
 }
-
-
-
 .form-login {
     background-color: #EDEDED;
     padding-top: 10px;

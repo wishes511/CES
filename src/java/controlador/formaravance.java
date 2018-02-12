@@ -87,7 +87,6 @@ public class formaravance extends HttpServlet {
     }
 //Aqui me quede0000
     private void Autoupdate_Stoplote(ArrayList<String> arr, int k, int a,String fecha, Avances avan, String banda, String charmaquila) throws SQLException, ClassNotFoundException{
-        int cont =0;
         k+=3;
         for(int i =0;i<k;i++){
             //System.out.println(arr.get(i)+"-"+a+"-"+k);

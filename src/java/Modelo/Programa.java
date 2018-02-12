@@ -10,7 +10,7 @@ package Modelo;
  * @author gateway1
  */
 public class Programa {
-    int programa,lote,estilo,pares,mes,id,year;
+    private int programa,lote,estilo,pares,mes,id,year;
 
     public int getYear() {
         return year;
@@ -19,7 +19,7 @@ public class Programa {
     public void setYear(int year) {
         this.year = year;
     }
-    String fecha;
+    private String fecha;
 
     public String getFecha() {
         return fecha;
@@ -52,7 +52,7 @@ public class Programa {
     public void setPares(int pares) {
         this.pares = pares;
     }
-    String corrida="",combinacion="",fechae="",codigo="",status="";
+    private String corrida="",combinacion="",fechae="",codigo="",status="";
 
     public String getStatus() {
         return status;
