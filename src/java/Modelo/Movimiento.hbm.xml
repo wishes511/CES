@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 27, 2018 4:37:28 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Movimiento" table="movimiento" schema="dbo" catalog="CES" optimistic-lock="version">
+        <id name="folio" type="int">
+            <column name="folio" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="departamento" class="Modelo.Departamento" fetch="select">
+            <column name="clave_departamento" />
+        </many-to-one>
+        <property name="claveUsuario" type="java.lang.Integer">
+            <column name="clave_usuario" />
+        </property>
+        <property name="claveProveedor" type="java.lang.Integer">
+            <column name="clave_proveedor" />
+        </property>
+        <property name="claveAutorizado" type="java.lang.Integer">
+            <column name="clave_autorizado" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" />
+        </property>
+        <property name="tipoMov" type="string">
+            <column name="tipo_mov" length="1" />
+        </property>
+        <property name="area" type="string">
+            <column name="area" length="20" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="observaciones" length="50" />
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="23" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 27, 2018 4:37:28 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Usuario" table="usuario" schema="dbo" catalog="CES" optimistic-lock="version">
+        <id name="claveUsuario" type="int">
+            <column name="clave_usuario" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="departamento" class="Modelo.Departamento" fetch="select">
+            <column name="clave_departamento" />
+        </many-to-one>
+        <many-to-one name="tipoUsuario" class="Modelo.TipoUsuario" fetch="select">
+            <column name="clave_tipo" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" />
+        </property>
+        <property name="codigo" type="string">
+            <column name="codigo" length="6" />
+        </property>
+        <property name="statuo" type="java.lang.Character">
+            <column name="statuo" length="1" />
+        </property>
+        <property name="pass" type="string">
+            <column name="pass" length="15" />
+        </property>
+        <property name="empresa" type="string">
+            <column name="empresa" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

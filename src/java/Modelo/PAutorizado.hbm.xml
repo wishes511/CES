@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 27, 2018 4:37:28 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.PAutorizado" table="p_autorizado" schema="dbo" catalog="CES" optimistic-lock="version">
+        <id name="claveAutorizado" type="int">
+            <column name="clave_autorizado" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="proveedor" class="Modelo.Proveedor" fetch="select">
+            <column name="clave_proveedor" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" />
+        </property>
+        <property name="statuo" type="java.lang.Character">
+            <column name="statuo" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>
