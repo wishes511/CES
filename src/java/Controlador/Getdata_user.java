@@ -85,7 +85,7 @@ public class Getdata_user extends HttpServlet {
         try {
             String usuario = (String) objSesion.getAttribute("usuario");
        String tipos = (String) objSesion.getAttribute("tipo");
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")) ) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")||tipos.equals("ADMINPROV")) ) {
     }else response.sendRedirect("../index.jsp");
     
         String uso = request.getParameter("uso");

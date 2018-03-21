@@ -86,6 +86,25 @@ public ArrayList<String> buscaru_clave(int clave) throws ClassNotFoundException,
         return ids;
     }
 
+
+public boolean buscarusuarios() throws ClassNotFoundException, SQLException {
+        boolean respo =false;
+        String query = "select top(1) nombre from usuario";
+        Statement smt;
+        ResultSet df;
+        conBD db = new conBD();
+        db.abrir();
+        Connection conect=db.getConexion();
+        smt = conect.createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {
+            respo=true;
+        }
+        df.close();
+        smt.close();
+        return respo;
+    }
+
 public ArrayList<String> buscarusuario(String nombre, String status) throws ClassNotFoundException, SQLException {
     ArrayList<String> lista= new ArrayList<>();    
     String query = "select u.clave_usuario as 'clave_usuario',u.nombre as 'nombre',d.nombre as 'departamento',t.nombre as 'tipo',u.empresa as 'empresa' \n" +

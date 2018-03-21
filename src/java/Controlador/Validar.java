@@ -44,7 +44,13 @@ public class Validar extends HttpServlet {
         boolean flag=false;
         int interv =180;
          PrintWriter out = response.getWriter();
-        //control de acceso
+        //control de acceso 
+        CES a = new CES();
+        if(!a.buscarusuarios()){
+            objSesion.setAttribute("usuario", "ADMINPROV");
+                        objSesion.setAttribute("tipo", "ADMINPROV");
+                        response.sendRedirect("usuario/usuarios.jsp");
+        }else{
         if (nombre.equals(null) || contrasena.equals(null) || nombre.equals("") || contrasena.equals("")) {
                 out.println("<script type=\"text/javascript\">");
                 out.println("location='index.jsp';");
@@ -61,7 +67,7 @@ public class Validar extends HttpServlet {
         // Definir variable de referencia a un objeto de tipo Usuario
         String tipo = "";
         // Consultar Base de datos
-        CES a = new CES();
+       
         
             tipo = a.buscaru(nombre, contrasena);            
             if (tipo.equals("n")) {                
@@ -84,6 +90,11 @@ public class Validar extends HttpServlet {
                         objSesion.setAttribute("tipo", tipo);
                         response.sendRedirect("usuario/index.jsp");
                         break;
+                    case "ADMINPROV":
+                                    objSesion.setAttribute("usuario", "ADMINPROV");
+                        objSesion.setAttribute("tipo", "ADMINPROV");
+                        response.sendRedirect("usuario/usuarios.jsp");
+                        break;
                     default:
                         out.println("<script type=\"text/javascript\">");
                         out.println("alert('Usuario o contrasena incorrectos');");
@@ -93,12 +104,13 @@ public class Validar extends HttpServlet {
                 }
             }   
         }
+        }
         } catch (SQLException ex) {
             System.out.println(ex+" error "+ex.getMessage());
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Validar.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         // Redireccionar a una pagina de respuesta
 
         // Redireccionar a una pagina de respuesta

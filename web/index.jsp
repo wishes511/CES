@@ -54,7 +54,7 @@
     </nav> 
             </div>
         <div class="">
-            <div id="fondoES" class="container-fluid  espacio-lg-down" align="center">
+            <div id="fondoES" class="container-fluid espacio-lg-down" align="center">
                 <div class="btn" >
                     <div class="" align="center" >
                         <br><br><br><br><br><label class="">Codigo</label><input type="text" id="codigo" name="codigo" onchange="searchuser()" class="form-control ">

@@ -10,7 +10,7 @@
    try{
        String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")) ) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")|| tipos.equals("ADMINPROV")) ) {
        // out.println(usuario);
     } else {
         response.sendRedirect("../index.jsp");
@@ -47,7 +47,7 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <%
-                if(tipos.equals("ADMIN")){
+                if(tipos.equals("ADMIN")|| tipos.equals("ADMINPROV")){
                 out.print("<a class=\"nav-link\" href=index.jsp>Proveedores</a>");
                 out.print("<a class=\"nav-link active\">Usuarios<span class=\"sr-only\">(current)</span></a>"
                         + "<a class=\"nav-link\" href=\"reportes.jsp\">Reportes</a>");
@@ -70,7 +70,7 @@
             <div class="container-fluid " align="center">
                 <div class="row">
         <%
-                if(tipos.equals("ADMIN")){
+                if(tipos.equals("ADMIN")|| tipos.equals("ADMINPROV")){
                
             out.print("<nav class=\"col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar\">\n" +
 "          <ul class=\"nav nav-pills flex-column\" id=barra_nav>\n" +
@@ -88,7 +88,7 @@
 "          </ul>\n" +
 "        </nav>");
                 }
-            if(tipos.equals("ADMIN")){
+            if(tipos.equals("ADMIN")|| tipos.equals("ADMINPROV")){
         out.print("<main class=\"col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3\" id=main_prov>\n" +
 "          <h1>Usuarios</h1>\n" +
 "          <section class=\"row text-center placeholders\" id=section_prov align=center>\n" +
