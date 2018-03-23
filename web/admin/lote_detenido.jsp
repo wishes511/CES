@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : lote_detenido.jsp
     Created on : 29/11/2017, 10:01:15 AM
     Author     : mich

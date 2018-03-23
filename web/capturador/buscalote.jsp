@@ -97,8 +97,9 @@
                         </div>  
                     </div>
                     <br><div class="row">
-                        <div align="center"> <br>
-                        <button class="btn btn-success ln" id="boton3" onclick="lotes()">Generar reporte</button></div>
+                        <div align="center"> <br><button class="btn btn-success ln" id="boton" onclick="nprograma()">Aceptar</button> 
+                            <button class="btn btn-success ln" id="boton2" onclick="busqueda()">Historial de Lotes</button>
+                            <button class="btn btn-success ln" id="boton3" onclick="lotes()">Generar reporte</button></div>
                     </div>
                 </div>
                    <div id="respuesta" class="row deep-sm"></div>

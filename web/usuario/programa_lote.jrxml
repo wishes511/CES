@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b684b2d4-93eb-4508-952d-b93a3c718f6a">
 	<property name="ireport.zoom" value="1.9487171000000156"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="69"/>
+	<property name="ireport.x" value="5"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -48,6 +48,9 @@ group by prog, lote,estilo,combinacion,corrida,mes,statuto,ultima_fecha,npares]]
 	<field name="ultima_fecha" class="java.lang.String"/>
 	<field name="pares" class="java.lang.Integer"/>
 	<variable name="pares_1" class="java.lang.Integer" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{pares}]]></variableExpression>
+	</variable>
+	<variable name="pares_2" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{pares}]]></variableExpression>
 	</variable>
 	<background>
@@ -198,10 +201,6 @@ group by prog, lote,estilo,combinacion,corrida,mes,statuto,ultima_fecha,npares]]
 	</pageFooter>
 	<summary>
 		<band height="21" splitType="Stretch">
-			<textField>
-				<reportElement x="233" y="3" width="100" height="18" uuid="e2ff8393-9e68-4540-87e1-aa0d6c8fef4b"/>
-				<textFieldExpression><![CDATA[$V{pares_1}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="161" y="3" width="72" height="18" uuid="ca934987-740c-4f71-9e77-0e1c8e9ee186"/>
 				<text><![CDATA[Total de Pares: ]]></text>
@@ -212,6 +211,10 @@ group by prog, lote,estilo,combinacion,corrida,mes,statuto,ultima_fecha,npares]]
 					<pen lineWidth="3.0"/>
 				</graphicElement>
 			</line>
+			<textField>
+				<reportElement x="235" y="1" width="100" height="20" uuid="067a9ce2-e685-40f8-a44e-a98c4790ac82"/>
+				<textFieldExpression><![CDATA[$V{pares_2}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
