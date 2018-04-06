@@ -93,7 +93,7 @@ public class Getfields extends HttpServlet {
                 }
             }
             
-            System.out.println(codigo + "-" + codigo.length()+"-"+d4);
+            //System.out.println(codigo + "-" + codigo.length()+"-"+d4);
             
              Calendar fecha = Calendar.getInstance();
         int año = fecha.get(Calendar.YEAR);
@@ -129,17 +129,16 @@ public class Getfields extends HttpServlet {
                         break;
                     // Personal y maquiladores
                     default:
-                        System.out.println("entre a def");
+                        //System.out.println("entre a def");
                         CES u = new CES();
                         ArrayList<String> arru =u.buscaru_clave(Integer.parseInt(d4));
-                        System.out.println(!arru.isEmpty()+"-"+arru.get(4)+","+area);
+                        //System.out.println(!arru.isEmpty()+"-"+arru.get(4)+","+area);
                         if(!arru.isEmpty() && area.equals(arru.get(4))){
                             tipo_usuario_pm(arru,area,fechac,horas,out,mov);
                         }else {out.print("<label>No se encontro Usuario o codigo registrado</label>");
                                 out.print("<script>document.getElementById('codigo').value='';</script>");}
                         break;
                 }
-
             } else {
                 PrintWriter oute = response.getWriter();
                 oute.print("<div class= container-fluid align=center><label>Escriba o pase su numero de credencial adecuada</label><div class=col-sm-3 align=center>");
@@ -149,18 +148,18 @@ public class Getfields extends HttpServlet {
         } catch (ClassNotFoundException c) {
             System.out.println(c);
             PrintWriter out = response.getWriter();
-            out.print("<label>Falta algun archivo por cargar o no se encuentra alguno, llame a un administrador</label>");
+            out.print("<label>Codigo 2: Falta algun archivo por cargar o no se encuentra alguno, llame a un administrador<br>"+c+"</label>");
         } catch (IOException i) {
             System.out.println(i);
             PrintWriter out = response.getWriter();
-            out.print("<label>Problemas al ingresar correctamente un dato</label>");
+            out.print("<label>Codigo 2.1: Problemas al ingresar correctamente un dato</label>");
         } catch (SQLException ex) {
             Logger.getLogger(Getfields.class.getName()).log(Level.SEVERE, null, ex);
             PrintWriter out = response.getWriter();
-            out.print("<label>Problemas con la base de datos, llame a un administrador</label><br><label>Error: " + ex + "</label>");
+            out.print("<label>Codigo 2.2: Problemas con la base de datos, llame a un administrador<br>"+ex+"</label>");
         } catch (Exception e) {
             PrintWriter out = response.getWriter();
-            out.print("<label>Problemas al ingresar correctamente los datos</label>");
+            out.print("<label>Codigo 2.3: Problemas al ingresar correctamente los datos<br>"+e+"</label>");
             System.out.println(e);
         }
     }
@@ -316,10 +315,10 @@ public class Getfields extends HttpServlet {
                 + "                        <div class=\"col-sm-3\" align=\"center\">\n"
                 + "                           <label>Nombre :</label>"
                 + "                        </div><br><div class=\"col-sm-3\" style=\"\" align=center>\n"
-                + "                                <input type=text id=\"nombre\" class=\"ln form-control\" >\n"
+                + "                                <input type=text id=\"nombre\" class=\"ln form-control\" onchange=saltodepinvi()>\n"
                 + "                        </div><br>\n"
                  + "                        <div class=\"col-sm-3\">\n"
-                + "                                <label>Departamento : </label><select id=\"depa\" onchange=\"\" class=\"form-control\"><option></option>\n");
+                + "                                <label>Departamento : </label><select id=\"depa\" onchange=\"saltoob()\" class=\"form-control\"><option></option>\n");
         for (int i = 0; i < arr_depa.size(); i++) {
             if (cont == 1) {
                 out.print("<option onchange=searchactivo_id() value=" + arr_depa.get(i - 1) + ">" + arr_depa.get(i) + "</option>");
@@ -329,12 +328,12 @@ public class Getfields extends HttpServlet {
             }
         }
         out.print("                        </select><br></div><br><div class=\"col-sm-3\" style=\"\" align=center>\n"
-                + "                                <input type=text id=\"observaciones\" class=\"ln form-control\" placeholder='COMENTARIOS'>\n"
+                + "                                <input type=text id=\"observaciones\" class=\"ln form-control\" placeholder='COMENTARIOS' onchange=saltoinvi()>\n"
                 + "                        </div><br>\n" 
                 + "                        <div class=\"col-sm\" style=\"\" align=center>\n"
                 + "                                <br><label class=\"ln\" style=\"color: red\" >Area : </label><input type=text id=\"area\" class=\"ln non-input\" value="+area+" disabled>\n"
                 + "                        </div><br>\n"
-                + "                                 <input type=\"button\" class=\"btn\" value=\"Iniciar I/O\" onclick=\"inicio_io_invi()\"><br><br>\n"
+                + "                                 <input type=\"button\" class=\"btn\" id=binvi value=\"Iniciar I/O\" onclick=\"inicio_io_invi()\"><br><br>\n"
                 + "                        <div id=ensa></div>\n"
                 + "                    </div>");
     }

@@ -20,8 +20,7 @@ import java.util.logging.Logger;
  *
  * @author mich
  */
-public class CES {
-private conBD db = new conBD();
+public class CES extends conBD {
 
 public ArrayList<String> buscar_tipo_u(ArrayList<String> arr) throws ClassNotFoundException, SQLException {
         
@@ -29,9 +28,8 @@ public ArrayList<String> buscar_tipo_u(ArrayList<String> arr) throws ClassNotFou
         //System.out.println(query);
         Statement smt;
         ResultSet df;
-        conBD db = new conBD();
-        db.abrir();
-        Connection conect=db.getConexion();
+        abrir();
+        Connection conect=getConexion();
         smt = conect.createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
@@ -46,12 +44,10 @@ public ArrayList<String> buscar_tipo_u(ArrayList<String> arr) throws ClassNotFou
 public String buscaru(String usuario, String pass) throws ClassNotFoundException, SQLException {
         String ids="n";
         String query = "select t.nombre from usuario u join tipo_usuario t on u.clave_tipo=t.clave_tipo where u.nombre ='"+usuario+"' and pass='"+pass+"'";
-        //System.out.println(query);
         Statement smt;
         ResultSet df;
-        conBD db = new conBD();
-        db.abrir();
-        Connection conect=db.getConexion();
+        abrir();
+        Connection conect=getConexion();
         smt = conect.createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
@@ -65,12 +61,10 @@ public ArrayList<String> buscaru_clave(int clave) throws ClassNotFoundException,
         ArrayList<String> ids= new ArrayList<>();
         String query = "select clave_usuario,u.nombre as 'nombre',u.clave_departamento as 'clave_departamento',empresa,a.nombre as 'area' from usuario u "
                 + "join departamento p on u.clave_departamento = p.clave_departamento join area a on p.clave_area=a.clave_area where u.statuo!='0' and u.clave_usuario="+clave;
-        System.out.println(query);
         Statement smt;
         ResultSet df;
-        conBD db = new conBD();
-        db.abrir();
-        Connection conect=db.getConexion();
+        abrir();
+        Connection conect=getConexion();
         smt = conect.createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
@@ -85,16 +79,13 @@ public ArrayList<String> buscaru_clave(int clave) throws ClassNotFoundException,
         smt.close();
         return ids;
     }
-
-
 public boolean buscarusuarios() throws ClassNotFoundException, SQLException {
         boolean respo =false;
         String query = "select top(1) nombre from usuario";
         Statement smt;
         ResultSet df;
-        conBD db = new conBD();
-        db.abrir();
-        Connection conect=db.getConexion();
+        abrir();
+        Connection conect=getConexion();
         smt = conect.createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
@@ -113,8 +104,8 @@ public ArrayList<String> buscarusuario(String nombre, String status) throws Clas
    // System.out.println(query);
         Statement smt;
         ResultSet df;
-        db.abrir();
-        smt = db.getConexion().createStatement();
+        abrir();
+        smt = getConexion().createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
             lista.add(df.getString("clave_usuario"));
@@ -133,8 +124,8 @@ public boolean buscarusuario(String nombre, int depa, int tipo, String pass) thr
     String query = "select nombre from usuario where nombre='"+nombre+"' and clave_departamento="+depa;
         Statement smt;
         ResultSet df;
-        db.abrir();
-        smt = db.getConexion().createStatement();
+        abrir();
+        smt =getConexion().createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {p=true;}
         df.close();
@@ -146,8 +137,8 @@ public int lastuser() throws ClassNotFoundException, SQLException {
     String query = "select max(clave_usuario) as clave_usuario from usuario";
         Statement smt;
         ResultSet df;
-        db.abrir();
-        smt = db.getConexion().createStatement();
+        abrir();
+        smt = getConexion().createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
             p=Integer.parseInt(df.getString("clave_usuario"));}
@@ -156,25 +147,23 @@ public int lastuser() throws ClassNotFoundException, SQLException {
         return p;
     }
 // Fin busquedas
-
     //insercion de datos a la bd
 public void nuevouser(Usuario u) throws ClassNotFoundException, SQLException {
         PreparedStatement st = null;
         int a=0;
         try {
-            db.abrir();
-            db.getConexion().setAutoCommit(false);
+            abrir();
+            getConexion().setAutoCommit(false);
             String s = "insert into usuario values('"+u.getNombre()+"',"+u.getTipoUsuario().getClaveTipo()+","+u.getDepartamento().getClaveDepartamento()+",'"
                     +u.getCodigo()+"','"+u.getStatuo()+"','"+u.getPass()+"','"+u.getEmpresa()+"')";
-            System.out.println(s);
-            st = db.getConexion().prepareStatement(s);
+            st = getConexion().prepareStatement(s);
             st.executeUpdate();
         st.close();
-            db.getConexion().commit();
+            getConexion().commit();
         } catch (Exception e) {
             Logger.getLogger(CES_prov.class.getName()).log(Level.SEVERE, null, e);
             try {
-                db.getConexion().rollback();
+                getConexion().rollback();
             } catch (Exception o) {
                 System.out.println(o.getMessage());
 
@@ -187,17 +176,17 @@ public void nuevouser(Usuario u) throws ClassNotFoundException, SQLException {
         PreparedStatement st = null;
         int a=0;
         try {
-            db.abrir();
-            db.getConexion().setAutoCommit(false);
+            abrir();
+            getConexion().setAutoCommit(false);
             String s = "update usuario set statuo='0' where clave_usuario="+id;
-            st = db.getConexion().prepareStatement(s);
+            st = getConexion().prepareStatement(s);
             st.executeUpdate();
         st.close();
-            db.getConexion().commit();
+            getConexion().commit();
         } catch (Exception e) {
             Logger.getLogger(CES_prov.class.getName()).log(Level.SEVERE, null, e);
             try {
-                db.getConexion().rollback();
+                getConexion().rollback();
             } catch (Exception o) {
                 System.out.println(o.getMessage());
             }
@@ -208,17 +197,17 @@ public void nuevouser(Usuario u) throws ClassNotFoundException, SQLException {
         PreparedStatement st = null;
         int a=0;
         try {
-            db.abrir();
-            db.getConexion().setAutoCommit(false);
+            abrir();
+            getConexion().setAutoCommit(false);
             String s = "update usuario set statuo='1' where clave_usuario="+id;
-            st = db.getConexion().prepareStatement(s);
+            st = getConexion().prepareStatement(s);
             st.executeUpdate();
         st.close();
-            db.getConexion().commit();
+            getConexion().commit();
         } catch (Exception e) {
             Logger.getLogger(CES_prov.class.getName()).log(Level.SEVERE, null, e);
             try {
-                db.getConexion().rollback();
+                getConexion().rollback();
             } catch (Exception o) {
                 System.out.println(o.getMessage());
             }
@@ -226,23 +215,4 @@ public void nuevouser(Usuario u) throws ClassNotFoundException, SQLException {
         st.close();   
     }
 
-private String codigo(String estilo){
-     char [] charestilo = estilo.toCharArray();
-     char [] arr = {'0','0','0','0','0','0'};
-     int cont=charestilo.length-1;
-     int cont1=arr.length-1;
-     for(int i = cont1;i>= 0;i--){
-         if(0<=cont){
-             arr[i]=charestilo[cont];
-             cont--;
-         }else{
-         cont--;
-         }
-     }
-     String cod="";
-     for(int i =0;i<=cont1;i++){
-         cod=cod+arr[i];
-     }
-    return cod;
-}
 }

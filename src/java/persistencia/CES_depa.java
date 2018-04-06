@@ -19,15 +19,14 @@ import java.util.logging.Logger;
  *
  * @author mich
  */
-public class CES_depa {
-    private conBD db = new conBD();
+public class CES_depa extends conBD{
 //-----Busquedas
 public ArrayList<String> busca_depa_cod(ArrayList<String> arr, char area) throws ClassNotFoundException, SQLException {  
     String query = "select clave_departamento,nombre from departamento where statuo='1' and clave_area='"+area+"' order by nombre";
         Statement smt;
         ResultSet df;
-        db.abrir();
-        smt = db.getConexion().createStatement();
+        abrir();
+        smt = getConexion().createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
             arr.add(df.getString("clave_departamento"));
@@ -43,8 +42,8 @@ public String busca_area_cod(char area) throws ClassNotFoundException, SQLExcept
     String query = "select nombre from area where statuo='1' and clave_area='"+area+"'";
         Statement smt;
         ResultSet df;
-        db.abrir();
-        smt = db.getConexion().createStatement();
+        abrir();
+        smt = getConexion().createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
             areas=(df.getString("nombre"));
@@ -58,8 +57,9 @@ public ArrayList<String> busca_depa_general(ArrayList<String> lista) throws Clas
     String query = "select clave_departamento,nombre from departamento where statuo='1' order by nombre";
         Statement smt;
         ResultSet df;
-        db.abrir();
-        smt = db.getConexion().createStatement();
+        
+        abrir();
+        smt = getConexion().createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
             lista.add(df.getString("clave_departamento"));
@@ -74,8 +74,10 @@ public int busca_area_depa(int claved) throws ClassNotFoundException, SQLExcepti
     String query = "select clave_area from departamento where statuo='1' and clave_departamento="+claved;
         Statement smt;
         ResultSet df;
-        db.abrir();
-        smt = db.getConexion().createStatement();
+        
+        abrir();
+        smt = 
+                getConexion().createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
             clave=Integer.parseInt(df.getString("clave_area"));
@@ -85,23 +87,5 @@ public int busca_area_depa(int claved) throws ClassNotFoundException, SQLExcepti
         return clave;
     }
 
-private String codigo(String estilo){
-     char [] charestilo = estilo.toCharArray();
-     char [] arr = {'0','0','0','0','0','0'};
-     int cont=charestilo.length-1;
-     int cont1=arr.length-1;
-     for(int i = cont1;i>= 0;i--){
-         if(0<=cont){
-             arr[i]=charestilo[cont];
-             cont--;
-         }else{
-         cont--;
-         }
-     }
-     String cod="";
-     for(int i =0;i<=cont1;i++){
-         cod=cod+arr[i];
-     }
-    return cod;
-}
+
 }

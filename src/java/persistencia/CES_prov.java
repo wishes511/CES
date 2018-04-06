@@ -17,16 +17,15 @@ import java.util.logging.Logger;
  *
  * @author mich
  */
-public class CES_prov {
-    private conBD db = new conBD();
+public class CES_prov extends conBD{
     // Busquedas--------------
 public ArrayList<String> buscarprov(String nombre, String status) throws ClassNotFoundException, SQLException {
     ArrayList<String> lista= new ArrayList<>();    
     String query = "select * from proveedor where nombre like '%"+nombre+"%' and statuo='"+status+"'";
         Statement smt;
         ResultSet df;
-        db.abrir();
-        smt = db.getConexion().createStatement();
+        abrir();
+        smt = getConexion().createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
             lista.add(df.getString("clave_proveedor"));
@@ -41,8 +40,8 @@ public ArrayList<String> buscarprov(ArrayList<String> arr) throws ClassNotFoundE
     String query = "select * from proveedor where statuo='1' order by nombre";
         Statement smt;
         ResultSet df;
-        db.abrir();
-        smt = db.getConexion().createStatement();
+        abrir();
+        smt = getConexion().createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
             arr.add(df.getString("clave_proveedor"));
@@ -57,8 +56,8 @@ public boolean buscarprov(String nombre) throws ClassNotFoundException, SQLExcep
     String query = "select nombre from proveedor where nombre='"+nombre+"'";
         Statement smt;
         ResultSet df;
-        db.abrir();
-        smt = db.getConexion().createStatement();
+        abrir();
+        smt = getConexion().createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {p=true;}
         df.close();
@@ -71,8 +70,8 @@ public boolean buscarmov_prov(int id) throws ClassNotFoundException, SQLExceptio
                     "where p.clave_proveedor="+id;
         Statement smt;
         ResultSet df;
-        db.abrir();
-        smt = db.getConexion().createStatement();
+        abrir();
+        smt = getConexion().createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {p=true;}
         df.close();
@@ -87,17 +86,17 @@ public boolean buscarmov_prov(int id) throws ClassNotFoundException, SQLExceptio
         PreparedStatement st = null;
         int a=0;
         try {
-            db.abrir();
-            db.getConexion().setAutoCommit(false);
+            abrir();
+            getConexion().setAutoCommit(false);
             String s = "insert into proveedor values('"+p+"','1')";
-            st = db.getConexion().prepareStatement(s);
+            st = getConexion().prepareStatement(s);
             st.executeUpdate();
         st.close();
-            db.getConexion().commit();
+            getConexion().commit();
         } catch (Exception e) {
             Logger.getLogger(CES_prov.class.getName()).log(Level.SEVERE, null, e);
             try {
-                db.getConexion().rollback();
+                getConexion().rollback();
             } catch (Exception o) {
                 System.out.println(o.getMessage());
 
@@ -109,17 +108,17 @@ public boolean buscarmov_prov(int id) throws ClassNotFoundException, SQLExceptio
         PreparedStatement st = null;
         int a=0;
         try {
-            db.abrir();
-            db.getConexion().setAutoCommit(false);
+            abrir();
+            getConexion().setAutoCommit(false);
             String s = "delete proveedor where clave_proveedor="+id;
-            st = db.getConexion().prepareStatement(s);
+            st = getConexion().prepareStatement(s);
             st.executeUpdate();
         st.close();
-            db.getConexion().commit();
+            getConexion().commit();
         } catch (Exception e) {
             Logger.getLogger(CES_prov.class.getName()).log(Level.SEVERE, null, e);
             try {
-                db.getConexion().rollback();
+                getConexion().rollback();
             } catch (Exception o) {
                 System.out.println(o.getMessage());
             }
@@ -130,17 +129,17 @@ public boolean buscarmov_prov(int id) throws ClassNotFoundException, SQLExceptio
         PreparedStatement st = null;
         int a=0;
         try {
-            db.abrir();
-            db.getConexion().setAutoCommit(false);
+            abrir();
+            getConexion().setAutoCommit(false);
             String s = "update proveedor set statuo='0' where clave_proveedor="+id;
-            st = db.getConexion().prepareStatement(s);
+            st = getConexion().prepareStatement(s);
             st.executeUpdate();
         st.close();
-            db.getConexion().commit();
+            getConexion().commit();
         } catch (Exception e) {
             Logger.getLogger(CES_prov.class.getName()).log(Level.SEVERE, null, e);
             try {
-                db.getConexion().rollback();
+                getConexion().rollback();
             } catch (Exception o) {
                 System.out.println(o.getMessage());
             }
@@ -151,17 +150,17 @@ public boolean buscarmov_prov(int id) throws ClassNotFoundException, SQLExceptio
         PreparedStatement st = null;
         int a=0;
         try {
-            db.abrir();
-            db.getConexion().setAutoCommit(false);
+            abrir();
+            getConexion().setAutoCommit(false);
             String s = "update proveedor set statuo='1' where clave_proveedor="+id;
-            st = db.getConexion().prepareStatement(s);
+            st = getConexion().prepareStatement(s);
             st.executeUpdate();
         st.close();
-            db.getConexion().commit();
+            getConexion().commit();
         } catch (Exception e) {
             Logger.getLogger(CES_prov.class.getName()).log(Level.SEVERE, null, e);
             try {
-                db.getConexion().rollback();
+                getConexion().rollback();
             } catch (Exception o) {
                 System.out.println(o.getMessage());
             }
@@ -172,17 +171,17 @@ public boolean buscarmov_prov(int id) throws ClassNotFoundException, SQLExceptio
         PreparedStatement st = null;
         int a=0;
         try {
-            db.abrir();
-            db.getConexion().setAutoCommit(false);
+            abrir();
+            getConexion().setAutoCommit(false);
             String s = "update proveedor set nombre='"+nombre+"' where clave_proveedor="+id;
-            st = db.getConexion().prepareStatement(s);
+            st = getConexion().prepareStatement(s);
             st.executeUpdate();
         st.close();
-            db.getConexion().commit();
+            getConexion().commit();
         } catch (Exception e) {
             Logger.getLogger(CES_prov.class.getName()).log(Level.SEVERE, null, e);
             try {
-                db.getConexion().rollback();
+                getConexion().rollback();
             } catch (Exception o) {
                 System.out.println(o.getMessage());
             }

@@ -281,7 +281,6 @@ function inicio_io_invi(){
     var area=$('#area').val();
     var codigo=$('#codigo').val();
     var uso="invitado";
-    alert(depa+"/"+nombre);
     if(nombre=="" || obs=="" || area==""){
         alert("no pueden ir campos en blanco favor de rectificarlo");
     }else{
@@ -296,6 +295,15 @@ function inicio_io_invi(){
                     }
                 });
             }
+}
+function saltoinvi(){
+    document.getElementById('binvi').focus();
+}
+function saltoob(){
+    document.getElementById('observaciones').focus();
+}
+function saltodepinvi(){
+    document.getElementById('depa').focus();
 }
 function llenabarra_np(){
     document.getElementById('barra_nav').innerHTML="<li class=\"nav-item\">\n" +

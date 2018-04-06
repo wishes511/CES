@@ -80,22 +80,22 @@ public class Getdata_prov extends HttpServlet {
         try {
             String usuario = (String) objSesion.getAttribute("usuario");
        String tipos = (String) objSesion.getAttribute("tipo");
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")) ) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")) ) {// verificar si el tipo de usuario esta en session
     }else response.sendRedirect("../index.jsp");
     
         String uso = request.getParameter("uso");
         CES_prov bd = new CES_prov();
-        if(uso.equals("buscar")){
+        if(uso.equals("buscar")){// accion para el string de uso(buscar)
             String prov_field = request.getParameter("proveedor");
             String prov_activo = request.getParameter("activo");
-            if(prov_activo.equals("A")){
+            if(prov_activo.equals("A")){// comprobar si es una proveedor activo
                 prov_activo="1";
-                ArrayList<String> arr= bd.buscarprov(prov_field, prov_activo);
+                ArrayList<String> arr= bd.buscarprov(prov_field, prov_activo);// busca y almacenaen una lista los proveeedores activos
              PrintWriter out = response.getWriter();
-            if(!arr.isEmpty()){
+            if(!arr.isEmpty()){// verifica si la lista esta vacia
                 int cont=0;
-            for(int i =0;i<arr.size();i++){
-                if(cont==1){
+            for(int i =0;i<arr.size();i++){// retorno del contenido de la tabla con datos hacia la pagina
+                if(cont==1){// cont para saber elnumero 
                     out.print("<tr align=\"center\">\n" +
 "                  <td>"+arr.get(i)+"</td>\n" +
 "                  <td><a onclick=\"delete_prov('"+arr.get(i-1)+"')\"><img src=\"../images/delete.png\" class=\"img-fluid img_menus\" alt=\"\"></a></td>\n" +
@@ -108,16 +108,16 @@ public class Getdata_prov extends HttpServlet {
             }
             }else {
             prov_activo="0";
-                ArrayList<String> arr= bd.buscarprov(prov_field, prov_activo);
+                ArrayList<String> arr= bd.buscarprov(prov_field, prov_activo);//busca proveedores inactivos
              PrintWriter out = response.getWriter();
             if(!arr.isEmpty()){
                 int cont=0;
-            for(int i =0;i<arr.size();i++){
+            for(int i =0;i<arr.size();i++){// retorno del contenido de la tabla con datos hacia la pagina
                 if(cont==1){
                     out.print("<tr align=\"center\">\n" +
 "                  <td>"+arr.get(i)+"</td>\n" +
 "                  <td><a onclick=\"delete_prov('"+arr.get(i-1)+"')\"><img src=\"../images/delete.png\" class=\"img-fluid img_menus\" alt=\"\"></a></td>\n" +
-"                  <td><a onclick=\"mod_prov('"+arr.get(i-1)+"')\"><img src=\"../images/modificar.png\" class=\"img-fluid img_menus\" alt=\"\"></a></td>\n" +
+//"                  <td><a onclick=\"mod_prov('"+arr.get(i-1)+"')\"><img src=\"../images/modificar.png\" class=\"img-fluid img_menus\" alt=\"\"></a></td>\n" +
 "                  <td><a onclick=\"up_prov('"+arr.get(i-1)+"')\"><img src=\"../images/up.png\" class=\"img-fluid img_menus\" alt=\"\"></a></td>\n" +
 "                </tr>");
                     cont=0;
@@ -127,7 +127,7 @@ public class Getdata_prov extends HttpServlet {
             }
             
             
-        }else if(uso.equals("nuevo")){
+        }else if(uso.equals("nuevo")){// despliega interfaz de un nuevo prov
             PrintWriter out = response.getWriter();
             out.print("<div align=center class=container-fluid><div class=col-sm   align=center><input type=text class=form-control id=prov_new1 placeholder=\"Nombre del Proveedor\" onchange=nuevo_prov()><br><button class=btn btn-success onclick=nuevo_prov()>Ingresar Nuevo Proveedor</button><br><div id=response_nprov></div></div></div>");
         }else if(uso.equals("nuevo_row")){
@@ -171,18 +171,17 @@ public class Getdata_prov extends HttpServlet {
         }
         
         } catch (SQLException ex) {
-            System.out.println("ENtre aqui");
             System.out.println(ex+" error "+ex.getMessage());
             PrintWriter out = response.getWriter();
-            out.print("No se puede eliminar proveedor debido a que ya se hicieron movimientos");
+            out.print("Codigo 3: No se puede eliminar proveedor debido a que ya se hicieron movimientos<br> "+ex);
             
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Getdata_prov.class.getName()).log(Level.SEVERE, null, ex);
             PrintWriter out = response.getWriter();
-            out.print("No se encuentra algun archivo, llame a un administrador");
+            out.print("Codigo 3.1: No se encuentra algun archivo, llame a un administrador<br> "+ex);
         }catch(Exception e){
             PrintWriter out = response.getWriter();
-            out.print(e);
+            out.print("Codigo 3.2 Error al procesar datos<br> "+e);
         
         }
     }

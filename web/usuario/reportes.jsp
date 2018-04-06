@@ -19,7 +19,11 @@
 Calendar fecha = Calendar.getInstance();
 int año = fecha.get(Calendar.YEAR);
         String mes =String.valueOf(fecha.get(Calendar.MONTH) + 1);
-        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        String dia = String.valueOf(fecha.get(Calendar.DAY_OF_MONTH));
+        String sdia="";
+        if(dia.length()==1){
+        dia="0"+dia;
+        }
         if(mes.length()==1){
             mes= "0"+mes;
         }

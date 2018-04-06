@@ -5,7 +5,6 @@
  */
 package Controlador;
 
-
 import Modelo.Departamento;
 import Modelo.TipoUsuario;
 import Modelo.Usuario;
@@ -39,19 +38,7 @@ public class Getdata_user extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
     }
-    private boolean regularexp(String name, String pass){
-        boolean flag =true;
-       // String patt="\\d{1,2}\\-\\d{1,2}\\-\\d{4}";
-        String patp="[a-zA-Z]+";               
-               Pattern pat1 =Pattern.compile(patp);
-               Matcher match1 = pat1.matcher(name);
-               Pattern pat2 =Pattern.compile(patp);
-               Matcher match2 = pat2.matcher(pass);
-               if( match1.matches() && match2.matches()){
-               flag=false;
-               }
-        return flag;
-    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -80,13 +67,12 @@ public class Getdata_user extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
         HttpSession objSesion = request.getSession(true);
         try {
             String usuario = (String) objSesion.getAttribute("usuario");
-       String tipos = (String) objSesion.getAttribute("tipo");
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")||tipos.equals("ADMINPROV")) ) {
-    }else response.sendRedirect("../index.jsp");
+        String tipos = (String) objSesion.getAttribute("tipo");
+        if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")||tipos.equals("ADMINPROV")) ) {
+        }else response.sendRedirect("../index.jsp");
     
         String uso = request.getParameter("uso");
         CES bd = new CES();
@@ -134,8 +120,6 @@ public class Getdata_user extends HttpServlet {
             }
             }
             }
-            
-            
         }else if(uso.equals("nuevo")){
             CES_depa cdepa = new CES_depa();
             CES u = new CES();
@@ -160,7 +144,6 @@ public class Getdata_user extends HttpServlet {
                     cont=0;
                 }else cont++;
             }out.print("</select><br><div id=field_pass></div><br><button class=btn btn-success id=btn_nuevo_u onclick=nuevo_prov()>Ingresar Nuevo Usuario</button><br><div id=response_nprov></div></div></div>");
-        
         }else if(uso.equals("nuevo_row")){// Nuevo Usuario uso: uso,user:user,depa:depa,tipo:tipo,pass:pass
             String name=request.getParameter("user").toUpperCase();
             int depa=Integer.parseInt(request.getParameter("depa").toUpperCase());
@@ -168,7 +151,6 @@ public class Getdata_user extends HttpServlet {
             String pass=request.getParameter("pass").toUpperCase();
             String tipo_cod=request.getParameter("tipo_cod").toUpperCase();
             String empresa=request.getParameter("empresa").toUpperCase();
-
             CES prov = new CES();            
             String mensaje="";
             String coloresp="";
@@ -207,7 +189,6 @@ public class Getdata_user extends HttpServlet {
             db.borrarprov(id);
             out.print("Eliminacion exitosa"); 
             }
-              
         }else if(uso.equals("baja")){
             int id = Integer.parseInt(request.getParameter("id"));
             CES db = new CES();
@@ -221,24 +202,19 @@ public class Getdata_user extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.print("Alta exitosa");
         }
-        
         } catch (SQLException ex) {
-            System.out.println("ENtre aqui");
             System.out.println(ex+" error "+ex.getMessage());
             PrintWriter out = response.getWriter();
-            out.print("No se puede eliminar proveedor debido a que ya se hicieron movimientos");
-            
+            out.print("Codigo 5: <br>"+ex);       
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Getdata_user.class.getName()).log(Level.SEVERE, null, ex);
             PrintWriter out = response.getWriter();
-            out.print("No se encuentra algun archivo, llame a un administrador");
+            out.print("Codigo 5.1: <br>"+ex);
         }catch(Exception e){
             PrintWriter out = response.getWriter();
-            out.print(e);
-        
+            out.print("Codigo 5.2: <br>"+e);       
         }
     }
-
 private String codigo(String usuario){
      char [] charestilo = usuario.toCharArray();
      char [] arr = {'0','0','0','0'};

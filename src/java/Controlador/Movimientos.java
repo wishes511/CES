@@ -82,9 +82,9 @@ public class Movimientos extends HttpServlet {
         
         HttpSession objSesion = request.getSession(true);
         try {
-            String usuario = (String) objSesion.getAttribute("usuario");
-       String tipos = (String) objSesion.getAttribute("tipo");
-    Calendar fecha = Calendar.getInstance();
+        String usuario = (String) objSesion.getAttribute("usuario");
+        String tipos = (String) objSesion.getAttribute("tipo");
+        Calendar fecha = Calendar.getInstance();
         int año = fecha.get(Calendar.YEAR);
         int mes = fecha.get(Calendar.MONTH) + 1;
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
@@ -98,7 +98,6 @@ public class Movimientos extends HttpServlet {
         if(uso.equals("proveedor")){
             String codigo=request.getParameter("codigo");
             String numero=String.valueOf(codigo.charAt(6)) +codigo.charAt(7);
-            
             String prov = request.getParameter("prov");
             String prov_activo = request.getParameter("autorizada").toUpperCase();
             String depa = request.getParameter("depa");
@@ -125,7 +124,6 @@ public class Movimientos extends HttpServlet {
         }else if(uso.equals("invitado")){
             String codigo=request.getParameter("codigo");
             String numero=String.valueOf(codigo.charAt(6)) +codigo.charAt(7);
-            
             int depa=Integer.parseInt(request.getParameter("depa"));
             String prov = request.getParameter("nombre").toUpperCase();
             String obs = request.getParameter("obs").toUpperCase();
@@ -157,7 +155,6 @@ public class Movimientos extends HttpServlet {
             int cont=0;
             for(int i =0; i<arr.size();i++){
                 if(cont ==7){
-                    
                 out.print("<tr align=\"center\">\n" +
 "                  <td>"+arr.get(i-7)+"</td>\n" +
 "                  <td>"+arr.get(i-6)+"</td>\n" +
@@ -168,17 +165,20 @@ public class Movimientos extends HttpServlet {
 "                </tr>");
                 cont =0;
                 }else cont++;
-            
             }
-            
         }
-        
         } catch (SQLException ex) {
-            System.out.println(ex+" error "+ex.getMessage());
+            System.out.println("Codigo 6: <br>"+ex);
+            PrintWriter out = response.getWriter();
+            out.print("Codigo 6: <br>"+ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Movimientos.class.getName()).log(Level.SEVERE, null, ex);
+            PrintWriter out = response.getWriter();
+            out.print("Codigo 6.1: <br>"+ex);            
         }catch(Exception e){
             System.out.println(e);
+            PrintWriter out = response.getWriter();
+            out.print("Codigo 6.2: <br>"+e);            
         }
     }
 

@@ -19,18 +19,8 @@ import java.util.logging.Logger;
  *
  * @author mich
  */
-public class CES_movs {
+public class CES_movs extends conBD{
 
-    private conBD db = new conBD();
-    public void abrir() throws ClassNotFoundException, SQLException{
-        db.abrir();
-    }
-    public Connection getconexion (){
-        return db.getConexion();
-    }
-    public void cerrar() throws SQLException{
-    db.cerrar();
-    }
     // Busquedas--------------
 // Fin busquedas
 
@@ -43,8 +33,8 @@ public class CES_movs {
         String retorno = "";
         int conta = 0;
         try {
-            db.abrir();
-            db.getConexion().setAutoCommit(false);
+            abrir();
+            getConexion().setAutoCommit(false);
             String query = "";
             if (m.getClaveAutorizado() == 0 && m.getClaveProveedor() == 0 && m.getClaveUsuario() == 0) {
                 query = "SELECT nombre from  movimiento where fecha='" + m.getFecha() + "' and n_credencial='" + credencial + "' and clave_proveedor=0";
@@ -54,7 +44,7 @@ public class CES_movs {
                         + " and m.fecha='" + m.getFecha() + "' and n_credencial='" + credencial + "'";
             }
             //System.out.println("query nuevo_mov"+query);    
-            smt = db.getConexion().createStatement();
+            smt = getConexion().createStatement();
             rs = smt.executeQuery(query);
             while (rs.next()) {
                 conta++;
@@ -67,7 +57,7 @@ public class CES_movs {
                         + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                         + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "')";
                 retorno = "Entrada";
-                st = db.getConexion().prepareStatement(s);
+                st = getConexion().prepareStatement(s);
                 st.executeUpdate();
                 st.close();
             } else if (conta != 0) {
@@ -75,7 +65,7 @@ public class CES_movs {
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                             + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "')";
-                    retorno = "Entrada: " + nombre;
+                    retorno = "Entrada: " + m.getNombre();
                 } else {
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','S','" + m.getArea() + "',"
@@ -84,14 +74,14 @@ public class CES_movs {
                 }
             }
             //System.out.println(sentenciaSQL);
-            st = db.getConexion().prepareStatement(sentenciaSQL);
+            st = getConexion().prepareStatement(sentenciaSQL);
             st.executeUpdate();
             st.close();
-            db.getConexion().commit();
+            getConexion().commit();
         } catch (Exception e) {
             Logger.getLogger(CES_movs.class.getName()).log(Level.SEVERE, null, e);
             try {
-                db.getConexion().rollback();
+                getConexion().rollback();
             } catch (Exception o) {
                 Logger.getLogger(CES_movs.class.getName()).log(Level.SEVERE, null, o);
             }
@@ -106,13 +96,15 @@ public class CES_movs {
         ResultSet rs;
         String nombre = "";
         String retorno = "";
+        String movimiento="";
+        int folio=0;
         int conta = 0;
         try {
-            db.abrir();
-            db.getConexion().setAutoCommit(false);
-            String query = "select d.nombre as 'nombres' from departamento d join movimiento m on m.clave_departamento = d.clave_departamento where m.clave_departamento=" + m.getDepartamento().getClaveDepartamento() + " and m.clave_usuario=" + m.getClaveUsuario() + " and m.fecha='" + m.getFecha() + "'";
-            //System.out.println("query nuevo_mov"+query);    
-            smt = db.getConexion().createStatement();
+            abrir();
+            getConexion().setAutoCommit(false);
+            String query = "select d.nombre as 'nombres',m.tipo_mov as 'tipo',m.follio as 'folio' from departamento d join movimiento m on m.clave_departamento = d.clave_departamento where m.clave_departamento=" + m.getDepartamento().getClaveDepartamento() + " and m.clave_usuario=" + m.getClaveUsuario() + " and m.fecha='" + m.getFecha() + "'";
+            System.out.println("query nuevo_mov"+query);    
+            smt = getConexion().createStatement();
             rs = smt.executeQuery(query);
             while (rs.next()) {
                 conta++;
@@ -124,8 +116,8 @@ public class CES_movs {
                 String s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                         + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                         + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "')";
-                retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+"</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><br><br><label><big>ENTRADA</big></label></div>";
-                st = db.getConexion().prepareStatement(s);
+                retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+"</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><br><label><big>ENTRADA</big></label></div>";
+                st = getConexion().prepareStatement(s);
                 st.executeUpdate();
                 st.close();
             } else if (conta != 0) {
@@ -134,7 +126,7 @@ public class CES_movs {
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                             + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "')";
                     retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>ENTRADA</big></label></div>";
-//     retorno="Entrada: "+nombre;
+//     retorno="Entrada: "+nombre; 48402
                 } else {
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','S','" + m.getArea() + "',"
@@ -144,14 +136,14 @@ public class CES_movs {
                 }
             }
             //System.out.println(sentenciaSQL);
-            st = db.getConexion().prepareStatement(sentenciaSQL);
+            st = getConexion().prepareStatement(sentenciaSQL);
             st.executeUpdate();
             st.close();
-            db.getConexion().commit();
+            getConexion().commit();
         } catch (Exception e) {
             Logger.getLogger(CES_movs.class.getName()).log(Level.SEVERE, null, e);
             try {
-                db.getConexion().rollback();
+                getConexion().rollback();
             } catch (Exception o) {
                 Logger.getLogger(CES_movs.class.getName()).log(Level.SEVERE, null, o);
             }
@@ -165,8 +157,8 @@ public class CES_movs {
         Statement smt;
         ResultSet rs;
         String clave = "";
-        db.abrir();
-        db.getConexion().setAutoCommit(false);
+        abrir();
+        getConexion().setAutoCommit(false);
         String query;
 
         if (tipo_mov.equals("prov")) {
@@ -177,8 +169,8 @@ public class CES_movs {
             query = "SELECT * from movimiento where fecha='" + fecha + "' and n_credencial='" + numero + "' and area ='" + area + "' and clave_proveedor =0";
         }
 
-        // System.out.println(query);
-        smt = db.getConexion().createStatement();
+        //System.out.println(query);
+        smt = getConexion().createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
             list.add(rs.getString("folio"));
@@ -201,15 +193,15 @@ public class CES_movs {
         ArrayList<String> list = new ArrayList<>();
         Statement smt;
         ResultSet rs;
-        db.abrir();
+        abrir();
         String query= "SELECT m.nombre as 'nombre',isnull(p.nombre,'') as proveedor,a.nombre as 'area',d.nombre as 'depa',u.empresa as 'empresa',m.fecha,"+
 "m.hora,m.tipo_mov from movimiento m join departamento d on m.clave_departamento= d.clave_departamento\n" +
 "join area a on a.clave_area=d.clave_area\n" +
 "left join usuario u on m.clave_usuario =u.clave_usuario\n" +
 "left join proveedor p on m.clave_proveedor=p.clave_proveedor\n" +
 "where (m.nombre like '%"+nombre+"%' or p.nombre like '%"+nombre+"%') and m.area like '%"+narea+"%' and d.nombre like '%"+ndepa+"%' and m.tipo_mov like '%"+mov+"%' and m.fecha between '"+f1+"' and '"+f2+"' order by fecha";
-        //System.out.println(query);
-        smt = db.getConexion().createStatement();
+        System.out.println(query);
+        smt = getConexion().createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
             list.add(rs.getString("nombre"));
@@ -223,5 +215,8 @@ public class CES_movs {
         }// fin de busqueda 
         rs.close();
         return list;
+    }
+        public Connection getconexion() {
+        return getConexion();
     }
 }

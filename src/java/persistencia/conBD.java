@@ -17,7 +17,7 @@ public class conBD {
     private String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;databaseName=CES;databaseName=CES;user=mich; password=mich;";
 //   String url ="jdbc:sqlserver://192.168.6.8\\datos65:9205;databaseName=CES;";
     private String drive = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private Connection conexion = null;
+    protected Connection conexion = null;
     public Connection getConexion() {
         return this.conexion;
     }

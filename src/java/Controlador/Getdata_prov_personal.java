@@ -5,8 +5,6 @@
  */
 package Controlador;
 
-
-import Modelo.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -15,14 +13,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import persistencia.CES;
 import persistencia.CES_prov;
 import persistencia.CES_provact;
 
@@ -196,8 +192,16 @@ public class Getdata_prov_personal extends HttpServlet {
         
         } catch (SQLException ex) {
             System.out.println(ex+" error "+ex.getMessage());
+            PrintWriter out = response.getWriter();
+            out.print("Codigo 4:<br> "+ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Getdata_prov_personal.class.getName()).log(Level.SEVERE, null, ex);
+            PrintWriter out = response.getWriter();
+            out.print("Codigo 4.1:<br> "+ex);
+        } catch (Exception ex) {
+            System.out.println(ex+" error "+ex.getMessage());
+            PrintWriter out = response.getWriter();
+            out.print("Codigo 4.2:<br> "+ex);
         }
     }
     private void autosearch_activo(PrintWriter out){
