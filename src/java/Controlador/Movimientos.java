@@ -91,8 +91,18 @@ public class Movimientos extends HttpServlet {
         int hora = fecha.get(Calendar.HOUR_OF_DAY);
         int minuto = fecha.get(Calendar.MINUTE);
         int segundo = fecha.get(Calendar.SECOND);
+        String horas="";
+        if(hora >9 ){
+            horas =hora+":";
+        }if(hora<10){
+            horas="0"+hora+":";
+        }if(minuto <10){
+            horas=hora+"0"+minuto;
+        }if(minuto >9){
+            horas+=minuto;
+        }
         String fechac =año+"-"+mes+"-"+dia;
-        String horas =hora+":"+minuto;
+        
         String uso = request.getParameter("uso");
         CES_movs bd = new CES_movs();
         if(uso.equals("proveedor")){

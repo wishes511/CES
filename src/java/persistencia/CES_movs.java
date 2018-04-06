@@ -102,7 +102,7 @@ public class CES_movs extends conBD{
         try {
             abrir();
             getConexion().setAutoCommit(false);
-            String query = "select d.nombre as 'nombres',m.tipo_mov as 'tipo',m.follio as 'folio' from departamento d join movimiento m on m.clave_departamento = d.clave_departamento where m.clave_departamento=" + m.getDepartamento().getClaveDepartamento() + " and m.clave_usuario=" + m.getClaveUsuario() + " and m.fecha='" + m.getFecha() + "'";
+            String query = "select d.nombre as 'nombres',m.tipo_mov as 'tipo',m.folio as 'folio' from departamento d join movimiento m on m.clave_departamento = d.clave_departamento where m.clave_departamento=" + m.getDepartamento().getClaveDepartamento() + " and m.clave_usuario=" + m.getClaveUsuario() + " and m.fecha='" + m.getFecha() + "'";
             System.out.println("query nuevo_mov"+query);    
             smt = getConexion().createStatement();
             rs = smt.executeQuery(query);

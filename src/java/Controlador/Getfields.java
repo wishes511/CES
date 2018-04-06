@@ -102,7 +102,17 @@ public class Getfields extends HttpServlet {
         String fechac =año+"-"+mes+"-"+dia;
         int hora = fecha.get(Calendar.HOUR_OF_DAY);
         int minuto = fecha.get(Calendar.MINUTE);
-        String horas =hora+":"+minuto;
+        String horas="";
+        if(hora >9 ){
+            horas =hora+":";
+        }if(hora<10){
+            horas="0"+hora+":";
+        }if(minuto <10){
+            horas=horas+"0"+minuto;
+        }
+        if(minuto >9){
+            horas+=minuto;
+        }
             String n_tarjeta=String.valueOf(codigo.charAt(6)) +codigo.charAt(7);
             CES_movs mov = new CES_movs();
             area = depa.busca_area_cod(codigo.charAt(0));// busca el area de acuerdo al codigo
