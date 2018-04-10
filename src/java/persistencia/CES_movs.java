@@ -31,23 +31,31 @@ public class CES_movs extends conBD{
         ResultSet rs;
         String nombre = "";
         String retorno = "";
+        String movimiento="";
+        int folio=0;
+        String hora="";
         int conta = 0;
         try {
             abrir();
             getConexion().setAutoCommit(false);
             String query = "";
             if (m.getClaveAutorizado() == 0 && m.getClaveProveedor() == 0 && m.getClaveUsuario() == 0) {
-                query = "SELECT nombre from  movimiento where fecha='" + m.getFecha() + "' and n_credencial='" + credencial + "' and clave_proveedor=0";
+                query = "SELECT nombre,tipo_mov as 'tipo',folio as 'folio', hora as 'hora'"
+                    + " from  movimiento where fecha='" + m.getFecha() + "' and n_credencial='" + credencial + "' and clave_proveedor=0";
             } else {
-                query = "SELECT p.clave_proveedor,p.nombre from proveedor p join movimiento m "
+                query = "SELECT p.clave_proveedor,p.nombre,m.tipo_mov as 'tipo',m.folio as 'folio', m.hora as 'hora'"
+                    + " from proveedor p join movimiento m "
                         + "on m.clave_proveedor=p.clave_proveedor where p.clave_proveedor=" + m.getClaveProveedor()
                         + " and m.fecha='" + m.getFecha() + "' and n_credencial='" + credencial + "'";
             }
-            //System.out.println("query nuevo_mov"+query);    
+           // System.out.println("query nuevo_mov"+query);    
             smt = getConexion().createStatement();
             rs = smt.executeQuery(query);
             while (rs.next()) {
                 conta++;
+                movimiento=rs.getString("tipo");
+                folio = rs.getInt("folio");
+                hora = rs.getString("hora");
                 nombre = rs.getString("nombre");
             }// fin de busqueda del proveedor en los movimientos actuales
             rs.close();
@@ -55,25 +63,24 @@ public class CES_movs extends conBD{
             if (conta == 0) {// verifica si hubo registros en la consulta anterior,si no hubo insertar
                 String s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                         + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "')";
+                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','','')";
                 retorno = "Entrada";
                 st = getConexion().prepareStatement(s);
                 st.executeUpdate();
                 st.close();
             } else if (conta != 0) {
-                if (conta % 2 == 0) {
+                if (movimiento.equals("S")) {
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "')";
+                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','','')";
                     retorno = "Entrada: " + m.getNombre();
                 } else {
-                    sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
-                            + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','S','" + m.getArea() + "',"
-                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "')";
+                    sentenciaSQL = "update movimiento set horasalida='"+horas+"', tiempo='"+tiempo(hora,horas)+"',tipo_mov='S' where folio="+folio;
                     retorno = "Salida: " + nombre;
                 }
+                
             }
-            //System.out.println(sentenciaSQL);
+           // System.out.println(sentenciaSQL);
             st = getConexion().prepareStatement(sentenciaSQL);
             st.executeUpdate();
             st.close();
@@ -98,40 +105,48 @@ public class CES_movs extends conBD{
         String retorno = "";
         String movimiento="";
         int folio=0;
+        String hora="";
         int conta = 0;
         try {
             abrir();
             getConexion().setAutoCommit(false);
-            String query = "select d.nombre as 'nombres',m.tipo_mov as 'tipo',m.folio as 'folio' from departamento d join movimiento m on m.clave_departamento = d.clave_departamento where m.clave_departamento=" + m.getDepartamento().getClaveDepartamento() + " and m.clave_usuario=" + m.getClaveUsuario() + " and m.fecha='" + m.getFecha() + "'";
-            System.out.println("query nuevo_mov"+query);    
+            String query = "select d.nombre as 'nombres',m.tipo_mov as 'tipo',m.folio as 'folio', m.hora as 'hora'"
+                    + " from departamento d join movimiento m on m.clave_departamento = d.clave_departamento where m.clave_departamento=" + m.getDepartamento().getClaveDepartamento() + " and m.clave_usuario=" + m.getClaveUsuario() + " and m.fecha='" + m.getFecha() + "'";
+            //System.out.println("query nuevo_mov"+query);    
             smt = getConexion().createStatement();
             rs = smt.executeQuery(query);
             while (rs.next()) {
                 conta++;
                 nombre = rs.getString("nombres");
+                movimiento=rs.getString("tipo");
+                folio = rs.getInt("folio");
+                hora = rs.getString("hora");
             }// fin de busqueda del proveedor en los movimientos actuales
             rs.close();
             String sentenciaSQL = "";
             if (conta == 0) {// verifica si hubo registros en la consulta anterior,si no hubo insertar
                 String s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                         + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "')";
+                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','','')";
                 retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+"</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><br><label><big>ENTRADA</big></label></div>";
                 st = getConexion().prepareStatement(s);
                 st.executeUpdate();
                 st.close();
             } else if (conta != 0) {
-                if (conta % 2 == 0) {
+                if (movimiento.equals("S")) {
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "')";
+                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','','')";
                     retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>ENTRADA</big></label></div>";
 //     retorno="Entrada: "+nombre; 48402
                 } else {
-                    sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
-                            + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','S','" + m.getArea() + "',"
-                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "')";
+                    sentenciaSQL = "update movimiento set horasalida='"+horas+"', tiempo='"+tiempo(hora,horas)+"',tipo_mov='S' where folio="+folio;
                     retorno = "<div class=letra_salida><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>SALIDA</big></label></div>";
+
+//                    sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
+//                            + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','S','" + m.getArea() + "',"
+//                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "')";
+//                    retorno = "<div class=letra_salida><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>SALIDA</big></label></div>";
 //retorno="Salida: "+nombre;
                 }
             }
@@ -195,12 +210,13 @@ public class CES_movs extends conBD{
         ResultSet rs;
         abrir();
         String query= "SELECT m.nombre as 'nombre',isnull(p.nombre,'') as proveedor,a.nombre as 'area',d.nombre as 'depa',u.empresa as 'empresa',m.fecha,"+
-"m.hora,m.tipo_mov from movimiento m join departamento d on m.clave_departamento= d.clave_departamento\n" +
+"m.hora,m.tipo_mov,m.horasalida,m.tiempo from movimiento m join departamento d on m.clave_departamento= d.clave_departamento\n" +
 "join area a on a.clave_area=d.clave_area\n" +
 "left join usuario u on m.clave_usuario =u.clave_usuario\n" +
 "left join proveedor p on m.clave_proveedor=p.clave_proveedor\n" +
-"where (m.nombre like '%"+nombre+"%' or p.nombre like '%"+nombre+"%') and m.area like '%"+narea+"%' and d.nombre like '%"+ndepa+"%' and m.tipo_mov like '%"+mov+"%' and m.fecha between '"+f1+"' and '"+f2+"' order by fecha";
-        System.out.println(query);
+"where (m.nombre like '%"+nombre+"%' or p.nombre like '%"+nombre+"%') and m.area like '%"+narea+"%' and d.nombre like '%"+ndepa+"%' and m.tipo_mov like '%"+
+ mov+"%' and m.fecha between '"+f1+"' and '"+f2+"' group by a.nombre,d.nombre,m.nombre,p.nombre,u.empresa,m.fecha,m.hora,m.tipo_mov,m.horasalida,m.tiempo";
+       // System.out.println(query);
         smt = getConexion().createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -212,11 +228,55 @@ public class CES_movs extends conBD{
             list.add(rs.getString("fecha"));
             list.add(rs.getString("hora"));
             list.add(rs.getString("tipo_mov"));
+            list.add(rs.getString("horasalida"));
+            list.add(rs.getString("tiempo"));
+            
         }// fin de busqueda 
         rs.close();
         return list;
     }
         public Connection getconexion() {
         return getConexion();
+    }
+    private String tiempo(String h1, String h2){
+    int arr []=new int[2];
+    int arr1 []=new int[2];
+    String hora="";
+    arr[0]=Integer.parseInt(h1.charAt(0)+""+h1.charAt(1));
+    arr[1]=Integer.parseInt(h2.charAt(0)+""+h2.charAt(1));
+    arr1[0]=Integer.parseInt(h1.charAt(3)+""+h1.charAt(4));
+    arr1[1]=Integer.parseInt(h2.charAt(3)+""+h2.charAt(4));
+    int horas=0;
+    int mins=0;
+    if(arr[0]==arr[1]){
+        mins=arr1[1]-arr1[0];
+    }else{
+    mins=(60-arr1[0])+arr1[1];
+    }
+    
+    if(mins <0){
+        mins = mins*(-1);
+    }
+   // System.out.println(mins+"="+arr[0]+"*"+arr[1]);
+    if((mins %60==0 || mins >59) && mins !=0){
+        
+        horas++;
+        mins=mins-60;
+        if(mins <10){
+            hora=horas+":0"+mins;
+        }else{
+            hora=horas+":"+mins;
+        } 
+//        System.out.println(hora+" hora");
+    }else{
+        if(mins <10){
+            hora=horas+":0"+mins;
+        }else{
+            hora=horas+":"+mins;
+        }
+       // System.out.println(hora+" min");
+    }
+    
+    return hora;
     }
 }

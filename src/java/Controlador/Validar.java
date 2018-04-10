@@ -87,12 +87,12 @@ public class Validar extends HttpServlet {
             PrintWriter out = response.getWriter();
             //control de acceso 
             CES a = new CES();
-            if (!a.buscarusuarios()) {
+            if (!a.buscarusuarios()) {// al inicio del sistema se otorga este permiso para crear un usuario como administrador
                 objSesion.setAttribute("usuario", "ADMINPROV");
                 objSesion.setAttribute("tipo", "ADMINPROV");
                 response.sendRedirect("usuario/usuarios.jsp");
             } else {
-                if (nombre.equals(null) || contrasena.equals(null) || nombre.equals("") || contrasena.equals("")) {
+                if (nombre.equals(null) || contrasena.equals(null) || nombre.equals("") || contrasena.equals("")) {// se regresa al inicio si el usuario o contrasena son vacios
                     out.println("<script type=\"text/javascript\">");
                     out.println("location='index.jsp';");
                     out.println("</script>");
@@ -106,14 +106,15 @@ public class Validar extends HttpServlet {
                     // Definir variable de referencia a un objeto de tipo Usuario
                     String tipo = "";
                     // Consultar Base de datos
-                    tipo = a.buscaru(nombre, contrasena);
-                    if (tipo.equals("n")) {
+                    tipo = a.buscaru(nombre, contrasena);// busca elusuario con los datos proporcionados y guarda el tipo de usuario en 'tipo'
+                    if (tipo.equals("n")) {// si no encontro nada
                         out.println("<script type=\"text/javascript\">");
                         out.println("alert('Usuario o contrasena incorrectos');");
                         out.println("location='index.jsp';");
                         out.println("</script>");
                     } else {
                         switch (tipo) {
+                            //usuario administrador
                             case "ADMIN":
                                 objSesion.setMaxInactiveInterval(interv + 10000);
                                 objSesion.setAttribute("usuario", nombre);
@@ -128,11 +129,12 @@ public class Validar extends HttpServlet {
                                 response.sendRedirect("usuario/index.jsp");
                                 break;
                             case "ADMINPROV":
+                                //posible usuario para inicio de la pagina
                                 objSesion.setAttribute("usuario", "ADMINPROV");
                                 objSesion.setAttribute("tipo", "ADMINPROV");
                                 response.sendRedirect("usuario/usuarios.jsp");
                                 break;
-                            default:
+                            default:// si lo que encontro es diferente a lo antes descrito manda un msj y lo regresa a ala pagina de inicio
                                 out.println("<script type=\"text/javascript\">");
                                 out.println("alert('Usuario o contrasena incorrectos');");
                                 out.println("location='index.jsp';");

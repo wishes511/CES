@@ -141,7 +141,8 @@ int año = fecha.get(Calendar.YEAR);
 "                  <td>Area</td>\n" +
 "                  <td>Departamento</td>\n" +
 "                  <td>Fecha</td>\n" +
-"                  <td>Movimiento</td>\n" +
+"                  <td>Hora final</td>\n" +
+"                  <td>Duracion  </td>\n" +        
 "                </tr>\n" +
 "              </thead>\n" +
 "              <tbody id=\"body_table\">\n" +

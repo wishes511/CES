@@ -191,7 +191,18 @@ public class Getfields extends HttpServlet {
                             Departamento d = new Departamento();
                             Movimiento m = new Movimiento();
                             for(int i =0;i<array.size();i++){
-                                if(i ==11 && (array.size()/12)==1){
+                                if(i ==11 && (array.size()/12)==1){// i=11
+                                    if(array.get(i-6).equals("S")){
+                                if(cod_usuario.equals("9999")){
+                                arr = prov.buscarprov(arr);//carga de proveedores
+                                arr_depa = depa.busca_depa_cod(arr_depa, codigo.charAt(0)); //carga de departamentos de acuerdo al area
+                                prov_fields(arr, arr_depa, area, out);// carga de menu de proveedor 
+                                }else if(cod_usuario.equals("9997")){
+                                arr_depa = depa.busca_depa_cod(arr_depa, codigo.charAt(0)); //carga de departamentos de acuerdo al area
+                                invitado_fields(area, out,arr_depa);// carga menu de invitados
+                                } 
+                                    }else{
+                                    System.out.println(i+"=11"+array.size());
                                 d.setClaveDepartamento(Integer.parseInt(array.get(i-4)));
                             //    System.out.println(i+"/"+array.get(i-11)+","+array.get(i-10)+","+array.get(i-9)+","+array.get(i-8)+","+array.get(i-7)+","+array.get(i-6)+","+array.get(i-5)+","+array.get(i-4)+","+array.get(i-3)+","+array.get(i-2)+","+array.get(i-1)+","+array.get(i));
                             m.setFolio(Integer.parseInt(array.get(i-11)));
@@ -208,7 +219,7 @@ public class Getfields extends HttpServlet {
                             String credencial = array.get(i);
                             out.print("<label>"+mov.nuevomov(m, hora_salida, credencial)+"</label>");
                             out.print("<script>document.getElementById('codigo').value='';</script>");
-                                
+                                    }
                             }else if((array.size()/12)>1 && i>11){// AQUI ME QUEDE COMPROBANDO LAS SALIDAS 
                                 int h=12*((array.size()/12)-1);
                                 if(array.get(h+5).equals("E")){

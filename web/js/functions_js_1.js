@@ -111,7 +111,7 @@ function nuevo_prov(){
                 var nametipo = document.getElementById('tipo_usuario').options[document.getElementById('tipo_usuario').selectedIndex].text;
                 if(nametipo == "ADMIN"){
                     pass=$('#pass_u').val();
-                    tipo_cod="7";
+                    tipo_cod="8";
                     empresa="ATH";
                 }else if(nametipo=="MAQUILA"){
                     pass="123";

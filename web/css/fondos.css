@@ -324,6 +324,7 @@ footer{
 .auto-y{
     overflow-y: scroll;
 }
+
 /*&nbsp;*/
 @media screen and (max-width: 840px) {
      .titulos{
