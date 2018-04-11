@@ -76,7 +76,7 @@ public class CES_movs extends conBD{
                     retorno = "Entrada: " + m.getNombre();
                 } else {
                     sentenciaSQL = "update movimiento set horasalida='"+horas+"', tiempo='"+tiempo(hora,horas)+"',tipo_mov='S' where folio="+folio;
-                    retorno = "Salida: " + nombre;
+                    retorno = "Salida: " + nombre+"<br><br> Hora de entrada: "+hora+"<br> Hora de salida: "+horas;
                 }
                 
             }
@@ -141,7 +141,7 @@ public class CES_movs extends conBD{
 //     retorno="Entrada: "+nombre; 48402
                 } else {
                     sentenciaSQL = "update movimiento set horasalida='"+horas+"', tiempo='"+tiempo(hora,horas)+"',tipo_mov='S' where folio="+folio;
-                    retorno = "<div class=letra_salida><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>SALIDA</big></label></div>";
+                    retorno = "<div class=letra_salida><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>SALIDA</big><br> Hora de entrada: "+hora+"<br> Hora de salida: "+horas+"</label></div>";
 
 //                    sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
 //                            + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','S','" + m.getArea() + "',"
@@ -204,6 +204,7 @@ public class CES_movs extends conBD{
         rs.close();
         return list;
     }
+    
         public ArrayList<String> search_movs(String f1,String f2,String nombre, String narea,String ndepa,String mov) throws ClassNotFoundException, SQLException {
         ArrayList<String> list = new ArrayList<>();
         Statement smt;
@@ -276,7 +277,6 @@ public class CES_movs extends conBD{
         }
        // System.out.println(hora+" min");
     }
-    
     return hora;
     }
 }

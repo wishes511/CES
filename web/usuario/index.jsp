@@ -10,7 +10,10 @@
     try {
         String tipos = (String) objSesion.getAttribute("tipo");
         String ids = String.valueOf(objSesion.getAttribute("i_d"));
-        if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("USUARIO"))) {
+        if(tipos.equals("USUARIO") ){
+            response.sendRedirect("reportes.jsp");
+        }
+        if (usuario != null && tipos != null && (tipos.equals("ADMIN")|| tipos.equals("VIGILANTE"))) {
             // out.println(usuario);
         } else {
             response.sendRedirect("../index.jsp");
@@ -21,7 +24,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-        <title>CES ADMIN</title>
+        <title>CES</title>
         <link rel="shortcut icon" type="image/x-icon" href="../images/icono.png" />
         <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../css/dashboard.css">
@@ -31,9 +34,16 @@
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
         <script>
-            $(document).ready(function () {
-                document.getElementById("search_prov").focus();
-            });
+            <%
+            if(tipos.equals("ADMIN")){
+            out.print("$(document).ready(function () {document.getElementById(\"search_prov\").focus();});");
+            }else if(tipos.equals("VIGILANTE")){
+            out.print("$(document).ready(function () {document.getElementById(\"codigo\").focus();});");
+            }
+            %>
+           function erasefield(){
+               document.getElementById("codigo").value="";
+           }         
         </script>
     </head>
     <body >
@@ -51,7 +61,11 @@
                                 out.print("<a class=\"nav-link\" href=\"usuarios.jsp\">Usuarios</a>"
                                         + "<a class=\"nav-link\" href=\"reportes.jsp\">Reportes</a>");
                             } else {
-                                out.print("<a class=\"nav-link active\" href=\"reportes.jsp\">Reportes<span class=\"sr-only\">(current)</span></a>");
+                                System.out.println("brr");
+                                if(tipos.equals("VIGILANTE")){
+                                    out.print("<a class=\"nav-link active\" href=\"\">Inicio<span class=\"sr-only\">(current)</span></a>");
+                                }
+                                out.print("<a class=\"nav-link \" href=\"reportes.jsp\">Reportes<span class=\"sr-only\">(current)</span></a>");
                                 //pendiente al usuario
                             }
                         %>
@@ -85,11 +99,7 @@
                                 + "          </ul>\n"
                                 + "        </nav>");
                     } else {
-                        out.print("<nav class=\"col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar\">\n"
-                                + "          <ul class=\"nav nav-pills flex-column\">\n"
-                                + "            \n"
-                                + "          </ul>\n"
-                                + "        </nav>");
+                       
                     }
                     if (tipos.equals("ADMIN")) {
                         out.print("<main class=\"col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3 \" id=main_prov>\n"
@@ -121,6 +131,21 @@
                                 + "            </table>\n"
                                 + "          </div>\n"
                                 + "        </main>");
+                    }else if(tipos.equals("VIGILANTE")){          
+            out.print("<main class=\"col-sm-9 offset-sm-3 col-md-10 offset-md-1 pt-3 \" id=main_prov>\n"+"<div class=\"\">\n" +
+"            <div id=\"fondoES\" class=\"container-fluid espacio-lg-down\" align=\"center\">\n" +
+"                <div class=\"btn\" >\n" +
+"                    <div class=\"\" align=\"center\" >\n" +
+"                        <br><br><br><br><br><label class=\"\">Codigo</label><input type=\"text\" id=\"codigo\" name=\"codigo\" onchange=\"searchuser()\" class=\"form-control \" onclick=erasefield()>\n" +
+"                    </div>\n" +
+"                </div>  \n" +
+"                <div id=\"respuesta\" align=\"center\">\n" +
+"                </div>\n" +
+"            </div>\n" +
+"        </div>\n" +
+"        <div class=\"container-fluid\">\n" +
+"            <div class=\"espacio-lg-down\"></div></main>");
+                    
                     }
                 %>
                 <!-- Modal -->

@@ -11,7 +11,7 @@
    try{
        String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")) ) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")|| tipos.equals("VIGILANTE")) ) {
        // out.println(usuario);
     } else {
         response.sendRedirect("../index.jsp");
@@ -74,7 +74,10 @@ int año = fecha.get(Calendar.YEAR);
                 out.print("<a class=\"nav-link\" href=usuarios.jsp>Usuarios</a>"
                         + "<a class=\"nav-link active\" href=\"reportes.jsp\">Reportes<span class=\"sr-only\">(current)</span></a>");
                 }else{
-                out.print("<a class=\"nav-link active\" href=\"reportes.jsp\">Reportes<span class=\"sr-only\">(current)</span></a>");
+                    if(tipos.equals("VIGILANTE")){
+                    out.print("<a class=\"nav-link\" href=\"index.jsp\">Entradas / Salidas<span class=\"sr-only\">(current)</span></a>");
+                    }
+                out.print("<a class=\"nav-link active\">Reportes<span class=\"sr-only\">(current)</span></a>");
                 //pendiente al usuario
                 }
             %>
@@ -92,7 +95,7 @@ int año = fecha.get(Calendar.YEAR);
             <div class="container-fluid " align="center">
                 <div class="row">
         <%
-        if(tipos.equals("ADMIN") || tipos.equals("USUARIO")){
+        if(tipos.equals("ADMIN") || tipos.equals("USUARIO")|| tipos.equals("VIGILANTE")){
         out.print("<main class=\"col-sm-12 pt-4\" id=main_prov>\n" +
 "          <section class=\"row text-center placeholders offset-sm-3\" id=section_prov align=center>\n" +
 "            <div class=\"col-6 col-sm-3 placeholder\">\n" +

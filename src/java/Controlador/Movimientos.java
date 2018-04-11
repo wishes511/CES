@@ -159,7 +159,7 @@ public class Movimientos extends HttpServlet {
                 for (int i = 0; i < arr.size(); i++) {
                     if (cont == 9) {// como tiene 8 columnas, cada vez que sea igual ejecutara la nueva linea.
                         if (!a.equals(arr.get(i - 7))) {// verifica si el area es direfente para crear una nueva linea pero con el area nueva
-                            out.print("<tr style=color:white;background-color:rgb(237,28,36) align=center><td colspan=7>" + arr.get(i - 7) + "</td></tr>");
+                            out.print("<tr style=color:white;background-color:#58C1A2 align=center><td colspan=7>" + arr.get(i - 7) + "</td></tr>");
                             a = arr.get(i - 7);
                         }
                         ///empezara a dibujar o escribir cada linea de informacion encontrada hacia el usuario    

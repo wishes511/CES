@@ -81,7 +81,7 @@ public class Validar extends HttpServlet {
         try {
             String nombre = request.getParameter("usu");
             String contrasena = request.getParameter("pass");
-            //System.out.println("," + nombre + "," + contrasena + ",");
+            System.out.println("," + nombre + "," + contrasena + ",");
             boolean flag = false;
             int interv = 180;
             PrintWriter out = response.getWriter();
@@ -134,6 +134,13 @@ public class Validar extends HttpServlet {
                                 objSesion.setAttribute("tipo", "ADMINPROV");
                                 response.sendRedirect("usuario/usuarios.jsp");
                                 break;
+                            case "VIGILANTE":
+                                //posible usuario para inicio de la pagina
+                                objSesion.setMaxInactiveInterval(interv + 15000);
+                                objSesion.setAttribute("usuario", nombre);
+                                objSesion.setAttribute("tipo", tipo);
+                                response.sendRedirect("usuario/index.jsp");
+                                break;    
                             default:// si lo que encontro es diferente a lo antes descrito manda un msj y lo regresa a ala pagina de inicio
                                 out.println("<script type=\"text/javascript\">");
                                 out.println("alert('Usuario o contrasena incorrectos');");

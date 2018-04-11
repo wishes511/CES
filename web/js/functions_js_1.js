@@ -109,7 +109,7 @@ function nuevo_prov(){
                 var pass="";
                 var tipo_cod="";
                 var nametipo = document.getElementById('tipo_usuario').options[document.getElementById('tipo_usuario').selectedIndex].text;
-                if(nametipo == "ADMIN"){
+                if(nametipo == "ADMIN" || nametipo=="VIGILANTE"){
                     pass=$('#pass_u').val();
                     tipo_cod="8";
                     empresa="ATH";

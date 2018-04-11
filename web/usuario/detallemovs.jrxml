@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b379cb8f-73ff-484b-9f89-28ae57495a68">
-	<property name="ireport.zoom" value="1.2100000000000009"/>
+	<property name="ireport.zoom" value="1.6105100000000014"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="nombre" class="java.lang.String">
@@ -63,7 +63,7 @@ where (m.nombre like '%$P!{nombre}%' and m.area like '%$P!{area}%' and d.nombre 
 				<text><![CDATA[DEPARTAMENTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="350" y="0" width="97" height="20" uuid="1374343d-e5b1-475a-ad26-a6fb0d7982c7"/>
+				<reportElement x="350" y="0" width="50" height="20" uuid="1374343d-e5b1-475a-ad26-a6fb0d7982c7"/>
 				<textElement textAlignment="Center">
 					<font size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
@@ -74,7 +74,7 @@ where (m.nombre like '%$P!{nombre}%' and m.area like '%$P!{area}%' and d.nombre 
 				<textElement textAlignment="Center">
 					<font size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
-				<text><![CDATA[SALIDA]]></text>
+				<text><![CDATA[HORA SALIDA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="512" y="0" width="43" height="20" uuid="92168d93-fa4f-4479-a30f-f95b16274fe1"/>
@@ -83,66 +83,72 @@ where (m.nombre like '%$P!{nombre}%' and m.area like '%$P!{area}%' and d.nombre 
 				</textElement>
 				<text><![CDATA[DURACION]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="410" y="0" width="37" height="20" uuid="13f05580-a323-4dc9-8634-594b6094aaff"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[HORA ENTRADA]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="47" y="0" width="68" height="20" uuid="6240516c-fb58-4235-b83c-72e520cae81e"/>
+				<reportElement x="47" y="0" width="68" height="12" uuid="6240516c-fb58-4235-b83c-72e520cae81e"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="512" y="0" width="43" height="20" uuid="900f06fa-37d1-4d8e-b1a6-baa6eae607a8"/>
+				<reportElement x="512" y="0" width="43" height="12" uuid="900f06fa-37d1-4d8e-b1a6-baa6eae607a8"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tiempo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="125" y="0" width="129" height="20" uuid="f06ce451-f724-450e-bab1-72c7b0e04934"/>
+				<reportElement x="125" y="0" width="129" height="12" uuid="f06ce451-f724-450e-bab1-72c7b0e04934"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{proveedor}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="267" y="0" width="72" height="20" uuid="f0be4ea9-82e2-4d31-a43b-c4d87a8ecf67"/>
+				<reportElement x="267" y="0" width="72" height="12" uuid="f0be4ea9-82e2-4d31-a43b-c4d87a8ecf67"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{depa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="350" y="0" width="50" height="20" uuid="2fb7e520-cc27-4f9f-8027-82f06f2a827a"/>
+				<reportElement x="350" y="0" width="50" height="12" uuid="2fb7e520-cc27-4f9f-8027-82f06f2a827a"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="400" y="0" width="10" height="20" uuid="c093c330-14ef-4340-af21-4119211831e7"/>
-				<textElement textAlignment="Center">
-					<font size="7"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="410" y="0" width="37" height="20" uuid="94e5e598-5868-43ad-8b8f-78bede63b3c9"/>
+				<reportElement x="410" y="0" width="37" height="12" uuid="94e5e598-5868-43ad-8b8f-78bede63b3c9"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{hora}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="458" y="0" width="43" height="20" uuid="9b23240e-a8ac-48f3-8ebd-4a51936eff7f"/>
+				<reportElement x="458" y="0" width="43" height="12" uuid="9b23240e-a8ac-48f3-8ebd-4a51936eff7f"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{horasalida}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="11" width="555" height="1" uuid="30a92c5b-4df5-4649-923c-ad59b4b9385a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
 		</band>
 	</detail>
 </jasperReport>

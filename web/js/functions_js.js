@@ -10,7 +10,7 @@ function searchuser(){
                 $.ajax({
                     type: 'post',
                     data: {uso: uso,codigo:codigo},
-                    url: 'Getfields',
+                    url: '../Getfields',
                     success: function (result) {
                         $('#respuesta').html(result);
                         
@@ -91,7 +91,7 @@ function searchactivo_id(){
                 $.ajax({
                     type: 'post',
                     data: {uso: uso,activo:pactivo},
-                    url: 'Getdata_prov_personal',
+                    url: '../Getdata_prov_personal',
                     success: function (result) {
                         $('#p_activos').html(result);
                     }
@@ -264,7 +264,7 @@ function inicio_io(){
     $.ajax({
                     type: 'post',
                     data: {uso: uso,prov:prov,autorizada:autorizada,depa:depa,area:area,codigo:codigo},
-                    url: 'Movimientos',
+                    url: '../Movimientos',
                     success: function (result) {
                         $('#ensa').html(result);
                         document.getElementById('codigo').value="";
@@ -287,7 +287,7 @@ function inicio_io_invi(){
     $.ajax({
                     type: 'post',
                     data: {uso: uso,nombre:nombre,area:area,codigo:codigo,obs:obs,depa:depa},
-                    url: 'Movimientos',
+                    url: '../Movimientos',
                     success: function (result) {
                         $('#ensa').html(result);
                         document.getElementById('codigo').value="";
