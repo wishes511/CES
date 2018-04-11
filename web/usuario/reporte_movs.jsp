@@ -16,11 +16,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>CES</title>  
     </head>
     <body>
 
         <% HttpSession objSesion = request.getSession(true);
-//i_d
+//i_d 
             boolean estado;
             String usuario = (String) objSesion.getAttribute("usuario");
             String tipos = (String) objSesion.getAttribute("tipo");

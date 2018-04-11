@@ -113,6 +113,7 @@ public class Getfields extends HttpServlet {
         if(minuto >9){
             horas+=minuto;
         }
+            
             String n_tarjeta=String.valueOf(codigo.charAt(6)) +codigo.charAt(7);
             CES_movs mov = new CES_movs();
             area = depa.busca_area_cod(codigo.charAt(0));// busca el area de acuerdo al codigo
@@ -122,20 +123,20 @@ public class Getfields extends HttpServlet {
                     // proveedores
                     case 9999:                        
                         array=mov.search_lastmov(area, fechac, n_tarjeta,"prov"); //busca ultimo movimiento al uso de la tarjeta
-                        select_tipo_user(n_tarjeta,array,out,mov,arr,arr_depa,prov,depa,codigo,area,"9999");
+                        select_tipo_user(n_tarjeta,array,out,mov,arr,arr_depa,prov,depa,codigo,area,"9999",horas);
                         break;
                     // Sr pablo
                     case 9998:
                         if(codigo.charAt(0)=='6' && codigo.charAt(0)=='7'){
                             array=mov.search_lastmov(area, fechac, n_tarjeta,"invitado"); //busca ultimo movimiento al uso de la tarjeta
-                        select_tipo_user(n_tarjeta,array,out,mov,arr,arr_depa,prov,depa,codigo,area,"9997");
+                        select_tipo_user(n_tarjeta,array,out,mov,arr,arr_depa,prov,depa,codigo,area,"9997",horas);
                         }
                         break;
                     // invitados
                     case 9997:
                        // invitado_fields(area,out,depa);
                         array=mov.search_lastmov(area, fechac, n_tarjeta,"invitado"); //busca ultimo movimiento al uso de la tarjeta
-                        select_tipo_user(n_tarjeta,array,out,mov,arr,arr_depa,prov,depa,codigo,area,"9997");
+                        select_tipo_user(n_tarjeta,array,out,mov,arr,arr_depa,prov,depa,codigo,area,"9997",horas);
                         break;
                     // Personal y maquiladores
                     default:
@@ -185,7 +186,7 @@ public class Getfields extends HttpServlet {
     }// </editor-fold>
 
     private void select_tipo_user(String n_tarjeta,ArrayList<String> array, PrintWriter out,CES_movs mov, ArrayList<String> arr,
-            ArrayList<String> arr_depa, CES_prov prov, CES_depa depa,String codigo,String area,String cod_usuario) throws ClassNotFoundException, SQLException{
+            ArrayList<String> arr_depa, CES_prov prov, CES_depa depa,String codigo,String area,String cod_usuario,String hora_salida) throws ClassNotFoundException, SQLException{
         //System.out.println(array.size());
         if (!array.isEmpty()){// verifica si encontro algun registro con anterioridad en el uso de la tarjeta
                             Departamento d = new Departamento();
@@ -202,7 +203,7 @@ public class Getfields extends HttpServlet {
                                 invitado_fields(area, out,arr_depa);// carga menu de invitados
                                 } 
                                     }else{
-                                    System.out.println(i+"=11"+array.size());
+                                   // System.out.println(i+"=11"+array.size());
                                 d.setClaveDepartamento(Integer.parseInt(array.get(i-4)));
                             //    System.out.println(i+"/"+array.get(i-11)+","+array.get(i-10)+","+array.get(i-9)+","+array.get(i-8)+","+array.get(i-7)+","+array.get(i-6)+","+array.get(i-5)+","+array.get(i-4)+","+array.get(i-3)+","+array.get(i-2)+","+array.get(i-1)+","+array.get(i));
                             m.setFolio(Integer.parseInt(array.get(i-11)));
@@ -215,7 +216,6 @@ public class Getfields extends HttpServlet {
                             m.setDepartamento(d);
                             m.setObservaciones(array.get(i-3));
                             m.setFecha(array.get(i-2));
-                            String hora_salida=array.get(i-1);
                             String credencial = array.get(i);
                             out.print("<label>"+mov.nuevomov(m, hora_salida, credencial)+"</label>");
                             out.print("<script>document.getElementById('codigo').value='';</script>");
@@ -235,7 +235,6 @@ public class Getfields extends HttpServlet {
                             m.setDepartamento(d);
                             m.setObservaciones(array.get(h+8));
                             m.setFecha(array.get(h+9));
-                            String hora_salida=array.get(h+10);
                             String credencial = array.get(h+11);
                             out.print("<label>"+mov.nuevomov(m, hora_salida, credencial)+"</label>"); //nuevasalida
                             out.print("<script>document.getElementById('codigo').value='';</script>");

@@ -82,16 +82,12 @@ public class Movimientos extends HttpServlet {
                 horas = "0" + hora + ":";
             }
             if (minuto < 10) {
-                horas = hora + "0" + minuto;
+                horas = hora + ":0" + minuto;
             }
             if (minuto > 9) {
                 horas += minuto;
-            } else {
-                horas = hora + ":" + minuto;
-            }
-            //System.out.println(horas);
-            String fechac = año + "-" + mes + "-" + dia;//fecha formada por Calendar.getInstance();
-
+            } 
+            String fechac = año + "-" + mes + "-" + dia;//fecha formada por Calendar.getInstance();               
             String uso = request.getParameter("uso");
             CES_movs bd = new CES_movs();
             if (uso.equals("proveedor")) {// solo acciones que convienen al proveedor
@@ -118,7 +114,7 @@ public class Movimientos extends HttpServlet {
                 m.setDepartamento(d);
                 m.setFecha(fechac);
                 m.setObservaciones("");
-                PrintWriter out = response.getWriter();// instanciar objeto para escribir y responder hacia una pagina 
+                PrintWriter out = response.getWriter();// instanciar objeto para escribir y responder hacia una pagina            
                 out.print("<label>" + bd.nuevomov(m, horas, numero) + "</label>");// regreso <label>Entrada: o SALIDA</label> a las funciones de javascript 
             } else if (uso.equals("invitado")) {// acciones que solo conciernen al invitado
                 String codigo = request.getParameter("codigo");

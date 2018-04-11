@@ -34,27 +34,24 @@ int año = fecha.get(Calendar.YEAR);
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-        <title>CES ADMIN</title>
+        <title>CES/<%=tipos%></title>
         <link rel="shortcut icon" type="image/x-icon" href="../images/icono.png" />
         <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../css/dashboard.css">
         <link rel="stylesheet" type="text/css" href="../css/fondos.css">
         <link rel="stylesheet" type="text/css" href="../css/dhtmlgoodies_calendar.css" media="screen">
-        
         <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="../js/tether.min.js"></script>
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="../js/dhtmlgoodies_calendar.js"></script>
         <script type="text/javascript" src="../js/jquery.tablesorter.js"></script>
-        
         <script type="text/javascript">
             $(document).ready(function () {
                 document.getElementById("f1").focus();
             });
             $(document).ready(function () {
                 $("#tablasor").tablesorter();
-                 
             });
         </script>
     </head>
@@ -65,7 +62,6 @@ int año = fecha.get(Calendar.YEAR);
         <span class="navbar-toggler-icon"></span>
       </button>
            <a class="navbar-brand" ><img src="../images/AF.png;base64" width="170px" height="50"></a>
-
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <% 
@@ -81,9 +77,6 @@ int año = fecha.get(Calendar.YEAR);
                 //pendiente al usuario
                 }
             %>
-            
-            
-            
         </ul>
         <div class="row">
             <!--<input class="form-control mr-sm-2" type="text" placeholder="Search">-->
@@ -97,7 +90,7 @@ int año = fecha.get(Calendar.YEAR);
         <%
         if(tipos.equals("ADMIN") || tipos.equals("USUARIO")|| tipos.equals("VIGILANTE")){
         out.print("<main class=\"col-sm-12 pt-4\" id=main_prov>\n" +
-"          <section class=\"row text-center placeholders offset-sm-3\" id=section_prov align=center>\n" +
+"          <section class=\"row text-center offset-sm-3\" id=section_prov align=center>\n" +
 "            <div class=\"col-6 col-sm-3 placeholder\">\n" +
 "              <h4>Inicial</h4>\n" +
 "              <input type=\"text\" class=\"form-control\" id=\"f1\" onkeypress=ver_regs() value="+fechac+">\n" +
@@ -113,8 +106,8 @@ int año = fecha.get(Calendar.YEAR);
 "             <h4>&nbsp</h4> <button class=\"btn btn-outline-secondary\" onclick=\"displayCalendar(document.getElementById('f2'), 'dd-mm-yyyy', this)\">...</button>\n" +
 "            </div>\n" +                              
 "          </section>\n" +
-"          <h4>Filtros</h4>     \n"+        
-"          <section class=\"row text-center placeholders fondos redondeado\" id=section_prov align=center >\n" +
+"          <h4 class=>Filtros</h4>     \n"+        
+"          <section class=\"row text-center fondos redondeado\" id=section_prov align=center >\n" +
 "            <div class=\"col-6 col-sm-3 offset-sm-2 placeholder\">\n" +
 "              <br><input type=\"text\" class=\"form-control\" id=\"nombre\" placeholder=Nombre onkeypress=ver_regs()>\n" +
 "            </div>\n" +
@@ -128,15 +121,14 @@ int año = fecha.get(Calendar.YEAR);
 "             <br><select class=form-control id=mov onchange=ver_regs()><option value=>Ambas</option><option value=E>Entrada</option><option value=S>Salida</option></select>\n" +
 "            </div>\n" +                              
 "          </section>\n" +
-        
-"           <section class=\"row text-center placeholders\" align=center>\n" +  
+"           <section class=\"row text-center espacio-xs-down\" align=center>\n" +  
 "              <div class=\"col-10 col-sm-8 offset-sm-2 placeholder\">\n" +                              
 "                  <br><button type=\"input\" class=btn  onclick=ver_regs()>Buscar Registros</button>\n" +
 "              <button type=\"input\" class=btn btn-success  onclick=reporte()>Generar reporte</button>\n" +
 "              </div>\n" +  
 "          </section>\n" +
 "          <div id=table_prov class=\"table-responsive\">\n" +
-"            <table id=tablasor class=\"table table-striped table-hover tablesorter\">\n" +
+"            <table id=tablasor class=\"table table-hover tablesorter\">\n" +
 "              <thead>\n" +
 "                <tr align=\"center\" style=color:white;background:black class=redondeado>\n" +
 "                  <td>Nombre</td>\n" +
@@ -148,14 +140,13 @@ int año = fecha.get(Calendar.YEAR);
 "                  <td>Duracion  </td>\n" +        
 "                </tr>\n" +
 "              </thead>\n" +
-"              <tbody id=\"body_table\">\n" +
+"              <tbody id=\"body_table\" class=body-table>\n" +
 "              </tbody>\n" +
 "            </table>\n" +
 "          </div>\n" +
 "        </main>");
             }
         %>
-        
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">

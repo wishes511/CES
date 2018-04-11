@@ -64,7 +64,7 @@ public class CES_movs extends conBD{
                 String s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                         + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                         + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','','')";
-                retorno = "Entrada";
+                retorno = "<div class=letra_entrada>Entrada</div>";
                 st = getConexion().prepareStatement(s);
                 st.executeUpdate();
                 st.close();
@@ -73,14 +73,14 @@ public class CES_movs extends conBD{
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                             + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','','')";
-                    retorno = "Entrada: " + m.getNombre();
+                    retorno = "<div class=letra_entrada>Entrada: " + m.getNombre()+"</div>";
                 } else {
                     sentenciaSQL = "update movimiento set horasalida='"+horas+"', tiempo='"+tiempo(hora,horas)+"',tipo_mov='S' where folio="+folio;
-                    retorno = "Salida: " + nombre+"<br><br> Hora de entrada: "+hora+"<br> Hora de salida: "+horas;
+                    retorno = "<div class=letra_salida>Salida: "+m.getNombre()+"/" + nombre+"<br><br> Hora de entrada: "+hora+"<br> Hora de salida: "+horas+"</div>";
                 }
                 
             }
-           // System.out.println(sentenciaSQL);
+            System.out.println(sentenciaSQL);
             st = getConexion().prepareStatement(sentenciaSQL);
             st.executeUpdate();
             st.close();
@@ -128,7 +128,11 @@ public class CES_movs extends conBD{
                 String s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                         + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                         + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','','')";
-                retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+"</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><br><label><big>ENTRADA</big></label></div>";
+                if(m.getArea().equals("MAQUILAS")){
+                retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+"</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><br><br><label><big>ENTRADA</big></label></div>";
+                }else{
+                retorno = "<div class=letra_entrada><br><label>Area:&nbsp</label><label>"+m.getArea()+"</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><br><br><label><big>ENTRADA</big></label></div>";
+                }
                 st = getConexion().prepareStatement(s);
                 st.executeUpdate();
                 st.close();
@@ -137,12 +141,18 @@ public class CES_movs extends conBD{
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                             + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','','')";
-                    retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>ENTRADA</big></label></div>";
-//     retorno="Entrada: "+nombre; 48402
+                    if(m.getArea().equals("MAQUILAS")){
+                    retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><br><br><label><big>ENTRADA</big></label></div>";
+                    }else{
+                    retorno = "<div class=letra_entrada><br><label>Area :</label><label>"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>ENTRADA</big></label></div>";
+                    }
                 } else {
                     sentenciaSQL = "update movimiento set horasalida='"+horas+"', tiempo='"+tiempo(hora,horas)+"',tipo_mov='S' where folio="+folio;
+                if(m.getArea().equals("MAQUILAS")){
                     retorno = "<div class=letra_salida><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>SALIDA</big><br> Hora de entrada: "+hora+"<br> Hora de salida: "+horas+"</label></div>";
-
+                }else{
+                    retorno = "<div class=letra_salida><br><label>Area: </label><label>"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Departamento:&nbsp"+nombre+"</label><br><br><label><big>SALIDA</big><br> Hora de entrada: "+hora+"<br> Hora de salida: "+horas+"</label></div>";
+                }        
 //                    sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
 //                            + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','S','" + m.getArea() + "',"
 //                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "')";
@@ -240,6 +250,7 @@ public class CES_movs extends conBD{
         return getConexion();
     }
     private String tiempo(String h1, String h2){
+
     int arr []=new int[2];
     int arr1 []=new int[2];
     String hora="";
@@ -249,34 +260,74 @@ public class CES_movs extends conBD{
     arr1[1]=Integer.parseInt(h2.charAt(3)+""+h2.charAt(4));
     int horas=0;
     int mins=0;
+    int cont =1;
+    int aux=0;
     if(arr[0]==arr[1]){
         mins=arr1[1]-arr1[0];
     }else{
     mins=(60-arr1[0])+arr1[1];
     }
-    
     if(mins <0){
         mins = mins*(-1);
     }
-   // System.out.println(mins+"="+arr[0]+"*"+arr[1]);
-    if((mins %60==0 || mins >59) && mins !=0){
-        
-        horas++;
-        mins=mins-60;
-        if(mins <10){
-            hora=horas+":0"+mins;
-        }else{
-            hora=horas+":"+mins;
-        } 
-//        System.out.println(hora+" hora");
-    }else{
+    if(arr[0]!=arr[1]){
+    horas=(arr[1]-arr[0])-1;
+    }
+    if(mins==60){
+    horas++;
+    mins=0;
+    }
         if(mins <10){
             hora=horas+":0"+mins;
         }else{
             hora=horas+":"+mins;
         }
        // System.out.println(hora+" min");
-    }
     return hora;
     }
+//    private String tiempo(String h1, String h2){
+//
+//    int arr []=new int[2];
+//    int arr1 []=new int[2];
+//    String hora="";
+//    arr[0]=Integer.parseInt(h1.charAt(0)+""+h1.charAt(1));
+//    arr[1]=Integer.parseInt(h2.charAt(0)+""+h2.charAt(1));
+//    arr1[0]=Integer.parseInt(h1.charAt(3)+""+h1.charAt(4));
+//    arr1[1]=Integer.parseInt(h2.charAt(3)+""+h2.charAt(4));
+//    int horas=0;
+//    int mins=0;
+//    int cont =1;
+//    System.out.println(arr[0]+"-"+arr[1]);
+//    if(arr[0]==arr[1]){
+//        System.out.println(arr[0]+"-"+arr[1]);
+//        mins=arr1[1]-arr1[0];
+//    }else{
+//    mins=(60-arr1[0])+arr1[1];
+//    System.out.println((60-arr1[0])+"+"+arr1[1]);
+//    }
+//    
+//    if(mins <0){
+//        mins = mins*(-1);
+//    }
+//    System.out.println(mins+"="+arr[0]+"*"+arr[1]);
+//    if((mins %60==0 || mins >59) && mins !=0){
+//        
+//        horas++;
+//        mins=mins-60;
+//        if(mins <10){
+//            hora=horas+":0"+mins;
+//        }else{
+//            hora=horas+":"+mins;
+//        } 
+////        System.out.println(hora+" hora");
+//    }else{
+//        if(mins <10){
+//            hora=horas+":0"+mins;
+//        }else{
+//            hora=horas+":"+mins;
+//        }
+//       // System.out.println(hora+" min");
+//    }
+//    return hora;
+//    }
 }

@@ -180,7 +180,9 @@ asside{
 }
 .fondos{
     background-color: rgb(51, 122, 183); 
-    color: white
+    color: white;
+    padding-bottom: 15px
+        
 }
 .endchapter{
     font-size: 25px;
@@ -286,6 +288,15 @@ footer{
 .espacio-md-down{
     padding-bottom: 2%
 }
+.espacio-xs-down{
+    padding-bottom: 1%
+}
+.espacio-sm-up{
+    padding-top: 2%
+}
+.espacio-sm-up{
+    padding-top: 4%
+}
 .espacio-lg-down{
     padding-bottom: 15%
 }
@@ -306,7 +317,7 @@ footer{
     letter-spacing: 0.1em
 }
 .letra_salida{
-    color:red;
+    color:#58C1A2;
     font-size: 20px;
    letter-spacing: 0.1em
 }
@@ -324,7 +335,12 @@ footer{
 .auto-y{
     overflow-y: scroll;
 }
-
+.body-table{
+    height:5px;
+    font-size: 11px;
+    padding: 0px;
+    padding-bottom:0px 
+}
 /*&nbsp;*/
 @media screen and (max-width: 840px) {
      .titulos{

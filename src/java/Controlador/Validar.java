@@ -81,7 +81,7 @@ public class Validar extends HttpServlet {
         try {
             String nombre = request.getParameter("usu");
             String contrasena = request.getParameter("pass");
-            System.out.println("," + nombre + "," + contrasena + ",");
+            //System.out.println("," + nombre + "," + contrasena + ",");
             boolean flag = false;
             int interv = 180;
             PrintWriter out = response.getWriter();
