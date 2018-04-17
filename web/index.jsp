@@ -57,14 +57,12 @@
         <div align="center">
             <%                 if (usuario != null && tipos != null && tipos.equals("INTERMEDIO")) {
                     out.println("<div class=container-fluid align=left> ");
-
                     out.println("<div class=row>");
                     out.println("<form action=capturador/index.jsp> ");
                     out.println("<label>Conectado como:</label>");
                     out.println("<input type=submit value=" + usuario + " class=btn btn-default>");
                     out.println("</form>");
                     out.println("</div>");
-
                     out.println("</div>");
 
                 } else {

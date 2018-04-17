@@ -35,6 +35,23 @@ public ArrayList<String> buscarprov_act_idprov(int clave) throws ClassNotFoundEx
         smt.close();
         return lista;
     }
+public ArrayList<String> buscarprov_act_idprov(String name) throws ClassNotFoundException, SQLException {
+    ArrayList<String> lista= new ArrayList<>();    
+    String query = "select pa.clave_autorizado as 'clave_autorizado',pa.nombre as 'nombre' from proveedor p "
+            + "join p_autorizado pa on pa.clave_proveedor=p.clave_proveedor where p.nombre='"+name+"' and p.statuo='1'";
+        Statement smt;
+        ResultSet df;
+        abrir();
+        smt = getConexion().createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {
+            lista.add(df.getString("clave_autorizado"));
+            lista.add(df.getString("nombre"));
+        }
+        df.close();
+        smt.close();
+        return lista;
+    }
 public ArrayList<String> buscarprov_autorizado(String nombre, String status) throws ClassNotFoundException, SQLException {
     ArrayList<String> lista= new ArrayList<>();    
     String query = "select pa.clave_autorizado,pa.nombre,p.nombre as 'nprov' from p_autorizado pa join proveedor p \n" +

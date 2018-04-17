@@ -274,7 +274,7 @@ public class Getfields extends HttpServlet {
     m.setNombre(arru.get(1));
     m.setArea(area);
     m.setDepartamento(dep);
-    m.setObservaciones(arru.get(3));
+    m.setObservaciones("");
     m.setFecha(fecha);
     String credencial="";
     
@@ -294,7 +294,7 @@ public class Getfields extends HttpServlet {
                 + "                           <label>Proveedor :</label><select id=\"proveedor\" name=\"proveedor\" onchange=\"searchactivo_id()\" class=\"form-control\"><option></option>");
         for (int i = 0; i < arr.size(); i++) {
             if (cont == 1) {
-                out.print("<option onchange=searchactivo_id() value=" + arr.get(i - 1) + ">" + arr.get(i) + "</option>");
+                out.print("<option onchange=searchactivo_id() value=" + arr.get(i) + ">" + arr.get(i) + "</option>");
                 cont = 0;
             } else {
                 cont++;
@@ -302,8 +302,11 @@ public class Getfields extends HttpServlet {
         }
         out.print("                             </select>\n"
                 + "                        </div>\n"
+                + "                        <br><div class=\"col-sm-3\" style=\"\" align=center>\n"
+                + "                                <input type=text id=\"proveed\" class=\"ln form-control\" placeholder=\"Nuevo Proveedor\" onchange=saltopa()>\n"
+                + "                        </div><br>"
                 + "                        <div class=\"col-sm-3\" align=\"center\" id=\"p_activos\">\n"
-                + "                            <label>Persona Autorizada :</label><select id=\"\" class=\"form-control\">\n"
+                + "                            <label>Persona Autorizada :</label><select id=\"pa\" class=\"form-control\">\n"
                 + "                            </select>\n"
                 + "                        </div>\n"
                 + "                        <br><div class=\"col-sm-3\" style=\"\" align=center>\n"
@@ -320,11 +323,14 @@ public class Getfields extends HttpServlet {
             }
         }
         out.print("                            </select>\n"
-                + "                            </div>\n"             
+                + "                            </div>\n"   
+                +"                           <br><div class=\"col-sm-3\" style=\"\" align=center>\n"
+                + "                                <input type=text id=\"observacion\" class=\"ln form-control\" placeholder=\"Se dirige con:\" onchange=saltobi()>\n"
+                + "                        </div><br>\n"
                 + "                            <div class=\"col-sm\" style=\"\" align=center>\n"
-                + "                                <br><label class=\"ln\" style=\"color: red\" >Area : </label><input type=text id=\"area\" class=\"ln non-input\" value="+area+" disabled>\n"
-                + "                            </div><br>\n"
-                + "                        <input type=\"button\" class=\"btn\" value=\"Iniciar I/O\" onclick=\"inicio_io()\"><br><br>\n"
+                + "                                <label class=\"ln\" style=\"color: red\" >Area : </label><input type=text id=\"area\" class=\"ln non-input\" value="+area+" disabled>\n"
+                + "                            </div>\n"
+                + "                        <input type=\"button\" class=\"btn\" value=\"Iniciar I/O\" onclick=\"inicio_io()\" id=bi><br><br>\n"
                 + "                        <div id=ensa></div>\n"
                 + "                    </div>");
     }
@@ -332,9 +338,12 @@ public class Getfields extends HttpServlet {
     private void invitado_fields(String area, PrintWriter out, ArrayList<String> arr_depa) {//menu invitado
         int cont =0;
         out.print("<div class=\" container-fluid\" align=\"center\">\n"
+                + "<div class=\"col-sm-3\" style=\"\" align=center>\n"
+                + "                                <br><input type=text id=\"procedencia\" class=\"ln form-control\" placeholder='Procedencia:' onchange=saltoprocedencia()>\n"
+                + "                        </div><br>\n"
                 + "                        <div class=\"col-sm-3\" align=\"center\">\n"
                 + "                           <label>Nombre :</label>"
-                + "                        </div><br><div class=\"col-sm-3\" style=\"\" align=center>\n"
+                + "                        </div><div class=\"col-sm-3\" style=\"\" align=center>\n"
                 + "                                <input type=text id=\"nombre\" class=\"ln form-control\" onchange=saltodepinvi()>\n"
                 + "                        </div><br>\n"
                  + "                        <div class=\"col-sm-3\">\n"
@@ -348,7 +357,7 @@ public class Getfields extends HttpServlet {
             }
         }
         out.print("                        </select><br></div><br><div class=\"col-sm-3\" style=\"\" align=center>\n"
-                + "                                <input type=text id=\"observaciones\" class=\"ln form-control\" placeholder='COMENTARIOS' onchange=saltoinvi()>\n"
+                + "                                <input type=text id=\"observaciones\" class=\"ln form-control\" placeholder='VISITA A:' onchange=saltoinvi()>\n"
                 + "                        </div><br>\n" 
                 + "                        <div class=\"col-sm\" style=\"\" align=center>\n"
                 + "                                <br><label class=\"ln\" style=\"color: red\" >Area : </label><input type=text id=\"area\" class=\"ln non-input\" value="+area+" disabled>\n"

@@ -64,6 +64,19 @@ public boolean buscarprov(String nombre) throws ClassNotFoundException, SQLExcep
         smt.close();
         return p;
     }
+public int buscarprov_id(String nombre) throws ClassNotFoundException, SQLException {  
+       int p=0;
+    String query = "select clave_proveedor from proveedor where nombre='"+nombre+"'";
+        Statement smt;
+        ResultSet df;
+        abrir();
+        smt = getConexion().createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {p=df.getInt("clave_proveedor");}
+        df.close();
+        smt.close();
+        return p;
+    }
 public boolean buscarmov_prov(int id) throws ClassNotFoundException, SQLException {  
         boolean p=false;
     String query = "select distinct p.nombre from movimiento m join proveedor p on m.clave_proveedor=p.clave_proveedor\n" +

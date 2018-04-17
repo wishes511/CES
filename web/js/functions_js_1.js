@@ -190,6 +190,15 @@ function reporte(){
                 var tipo= $('#mov').val();
     location='reporte_movs.jsp?f1='+f1+"&f2="+f2+"&nombre="+nombre+"&area="+area+"&depa="+dep+"&tipo="+tipo;
 }
+function reporte_det(){
+   var f1 =$('#f1').val();
+                var f2 =$('#f2').val();
+                var nombre =$('#nombre').val();
+                var area =$('#area').val()
+                var dep = $('#nombre_dep').val();
+                var tipo= $('#mov').val();
+    location='reporte_movs_det.jsp?f1='+f1+"&f2="+f2+"&nombre="+nombre+"&area="+area+"&depa="+dep+"&tipo="+tipo;
+}
 /* 
  * 
   catch(ClassNotFoundException c){

@@ -82,7 +82,7 @@ public class Getdata_prov_personal extends HttpServlet {
         CES_provact bd = new CES_provact();
         if(uso.equals("buscar")){
             String prov_field = request.getParameter("activo");
-            ArrayList<String> arr= bd.buscarprov_act_idprov(Integer.parseInt(prov_field));
+            ArrayList<String> arr= bd.buscarprov_act_idprov((prov_field));
              PrintWriter out = response.getWriter();
             if(!arr.isEmpty()){
                 int cont=0;

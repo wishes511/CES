@@ -63,9 +63,9 @@
                             } else {
                                 if(tipos.equals("VIGILANTE")){
                                     out.print("<a class=\"nav-link active\" href=\"\">Inicio<span class=\"sr-only\">(current)</span></a>");
+                                }else{
+                                  out.print("<a class=\"nav-link \" href=\"reportes.jsp\">Reportes<span class=\"sr-only\">(current)</span></a>");  
                                 }
-                                out.print("<a class=\"nav-link \" href=\"reportes.jsp\">Reportes<span class=\"sr-only\">(current)</span></a>");
-                                //pendiente al usuario
                             }
                         %>
                     </ul>
@@ -135,7 +135,7 @@
 "            <div id=\"fondoES\" class=\"container-fluid espacio-lg-down\" align=\"center\">\n" +
 "                <div class=\"btn\" >\n" +
 "                    <div class=\"\" align=\"center\" >\n" +
-"                        <br><br><br><label class=\"\">Codigo</label><input type=\"text\" id=\"codigo\" name=\"codigo\" onchange=\"searchuser()\" class=\"form-control \" onclick=erasefield()>\n" +
+"                        <br><label class=\"\">Codigo</label><input type=\"text\" id=\"codigo\" name=\"codigo\" onchange=\"searchuser()\" class=\"form-control \" onclick=erasefield()>\n" +
 "                    </div>\n" +
 "                </div>  \n" +
 "                <div id=\"respuesta\" align=\"center\">\n" +

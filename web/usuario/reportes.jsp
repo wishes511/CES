@@ -11,7 +11,7 @@
    try{
        String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")|| tipos.equals("VIGILANTE")) ) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")) ) {
        // out.println(usuario);
     } else {
         response.sendRedirect("../index.jsp");
@@ -124,19 +124,22 @@ int año = fecha.get(Calendar.YEAR);
 "           <section class=\"row text-center espacio-xs-down\" align=center>\n" +  
 "              <div class=\"col-10 col-sm-8 offset-sm-2 placeholder\">\n" +                              
 "                  <br><button type=\"input\" class=btn  onclick=ver_regs()>Buscar Registros</button>\n" +
-"              <button type=\"input\" class=btn btn-success  onclick=reporte()>Generar reporte</button>\n" +
+"              <button type=\"input\" class=\"btn btn-success\"  onclick=reporte()>Reporte Condensado</button>\n" +
+"                  <button type=\"input\" class=\"btn btn-success\"  onclick=reporte_det()>Reporte Detallado</button>\n" +        
 "              </div>\n" +  
 "          </section>\n" +
 "          <div id=table_prov class=\"table-responsive\">\n" +
 "            <table id=tablasor class=\"table table-hover tablesorter\">\n" +
 "              <thead>\n" +
 "                <tr align=\"center\" style=color:white;background:black class=redondeado>\n" +
+"                  <td>Fecha</td>\n" +
 "                  <td>Nombre</td>\n" +
 "                  <td>Proveedor</td>\n" +
 "                  <td>Area</td>\n" +
 "                  <td>Departamento</td>\n" +
-"                  <td>Fecha</td>\n" +
+"                  <td>Hora Inicial</td>\n" +
 "                  <td>Hora final</td>\n" +
+"                  <td>Procedencia y extras</td>\n" +
 "                  <td>Duracion  </td>\n" +        
 "                </tr>\n" +
 "              </thead>\n" +

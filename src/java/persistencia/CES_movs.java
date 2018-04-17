@@ -63,8 +63,8 @@ public class CES_movs extends conBD{
             if (conta == 0) {// verifica si hubo registros en la consulta anterior,si no hubo insertar
                 String s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                         + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','','')";
-                retorno = "<div class=letra_entrada>Entrada</div>";
+                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0)";
+                retorno = "<div class=letra_entrada>Entrada:"+m.getNombre()+"</div>";
                 st = getConexion().prepareStatement(s);
                 st.executeUpdate();
                 st.close();
@@ -72,15 +72,14 @@ public class CES_movs extends conBD{
                 if (movimiento.equals("S")) {
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','','')";
+                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0)";
                     retorno = "<div class=letra_entrada>Entrada: " + m.getNombre()+"</div>";
                 } else {
-                    sentenciaSQL = "update movimiento set horasalida='"+horas+"', tiempo='"+tiempo(hora,horas)+"',tipo_mov='S' where folio="+folio;
-                    retorno = "<div class=letra_salida>Salida: "+m.getNombre()+"/" + nombre+"<br><br> Hora de entrada: "+hora+"<br> Hora de salida: "+horas+"</div>";
+                    sentenciaSQL = "update movimiento set horasalida='"+horas+"', tiempo="+tiempo(hora,horas)+",tipo_mov='S' where folio="+folio;
+                    retorno = "<div class=letra_salida>Salida: "+m.getNombre()+"<br><br> Hora de entrada: "+hora+"<br> Hora de salida: "+horas+"</div>";
                 }
                 
             }
-            System.out.println(sentenciaSQL);
             st = getConexion().prepareStatement(sentenciaSQL);
             st.executeUpdate();
             st.close();
@@ -127,7 +126,7 @@ public class CES_movs extends conBD{
             if (conta == 0) {// verifica si hubo registros en la consulta anterior,si no hubo insertar
                 String s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                         + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','','')";
+                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0)";
                 if(m.getArea().equals("MAQUILAS")){
                 retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+"</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><br><br><label><big>ENTRADA</big></label></div>";
                 }else{
@@ -140,16 +139,16 @@ public class CES_movs extends conBD{
                 if (movimiento.equals("S")) {
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','','')";
+                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0)";
                     if(m.getArea().equals("MAQUILAS")){
-                    retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><br><br><label><big>ENTRADA</big></label></div>";
+                    retorno = "<div class=letra_entrada><br><label>Area: </label><label>"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><br><br><label><big>ENTRADA</big></label></div>";
                     }else{
                     retorno = "<div class=letra_entrada><br><label>Area :</label><label>"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>ENTRADA</big></label></div>";
                     }
                 } else {
-                    sentenciaSQL = "update movimiento set horasalida='"+horas+"', tiempo='"+tiempo(hora,horas)+"',tipo_mov='S' where folio="+folio;
+                    sentenciaSQL = "update movimiento set horasalida='"+horas+"', tiempo="+tiempo(hora,horas)+",tipo_mov='S' where folio="+folio;
                 if(m.getArea().equals("MAQUILAS")){
-                    retorno = "<div class=letra_salida><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Area:&nbsp" + m.getArea() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>SALIDA</big><br> Hora de entrada: "+hora+"<br> Hora de salida: "+horas+"</label></div>";
+                    retorno = "<div class=letra_salida><br><label>Area: </label><label>"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Departamento:&nbsp" + nombre + "</label><br><br><label><big>SALIDA</big><br> Hora de entrada: "+hora+"<br> Hora de salida: "+horas+"</label></div>";
                 }else{
                     retorno = "<div class=letra_salida><br><label>Area: </label><label>"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Departamento:&nbsp"+nombre+"</label><br><br><label><big>SALIDA</big><br> Hora de entrada: "+hora+"<br> Hora de salida: "+horas+"</label></div>";
                 }        
@@ -221,13 +220,13 @@ public class CES_movs extends conBD{
         ResultSet rs;
         abrir();
         String query= "SELECT m.nombre as 'nombre',isnull(p.nombre,'') as proveedor,a.nombre as 'area',d.nombre as 'depa',u.empresa as 'empresa',m.fecha,"+
-"m.hora,m.tipo_mov,m.horasalida,m.tiempo from movimiento m join departamento d on m.clave_departamento= d.clave_departamento\n" +
+"m.hora,m.tipo_mov,m.horasalida,cast((SUM(m.tiempo)/60)as varchar)+':'+cast((SUM(m.tiempo)%60) as varchar) as tiempo,m.observaciones as 'observacion' from movimiento m join departamento d on m.clave_departamento= d.clave_departamento\n" +
 "join area a on a.clave_area=d.clave_area\n" +
 "left join usuario u on m.clave_usuario =u.clave_usuario\n" +
 "left join proveedor p on m.clave_proveedor=p.clave_proveedor\n" +
 "where (m.nombre like '%"+nombre+"%' or p.nombre like '%"+nombre+"%') and m.area like '%"+narea+"%' and d.nombre like '%"+ndepa+"%' and m.tipo_mov like '%"+
- mov+"%' and m.fecha between '"+f1+"' and '"+f2+"' group by a.nombre,d.nombre,m.nombre,p.nombre,u.empresa,m.fecha,m.hora,m.tipo_mov,m.horasalida,m.tiempo";
-       // System.out.println(query);
+ mov+"%' and m.fecha between '"+f1+"' and '"+f2+"' group by a.nombre,m.fecha,d.nombre,m.nombre,p.nombre,u.empresa,m.hora,m.tipo_mov,m.horasalida,m.tiempo,m.observaciones";
+//        System.out.println(query);
         smt = getConexion().createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -238,9 +237,9 @@ public class CES_movs extends conBD{
             list.add(rs.getString("empresa"));
             list.add(rs.getString("fecha"));
             list.add(rs.getString("hora"));
-            list.add(rs.getString("tipo_mov"));
             list.add(rs.getString("horasalida"));
             list.add(rs.getString("tiempo"));
+            list.add(rs.getString("observacion"));
             
         }// fin de busqueda 
         rs.close();
@@ -249,19 +248,18 @@ public class CES_movs extends conBD{
         public Connection getconexion() {
         return getConexion();
     }
-    private String tiempo(String h1, String h2){
+        
+            private int tiempo(String h1, String h2){// calculo de tiempo vol 2.0
 
     int arr []=new int[2];
     int arr1 []=new int[2];
-    String hora="";
+    int hora=0;
     arr[0]=Integer.parseInt(h1.charAt(0)+""+h1.charAt(1));
     arr[1]=Integer.parseInt(h2.charAt(0)+""+h2.charAt(1));
     arr1[0]=Integer.parseInt(h1.charAt(3)+""+h1.charAt(4));
     arr1[1]=Integer.parseInt(h2.charAt(3)+""+h2.charAt(4));
     int horas=0;
     int mins=0;
-    int cont =1;
-    int aux=0;
     if(arr[0]==arr[1]){
         mins=arr1[1]-arr1[0];
     }else{
@@ -271,20 +269,50 @@ public class CES_movs extends conBD{
         mins = mins*(-1);
     }
     if(arr[0]!=arr[1]){
-    horas=(arr[1]-arr[0])-1;
+    mins=mins+((arr[1]-arr[0])-1)*60;
     }
-    if(mins==60){
-    horas++;
-    mins=0;
-    }
-        if(mins <10){
-            hora=horas+":0"+mins;
-        }else{
-            hora=horas+":"+mins;
-        }
+    
+    
        // System.out.println(hora+" min");
-    return hora;
+    return mins;
     }
+        
+//    private String tiempo(String h1, String h2){// calculo de tiempo vol 2.0
+//
+//    int arr []=new int[2];
+//    int arr1 []=new int[2];
+//    String hora="";
+//    arr[0]=Integer.parseInt(h1.charAt(0)+""+h1.charAt(1));
+//    arr[1]=Integer.parseInt(h2.charAt(0)+""+h2.charAt(1));
+//    arr1[0]=Integer.parseInt(h1.charAt(3)+""+h1.charAt(4));
+//    arr1[1]=Integer.parseInt(h2.charAt(3)+""+h2.charAt(4));
+//    int horas=0;
+//    int mins=0;
+//    int cont =1;
+//    int aux=0;
+//    if(arr[0]==arr[1]){
+//        mins=arr1[1]-arr1[0];
+//    }else{
+//    mins=(60-arr1[0])+arr1[1];
+//    }
+//    if(mins <0){
+//        mins = mins*(-1);
+//    }
+//    if(arr[0]!=arr[1]){
+//    horas=(arr[1]-arr[0])-1;
+//    }
+//    if(mins==60){
+//    horas++;
+//    mins=0;
+//    }
+//        if(mins <10){
+//            hora=horas+".0"+mins;
+//        }else{
+//            hora=horas+"."+mins;
+//        }
+//       // System.out.println(hora+" min");
+//    return hora;
+//    }
 //    private String tiempo(String h1, String h2){
 //
 //    int arr []=new int[2];

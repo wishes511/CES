@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import persistencia.CES_movs;
+import persistencia.CES_prov;
 import persistencia.CES_provact;
 
 /**
@@ -86,7 +87,7 @@ public class Movimientos extends HttpServlet {
             }
             if (minuto > 9) {
                 horas += minuto;
-            } 
+            }
             String fechac = año + "-" + mes + "-" + dia;//fecha formada por Calendar.getInstance();               
             String uso = request.getParameter("uso");
             CES_movs bd = new CES_movs();
@@ -97,23 +98,37 @@ public class Movimientos extends HttpServlet {
                 String prov_activo = request.getParameter("autorizada").toUpperCase();
                 String depa = request.getParameter("depa");
                 String area = request.getParameter("area").toUpperCase();
+                String obs = request.getParameter("observacion").toUpperCase();
+
                 CES_provact bda = new CES_provact();
+                CES_prov provs = new CES_prov();
+                CES_provact prov_p = new CES_provact();
                 //System.out.println(codigo+"/"+numero);
-                int clave_autorizado = bda.buscarprov_act_caseta(prov_activo, Integer.parseInt(prov));// busca si existe el nombre respecto al proveedor     
-                if (clave_autorizado == 0) {// si no existe, lo crea
-                    clave_autorizado = bda.nuevoprov_autorizado_caseta(prov_activo, Integer.parseInt(prov));
+                int clave_prov = provs.buscarprov_id(prov);
+                int clave_autorizado = 0;
+                if (clave_prov != 0) {
+                    clave_autorizado = bda.buscarprov_act_caseta(prov_activo, clave_prov);// busca si existe el nombre respecto al proveedor
+                    if (clave_autorizado == 0) {// si no existe, lo crea
+                        clave_autorizado = bda.nuevoprov_autorizado_caseta(prov_activo, clave_prov);
+                    }
+                } else {
+                    provs.nuevoprov(prov);
+                    clave_prov = provs.buscarprov_id(prov);
+                    prov_p.nuevoprov_autorizado(prov_activo, clave_prov);
+                    clave_autorizado = bda.buscarprov_act_caseta(prov_activo, clave_prov);
                 }
+
                 Movimiento m = new Movimiento(); // establecer obejeto para pasar datos a la consulta de la bd
                 Departamento d = new Departamento();
                 d.setClaveDepartamento(Integer.parseInt(depa));
                 m.setClaveUsuario(0);
-                m.setClaveProveedor(Integer.parseInt(prov));
+                m.setClaveProveedor(clave_prov);
                 m.setClaveAutorizado(clave_autorizado);
                 m.setNombre(prov_activo);
                 m.setArea(area);
                 m.setDepartamento(d);
                 m.setFecha(fechac);
-                m.setObservaciones("");
+                m.setObservaciones(obs);
                 PrintWriter out = response.getWriter();// instanciar objeto para escribir y responder hacia una pagina            
                 out.print("<label>" + bd.nuevomov(m, horas, numero) + "</label>");// regreso <label>Entrada: o SALIDA</label> a las funciones de javascript 
             } else if (uso.equals("invitado")) {// acciones que solo conciernen al invitado
@@ -123,6 +138,7 @@ public class Movimientos extends HttpServlet {
                 String prov = request.getParameter("nombre").toUpperCase();
                 String obs = request.getParameter("obs").toUpperCase();
                 String area = request.getParameter("area").toUpperCase();// datos provenientes del jsp, html
+                String procedencia= request.getParameter("procedencia").toUpperCase();
                 PrintWriter out = response.getWriter();
                 Movimiento m = new Movimiento();
                 Departamento d = new Departamento();
@@ -134,7 +150,7 @@ public class Movimientos extends HttpServlet {
                 m.setArea(area);
                 m.setDepartamento(d);
                 m.setFecha(fechac);
-                m.setObservaciones(obs);
+                m.setObservaciones(procedencia+"-"+obs);
                 out.print("<label>" + bd.nuevomov(m, horas, numero) + "</label>");// respuesta hacia la pagina del usuario
             }
             if (uso.equals("report")) {// {uso: uso,f1:f1,f2:f2,nombre:nombre,area:area,depa:dep,tipo:tipo}
@@ -155,18 +171,22 @@ public class Movimientos extends HttpServlet {
                 for (int i = 0; i < arr.size(); i++) {
                     if (cont == 9) {// como tiene 8 columnas, cada vez que sea igual ejecutara la nueva linea.
                         if (!a.equals(arr.get(i - 7))) {// verifica si el area es direfente para crear una nueva linea pero con el area nueva
-                            out.print("<tr style=color:white;background-color:#58C1A2 align=center><td colspan=7>" + arr.get(i - 7) + "</td></tr>");
+                            out.print("<tr style=color:white;background-color:#58C1A2 align=center><td colspan=9>" + arr.get(i - 7) + "</td></tr>");
                             a = arr.get(i - 7);
                         }
                         ///empezara a dibujar o escribir cada linea de informacion encontrada hacia el usuario    
                         out.print("<tr align=\"center\">\n"
+                               // + "                  <td>" + arr.get(i - 3) + "</td>\n" tipo movi
+                                + "                  <td>"+ arr.get(i - 4)  + "</td>\n" 
                                 + "                  <td>" + arr.get(i - 9) + "</td>\n"
                                 + "                  <td>" + arr.get(i - 8) + "</td>\n"
                                 + "                  <td>" + arr.get(i - 7) + "</td>\n"
                                 + "                  <td>" + arr.get(i - 6) + "</td>\n"
-                                + "                  <td>" + arr.get(i - 4) + " " + arr.get(i - 3) + "</td>\n"
-                                + "                  <td>" + arr.get(i - 1) + "</td>\n"
-                                + "                  <td>" + arr.get(i) + "</td>\n"
+                                + "                  <td>"+ arr.get(i - 3)  + "</td>\n"
+                                + "                  <td>"+ arr.get(i - 2)  + "</td>\n" 
+                                + "                  <td>" + arr.get(i) + "</td>\n"                                        
+                                + "                  <td>"+ arr.get(i - 1)  + "</td>\n" 
+
                                 + "                </tr>");
                         ///////////////////////
                         cont = 0;

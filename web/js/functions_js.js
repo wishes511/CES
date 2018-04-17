@@ -13,7 +13,6 @@ function searchuser(){
                     url: '../Getfields',
                     success: function (result) {
                         $('#respuesta').html(result);
-                        
                         //document.getElementById("proveedor").focus;
                     }
                 });
@@ -94,9 +93,21 @@ function searchactivo_id(){
                     url: '../Getdata_prov_personal',
                     success: function (result) {
                         $('#p_activos').html(result);
+                        var auto=document.getElementById('proveedor').value;
+                        document.getElementById('proveed').value=auto;
+                        document.getElementById("proveed").focus();
                     }
                 });
             }
+function saltopa(){
+    document.getElementById("pa").focus();
+}
+function saltobi(){
+    document.getElementById("bi").focus();
+}
+function saltoprocedencia(){
+    document.getElementById("nombre").focus();
+}
 function saltop(){
     var auto=document.getElementById('autorizada').value;
     document.getElementById('p_activos_n').value=auto;
@@ -250,23 +261,24 @@ function up_prov_a(id){
 }
 
 function inicio_io(){
-    var prov=$('#proveedor').val();
+    var prov=$('#proveed').val();
     var autorizada=$('#p_activos_n').val();
     var depa=$('#depa').val();
     var area=$('#area').val();
     var codigo=$('#codigo').val();
+    var obs=$('#observacion').val();
     
     var uso="proveedor";
-    if(prov=="" || autorizada=="" || depa=="" || area==""){
+    if(prov=="" || autorizada=="" || depa=="" || area=="" || obs ==""){
         alert("no pueden ir campos en blanco favor de rectificarlo");
         document.getElementById('proveedor').focus();
     }else{
     $.ajax({
                     type: 'post',
-                    data: {uso: uso,prov:prov,autorizada:autorizada,depa:depa,area:area,codigo:codigo},
+                    data: {uso: uso,prov:prov,autorizada:autorizada,depa:depa,area:area,codigo:codigo,observacion:obs},
                     url: '../Movimientos',
                     success: function (result) {
-                        $('#ensa').html(result);
+                        $('#respuesta').html(result);
                         document.getElementById('codigo').value="";
                         document.getElementById('codigo').focus();
                     }
@@ -280,16 +292,17 @@ function inicio_io_invi(){
     var obs=$('#observaciones').val();
     var area=$('#area').val();
     var codigo=$('#codigo').val();
+    var procedencia=$('#procedencia').val();
     var uso="invitado";
-    if(nombre=="" || obs=="" || area==""){
+    if(nombre=="" || obs=="" || area=="" || procedencia=="" || depa==""){
         alert("no pueden ir campos en blanco favor de rectificarlo");
     }else{
     $.ajax({
                     type: 'post',
-                    data: {uso: uso,nombre:nombre,area:area,codigo:codigo,obs:obs,depa:depa},
+                    data: {uso: uso,nombre:nombre,area:area,codigo:codigo,obs:obs,depa:depa,procedencia:procedencia},
                     url: '../Movimientos',
                     success: function (result) {
-                        $('#ensa').html(result);
+                        $('#respuesta').html(result);
                         document.getElementById('codigo').value="";
                         document.getElementById('codigo').focus();
                     }

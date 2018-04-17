@@ -25,14 +25,15 @@
 		<defaultValueExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\EntradasSalidas\\web\\usuario\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT a.nombre as 'area',cast((SUM(m.tiempo)/60)as varchar)+':'+cast((SUM(m.tiempo)%60) as varchar) as tiempo from movimiento m join departamento d on m.clave_departamento= d.clave_departamento
+		<![CDATA[SELECT a.nombre as 'area',m.nombre,cast((SUM(m.tiempo)/60)as varchar)+':'+cast((SUM(m.tiempo)%60) as varchar) as tiempo from movimiento m join departamento d on m.clave_departamento= d.clave_departamento
 join area a on a.clave_area=d.clave_area
 left join usuario u on m.clave_usuario =u.clave_usuario
 left join proveedor p on m.clave_proveedor=p.clave_proveedor
 where (m.nombre like '%$P!{nombre}%' and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%') and m.tipo_mov like '%$P!{tipo}%' and m.fecha between $P{f1} and $P{f2}
- group by a.nombre]]>
+ group by a.nombre,m.nombre]]>
 	</queryString>
 	<field name="area" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
 	<field name="tiempo" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -88,30 +89,7 @@ where (m.nombre like '%$P!{nombre}%' and m.area like '%$P!{area}%' and d.nombre 
 		<band height="4" splitType="Stretch"/>
 	</pageHeader>
 	<detail>
-		<band height="68" splitType="Stretch">
-			<subreport>
-				<reportElement x="2" y="25" width="550" height="42" uuid="da72eaee-f43e-4697-bcc0-429e715ef198"/>
-				<subreportParameter name="nombre">
-					<subreportParameterExpression><![CDATA[$P{nombre}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="area">
-					<subreportParameterExpression><![CDATA[$F{area}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="tipo">
-					<subreportParameterExpression><![CDATA[$P{tipo}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="depa">
-					<subreportParameterExpression><![CDATA[$P{depa}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="f1">
-					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="f2">
-					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detallemovs.jasper"]]></subreportExpression>
-			</subreport>
+		<band height="85" splitType="Stretch">
 			<rectangle>
 				<reportElement x="2" y="1" width="550" height="20" forecolor="#337AB7" backcolor="#337AB7" uuid="7d33338a-3a2b-4ac0-b7e9-fd702f5538af"/>
 			</rectangle>
@@ -122,6 +100,29 @@ where (m.nombre like '%$P!{nombre}%' and m.area like '%$P!{area}%' and d.nombre 
 				</textElement>
 				<textFieldExpression><![CDATA[$F{area}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement x="2" y="36" width="550" height="49" uuid="eb4aec7e-fd69-4b9f-a5c0-c18058fdd48e"/>
+				<subreportParameter name="area">
+					<subreportParameterExpression><![CDATA[$F{area}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tipo">
+					<subreportParameterExpression><![CDATA[$P{tipo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="depa">
+					<subreportParameterExpression><![CDATA[$P{depa}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="nombre">
+					<subreportParameterExpression><![CDATA[$F{nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detallemovs_1.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 		<band height="16">
 			<staticText>

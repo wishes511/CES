@@ -20,6 +20,15 @@ public class Movimiento  implements java.io.Serializable {
      private String area;
      private String observaciones;
      private String fecha;
+     private String procedencia;
+
+    public String getProcedencia() {
+        return this.procedencia;
+    }
+
+    public void setProcedencia(String procedencia) {
+        this.procedencia = procedencia;
+    }
 
     public Movimiento() {
     }
