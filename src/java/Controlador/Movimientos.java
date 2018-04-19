@@ -128,7 +128,8 @@ public class Movimientos extends HttpServlet {
                 m.setArea(area);
                 m.setDepartamento(d);
                 m.setFecha(fechac);
-                m.setObservaciones(obs);
+                m.setObservaciones("");
+                m.setDirigido(obs);
                 PrintWriter out = response.getWriter();// instanciar objeto para escribir y responder hacia una pagina            
                 out.print("<label>" + bd.nuevomov(m, horas, numero) + "</label>");// regreso <label>Entrada: o SALIDA</label> a las funciones de javascript 
             } else if (uso.equals("invitado")) {// acciones que solo conciernen al invitado
@@ -150,7 +151,8 @@ public class Movimientos extends HttpServlet {
                 m.setArea(area);
                 m.setDepartamento(d);
                 m.setFecha(fechac);
-                m.setObservaciones(procedencia+"-"+obs);
+                m.setObservaciones(procedencia);
+                m.setDirigido(obs);
                 out.print("<label>" + bd.nuevomov(m, horas, numero) + "</label>");// respuesta hacia la pagina del usuario
             }
             if (uso.equals("report")) {// {uso: uso,f1:f1,f2:f2,nombre:nombre,area:area,depa:dep,tipo:tipo}
@@ -169,24 +171,24 @@ public class Movimientos extends HttpServlet {
                 String a = "";
                 out.print("<tr></tr>");
                 for (int i = 0; i < arr.size(); i++) {
-                    if (cont == 9) {// como tiene 8 columnas, cada vez que sea igual ejecutara la nueva linea.
-                        if (!a.equals(arr.get(i - 7))) {// verifica si el area es direfente para crear una nueva linea pero con el area nueva
-                            out.print("<tr style=color:white;background-color:#58C1A2 align=center><td colspan=9>" + arr.get(i - 7) + "</td></tr>");
-                            a = arr.get(i - 7);
+                    if (cont == 10) {// como tiene 8 columnas, cada vez que sea igual ejecutara la nueva linea.
+                        if (!a.equals(arr.get(i - 8))) {// verifica si el area es direfente para crear una nueva linea pero con el area nueva
+                            out.print("<tr style=color:white;background-color:#58C1A2 align=center><td colspan=10>" + arr.get(i - 8) + "</td></tr>");
+                            a = arr.get(i - 8);
                         }
                         ///empezara a dibujar o escribir cada linea de informacion encontrada hacia el usuario    
                         out.print("<tr align=\"center\">\n"
                                // + "                  <td>" + arr.get(i - 3) + "</td>\n" tipo movi
-                                + "                  <td>"+ arr.get(i - 4)  + "</td>\n" 
+                                + "                  <td>"+ arr.get(i - 5)  + "</td>\n" 
+                                + "                  <td>" + arr.get(i - 10) + "</td>\n"
                                 + "                  <td>" + arr.get(i - 9) + "</td>\n"
+                                + "                  <td>" + arr.get(i-1) + "</td>\n"   
                                 + "                  <td>" + arr.get(i - 8) + "</td>\n"
                                 + "                  <td>" + arr.get(i - 7) + "</td>\n"
-                                + "                  <td>" + arr.get(i - 6) + "</td>\n"
-                                + "                  <td>"+ arr.get(i - 3)  + "</td>\n"
-                                + "                  <td>"+ arr.get(i - 2)  + "</td>\n" 
-                                + "                  <td>" + arr.get(i) + "</td>\n"                                        
-                                + "                  <td>"+ arr.get(i - 1)  + "</td>\n" 
-
+                                + "                  <td>"+ arr.get(i - 4)  + "</td>\n"
+                                + "                  <td>"+ arr.get(i - 3)  + "</td>\n" 
+                                + "                  <td>"+ arr.get(i)  + "</td>\n"                                          
+                                + "                  <td>"+ arr.get(i - 2)  + "</td>\n"                                        
                                 + "                </tr>");
                         ///////////////////////
                         cont = 0;

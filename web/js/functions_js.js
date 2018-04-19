@@ -289,7 +289,7 @@ function inicio_io(){
 function inicio_io_invi(){
     var depa=$('#depa').val();
     var nombre=$('#nombre').val();
-    var obs=$('#observaciones').val();
+    var obs=$('#visita').val();
     var area=$('#area').val();
     var codigo=$('#codigo').val();
     var procedencia=$('#procedencia').val();

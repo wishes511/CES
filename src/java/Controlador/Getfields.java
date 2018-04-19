@@ -92,9 +92,6 @@ public class Getfields extends HttpServlet {
                     d4 += codigo.charAt(i);
                 }
             }
-            
-            //System.out.println(codigo + "-" + codigo.length()+"-"+d4);
-            
              Calendar fecha = Calendar.getInstance();
         int año = fecha.get(Calendar.YEAR);
         int mes = fecha.get(Calendar.MONTH) + 1;
@@ -122,30 +119,39 @@ public class Getfields extends HttpServlet {
             switch (Integer.parseInt(d4)) {
                     // proveedores
                     case 9999:                        
+                        if(codigo.charAt(1)=='1' && codigo.charAt(7)!='0'){
                         array=mov.search_lastmov(area, fechac, n_tarjeta,"prov"); //busca ultimo movimiento al uso de la tarjeta
                         select_tipo_user(n_tarjeta,array,out,mov,arr,arr_depa,prov,depa,codigo,area,"9999",horas);
+                        }else {out.print("<label>Error en el codigo asignado intentelo de nuevo</label>");
+                                out.print("<script>document.getElementById('codigo').value='';</script>");}
                         break;
                     // Sr pablo
                     case 9998:
-                        if(codigo.charAt(0)=='6' && codigo.charAt(0)=='7'){
+                        if(codigo.charAt(0)=='6' && codigo.charAt(1)=='6' && codigo.charAt(7)!='0'){
                             array=mov.search_lastmov(area, fechac, n_tarjeta,"invitado"); //busca ultimo movimiento al uso de la tarjeta
                         select_tipo_user(n_tarjeta,array,out,mov,arr,arr_depa,prov,depa,codigo,area,"9997",horas);
-                        }
+                        }else {out.print("<label>Error en el codigo asignado, intentelo de nuevo</label>");
+                                out.print("<script>document.getElementById('codigo').value='';</script>");}
                         break;
                     // invitados
                     case 9997:
                        // invitado_fields(area,out,depa);
+                        if(codigo.charAt(1)=='7' && codigo.charAt(7)!='0' && codigo.charAt(1)!='6'){
                         array=mov.search_lastmov(area, fechac, n_tarjeta,"invitado"); //busca ultimo movimiento al uso de la tarjeta
                         select_tipo_user(n_tarjeta,array,out,mov,arr,arr_depa,prov,depa,codigo,area,"9997",horas);
+                        }else {out.print("<label>Error rn el codigo asignado intentelo de nuevo</label>");
+                                out.print("<script>document.getElementById('codigo').value='';</script>");}
                         break;
                     // Personal y maquiladores
                     default:
-                        //System.out.println("entre a def");
+                        if(codigo.charAt(1)=='8'){
                         CES u = new CES();
                         ArrayList<String> arru =u.buscaru_clave(Integer.parseInt(d4));
                         //System.out.println(!arru.isEmpty()+"-"+arru.get(4)+","+area);
                         if(!arru.isEmpty() && area.equals(arru.get(4))){
                             tipo_usuario_pm(arru,area,fechac,horas,out,mov);
+                        }else {out.print("<label>No se encontro Usuario o codigo registrado</label>");
+                                out.print("<script>document.getElementById('codigo').value='';</script>");}
                         }else {out.print("<label>No se encontro Usuario o codigo registrado</label>");
                                 out.print("<script>document.getElementById('codigo').value='';</script>");}
                         break;
@@ -276,6 +282,7 @@ public class Getfields extends HttpServlet {
     m.setDepartamento(dep);
     m.setObservaciones("");
     m.setFecha(fecha);
+    m.setDirigido("");
     String credencial="";
     
     if(arru.get(2).equals("") || arru.get(0).equals("")){
@@ -357,7 +364,7 @@ public class Getfields extends HttpServlet {
             }
         }
         out.print("                        </select><br></div><br><div class=\"col-sm-3\" style=\"\" align=center>\n"
-                + "                                <input type=text id=\"observaciones\" class=\"ln form-control\" placeholder='VISITA A:' onchange=saltoinvi()>\n"
+                + "                                <input type=text id=\"visita\" class=\"ln form-control\" placeholder='VISITA A:' onchange=saltoinvi()>\n"
                 + "                        </div><br>\n" 
                 + "                        <div class=\"col-sm\" style=\"\" align=center>\n"
                 + "                                <br><label class=\"ln\" style=\"color: red\" >Area : </label><input type=text id=\"area\" class=\"ln non-input\" value="+area+" disabled>\n"

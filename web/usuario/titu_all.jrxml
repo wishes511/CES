@@ -29,7 +29,7 @@
 join area a on a.clave_area=d.clave_area
 left join usuario u on m.clave_usuario =u.clave_usuario
 left join proveedor p on m.clave_proveedor=p.clave_proveedor
-where (m.nombre like '%$P!{nombre}%' and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%') and m.tipo_mov like '%$P!{tipo}%' and m.fecha between $P{f1} and $P{f2}
+where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.fecha between $P{f1} and $P{f2}
  group by a.nombre
 order by a.nombre]]>
 	</queryString>

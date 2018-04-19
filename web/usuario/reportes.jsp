@@ -135,11 +135,13 @@ int año = fecha.get(Calendar.YEAR);
 "                  <td>Fecha</td>\n" +
 "                  <td>Nombre</td>\n" +
 "                  <td>Proveedor</td>\n" +
+"                  <td>Procedencia</td>\n" +
 "                  <td>Area</td>\n" +
 "                  <td>Departamento</td>\n" +
 "                  <td>Hora Inicial</td>\n" +
 "                  <td>Hora final</td>\n" +
-"                  <td>Procedencia y extras</td>\n" +
+
+"                  <td>Visita</td>\n" +
 "                  <td>Duracion  </td>\n" +        
 "                </tr>\n" +
 "              </thead>\n" +
