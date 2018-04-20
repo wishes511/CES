@@ -69,10 +69,12 @@
                             <li class="ln"><a href="buscalote.jsp">Busqueda</a></li>
                             <li class="ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
                             <li class="ln"><a href="verpares.jsp">Ver pares</a></li>
+                            
                         </ul>
                     </li>
                     <li class="ln"><a  href="../Dateupdate">actualizar fechas</a></li>
                     <li class="ln"><a href="../Cierresesion">Salir</a></li>
+                    <li class="ln "><a href="opciones.jsp">opciones</a></li>
                 </ul>
                 <div style="float:right" class="nav nav-pills">
                     <li > <label class="ln">Online: <%=usuario%></label></li>

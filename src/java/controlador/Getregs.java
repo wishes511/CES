@@ -126,7 +126,7 @@ private String codigo(String estilo){
             String f6 = request.getParameter("f6");
             String f8 = request.getParameter("f8");
             String uso = request.getParameter("uso");
-            System.out.println("Inicio "+f+" uso " +uso);
+           // System.out.println("Inicio "+f+" uso " +uso);
                 ArrayList<String> lista;
                  lista = (ArrayList<String>) objSesion.getAttribute("cap");
             
@@ -258,7 +258,7 @@ private String codigo(String estilo){
             }else if(uso.equals("buscarp")){
                 Avances a = new Avances();
                 if(a.buscarprogram(f,mes1)){
-                    System.out.println("entre a ok");
+                    //System.out.println("entre a ok");
                     out.print("ok");
                 }else{
                     out.print("nel");
@@ -277,6 +277,13 @@ private String codigo(String estilo){
                 for(int i =0;i<lista.size();i++){
                 out.println("<option>"+lista.get(i)+"</option>");
                 }
+            }else if(uso.equals("autofill")){
+                String status = request.getParameter("autofill");
+                Avances a = new Avances();
+                a.modiautofillstatus(status);
+                if(status.equals("1")){
+                    out.print("<input type=\"checkbox\" name=\"auto_fill\" id=\"auto_fill\" onchange=\"autofill()\"/ >");
+                }else out.print("<input type=\"checkbox\" name=\"auto_fill\" id=\"auto_fill\" onchange=\"autofill()\" checked=\"checked\"/>");
             }else{
             response.sendRedirect("index.jsp");
             }

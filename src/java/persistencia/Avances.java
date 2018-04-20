@@ -24,11 +24,11 @@ import java.util.logging.Logger;
  */
 public class Avances {
     //servidor local de pruebas
-//String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=avances;user=mich; password=mich;";
+String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=avances;user=mich; password=mich;";
 //    String url = "jdbc:sqlserver://192.168.6.75:9205;"
 //            + "databaseName=avances;user=mich; password=mich;";
 //    jdbc:sqlserver://192.168.6.75\SQLEXPRESS:9205;databaseName=avances
-   String url ="jdbc:sqlserver://192.168.6.8\\datos65:9205;databaseName=Avances;";
+//   String url ="jdbc:sqlserver://192.168.6.8\\datos65:9205;databaseName=Avances;";
    String drive = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     // Declaramos los sioguientes objetos
     Connection conexion = null;
@@ -45,8 +45,8 @@ public class Avances {
 
     public void abrir() throws ClassNotFoundException, SQLException {
         Class.forName(drive);
-//        conexion = DriverManager.getConnection(url, "mich", "mich");
-        conexion = DriverManager.getConnection(url, "sa", "Prok2001");
+        conexion = DriverManager.getConnection(url, "mich", "mich");
+//        conexion = DriverManager.getConnection(url, "sa", "Prok2001");
     }
 
     public void cerrar() throws SQLException {
@@ -54,6 +54,42 @@ public class Avances {
     }
 
     // Busquedas--------------
+    public String check_autofill() throws ClassNotFoundException, SQLException {
+        String ids="0";
+        String query = "select switch_autosolucionador from opciones";
+        //System.out.println(query);
+        Statement smt;
+        ResultSet df;
+        abrir();
+        smt = conexion.createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {
+            ids=df.getString("switch_autosolucionador");
+        }
+        df.close();
+        smt.close();
+        return ids;
+    }
+        public void modiautofillstatus(String status){
+    PreparedStatement st = null;
+        try{//modificar status de programa
+             abrir();
+            conexion.setAutoCommit(false);
+            String s = "update opciones set switch_autosolucionador='"+status+"'";
+            //System.out.println(s);
+            st = conexion.prepareStatement(s);
+            st.executeUpdate();
+            conexion.commit();
+            st.close();
+    }catch(Exception e){
+        Logger.getLogger(Avances.class.getName()).log(Level.SEVERE, null, e);
+            try {
+                conexion.rollback();
+            } catch (Exception o) {
+                System.out.println(o.getMessage());
+            }
+    }
+    }//
 public String buscardepa(ArrayList<String> arr,int i,int a) throws ClassNotFoundException, SQLException {
         String ids="0";
         String query = "select "+arr.get(i)+" from avance where id_prog="+a;
@@ -1190,7 +1226,7 @@ private String codigo(String estilo){
             st = conexion.prepareStatement(s);
             st.executeUpdate();
              conexion.commit();
-            System.out.println(s); 
+            //System.out.println(s); 
            st.close();
         } catch (Exception e) {
             Logger.getLogger(Avances.class.getName()).log(Level.SEVERE, null, e);
