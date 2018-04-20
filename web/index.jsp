@@ -55,7 +55,7 @@
         <br>
 
         <div align="center">
-            <%                 if (usuario != null && tipos != null && tipos.equals("INTERMEDIO")) {
+            <%      if (usuario != null && tipos != null && tipos.equals("INTERMEDIO")) {
                     out.println("<div class=container-fluid align=left> ");
                     out.println("<div class=row>");
                     out.println("<form action=capturador/index.jsp> ");
@@ -64,7 +64,6 @@
                     out.println("</form>");
                     out.println("</div>");
                     out.println("</div>");
-
                 } else {
                 }
             %>
@@ -120,7 +119,6 @@
                     <div class="row espacio-md"><div class="col-sm-5"><a href="http://topsuelas.com/"><label class="shiro">TopSuelas</label><br></a><br></div>
                     <div class="col-sm-6"><img src="images/topf.png" alt="" width="105px" height="40px" style="max-width: 105px;max-height: 40px"></div>
                     </div>
-                    
                     <hr>
                 </div>
                 <div class="col-sm-3 espacio" >
@@ -134,7 +132,6 @@
                     <br>
                     <a class="" href="http://192.168.6.8:85/Avances"><label class="shiro titulos" >Avances</label></a>
                     <br><img class="img-responsive jumbismini" src="images/QR.png" width="75px" height="75px"><br>
-                    
                 </div>
             </div>
         </footer>

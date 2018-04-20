@@ -119,7 +119,7 @@ function nuevo_prov(){
                     empresa=$('#maquilas').val();
                 }else{
                 pass="123";
-                tipo_cod="7";  
+                tipo_cod="8";  
                 empresa="ATH";
                 }
                 var uso="nuevo_row";
@@ -140,9 +140,9 @@ function nuevo_prov(){
 }
 function display_pass(){
                 var tipo = document.getElementById('tipo_usuario').options[document.getElementById('tipo_usuario').selectedIndex].text;
-                if(tipo=="ADMIN"){
+                if(tipo=="ADMIN" || tipo=="VIGILANTE"){
                     document.getElementById("field_pass").innerHTML="<input type=password id=pass_u class=form-control onchange=salto_btn placeholder='contrasena'>";
-                    document.getElementById("field_pass").focus();
+                    document.getElementById("pass_u").focus();
                 }else if(tipo=="MAQUILA"){ 
                     document.getElementById("field_pass").innerHTML="<input type=text id=maquilas class=form-control onchange=salto_btn placeholder='Nombre Maquila'>";
                     document.getElementById("maquilas").focus();

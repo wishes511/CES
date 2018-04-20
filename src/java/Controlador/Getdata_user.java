@@ -162,7 +162,10 @@ public class Getdata_user extends HttpServlet {
                 Departamento departamento = new Departamento();
                 TipoUsuario tp= new TipoUsuario();
                 int area =depar.busca_area_depa(depa);
-                String codigo=area+tipo_cod+(codigo(String.valueOf(prov.lastuser()+1)));
+                String codigo="";
+                if(usuario.equals("ADMINPROV")){
+                codigo=area+tipo_cod+(codigo("1"));
+                }else{codigo=area+tipo_cod+(codigo(String.valueOf(prov.lastuser()+1)));}
                 departamento.setClaveDepartamento(depa);
                 tp.setClaveTipo(tipo);
                 Usuario u = new Usuario();
@@ -207,12 +210,15 @@ public class Getdata_user extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.print("Codigo 5: <br>"+ex);       
         } catch (ClassNotFoundException ex) {
+            System.out.println(ex+" error "+ex.getMessage());
             Logger.getLogger(Getdata_user.class.getName()).log(Level.SEVERE, null, ex);
             PrintWriter out = response.getWriter();
             out.print("Codigo 5.1: <br>"+ex);
-        }catch(Exception e){
+        }catch(Exception ex){
+            Logger.getLogger(Getdata_user.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex+" error ");
             PrintWriter out = response.getWriter();
-            out.print("Codigo 5.2: <br>"+e);       
+            out.print("Codigo 5.2: <br>"+ex);       
         }
     }
 private String codigo(String usuario){
