@@ -74,11 +74,25 @@
 
                 <ul class="nav navbar-nav nav-pills">
 
-                    
-                    <li><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li> <li class="active ln"><a href="lote_detenido.jsp">Lotes detenidos</a></li>
-                    <li class="ln"><a href="verpares.jsp">Ver Pares</a></li>  
+                    <li><a class="navbar-brand" href="index.jsp"><img src="../images/home.png" class="" width="25"></a></li>
+                    <li class="dropdown ln active">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
+                            Usuario<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="#90" role="menu">
+
+                            <li class="ln"><a href="buscalote.jsp">Busqueda</a></li>
+                            <li class="ln active"><a href="">Lotes detenidos</a></li>
+                            <li class="ln"><a href="verpares.jsp">Ver pares</a></li>
+                            
+                        </ul>
+                    </li> 
                     <li class="ln"><a href="../Cierresesion">Salir</a></li>
                 </ul>
+                <div style="float:right" class="nav nav-pills">
+                    <li > <label class="ln">Online: <%=usuario%></label></li>
+                    <li class="ln btnmy-2 my-sm-0"><a href="opciones.jsp"><img src="../images/opciones.png" width="5" height="20" alt=""></a></li>
+                </div>
 
             </nav>
             <div class="container">

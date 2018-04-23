@@ -24,11 +24,11 @@ import java.util.logging.Logger;
  */
 public class Avances {
     //servidor local de pruebas
-String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=avances;user=mich; password=mich;";
+//String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=avances;user=mich; password=mich;";
 //    String url = "jdbc:sqlserver://192.168.6.75:9205;"
 //            + "databaseName=avances;user=mich; password=mich;";
 //    jdbc:sqlserver://192.168.6.75\SQLEXPRESS:9205;databaseName=avances
-//   String url ="jdbc:sqlserver://192.168.6.8\\datos65:9205;databaseName=Avances;";
+   String url ="jdbc:sqlserver://192.168.6.8\\datos65:9205;databaseName=Avances;";
    String drive = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     // Declaramos los sioguientes objetos
     Connection conexion = null;
@@ -45,8 +45,8 @@ String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;" + "databaseName=a
 
     public void abrir() throws ClassNotFoundException, SQLException {
         Class.forName(drive);
-        conexion = DriverManager.getConnection(url, "mich", "mich");
-//        conexion = DriverManager.getConnection(url, "sa", "Prok2001");
+//        conexion = DriverManager.getConnection(url, "mich", "mich");
+        conexion = DriverManager.getConnection(url, "sa", "Prok2001");
     }
 
     public void cerrar() throws SQLException {

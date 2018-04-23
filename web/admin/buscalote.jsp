@@ -74,11 +74,12 @@
                             
                         </ul>
                     </li>
-                    <li class="ln"><a  href="../Dateupdate">actualizar fechas</a></li>
+                    <!--<li class="ln"><a  href="../Dateupdate">actualizar fechas</a></li>-->
                     <li class="ln"><a href="../Cierresesion">Salir</a></li>
                 </ul>
                 <div style="float:right" class="nav nav-pills">
                     <li > <label class="ln">Online: <%=usuario%></label></li>
+                    <li class="ln btnmy-2 my-sm-0"><a href="opciones.jsp"><img src="../images/opciones.png" width="5" height="20" alt=""></a></li>
                 </div>
             </nav>
             <div class="container" align="center">
