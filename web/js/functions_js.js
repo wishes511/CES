@@ -99,6 +99,9 @@ function searchactivo_id(){
                     }
                 });
             }
+function saltodepa(){
+    document.getElementById("depa").focus();
+}            
 function saltopa(){
     document.getElementById("pa").focus();
 }
@@ -312,8 +315,14 @@ function inicio_io_invi(){
 function saltoinvi(){
     document.getElementById('binvi').focus();
 }
+function saltoinvis(){
+    document.getElementById('bi').focus();
+}
 function saltoob(){
     document.getElementById('observaciones').focus();
+}
+function saltoobs(){
+    document.getElementById('visita').focus();
 }
 function saltodepinvi(){
     document.getElementById('depa').focus();

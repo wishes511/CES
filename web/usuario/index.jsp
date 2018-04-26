@@ -142,7 +142,6 @@
 "                </div>\n" +
 "            </div>\n" +
 "        </div>\n" +
-"        <div class=\"container-fluid\">\n" +
 "           </main>");
                     
                     }

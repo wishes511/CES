@@ -90,6 +90,7 @@ public class Movimientos extends HttpServlet {
             }
             String fechac = año + "-" + mes + "-" + dia;//fecha formada por Calendar.getInstance();               
             String uso = request.getParameter("uso");
+            System.out.println(uso);
             CES_movs bd = new CES_movs();
             if (uso.equals("proveedor")) {// solo acciones que convienen al proveedor
                 String codigo = request.getParameter("codigo");
@@ -198,6 +199,7 @@ public class Movimientos extends HttpServlet {
                 }
             }
         } catch (SQLException ex) {
+            Logger.getLogger(Getfields.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Codigo 6: <br>" + ex);
             PrintWriter out = response.getWriter();
             out.print("Codigo 6: <br>" + ex);

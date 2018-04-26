@@ -226,7 +226,7 @@ public class CES_movs extends conBD{
 "left join proveedor p on m.clave_proveedor=p.clave_proveedor\n" +
 "where (m.nombre like '%"+nombre+"%' or p.nombre like '%"+nombre+"%') and m.area like '%"+narea+"%' and d.nombre like '%"+ndepa+"%' and m.tipo_mov like '%"+
  mov+"%' and m.fecha between '"+f1+"' and '"+f2+"' group by a.nombre,m.fecha,d.nombre,m.nombre,p.nombre,u.empresa,m.hora,m.tipo_mov,m.horasalida,m.tiempo,m.observaciones,m.visita";
-//        System.out.println(query);
+        System.out.println(query);
         smt = getConexion().createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
