@@ -371,7 +371,8 @@ public class Getfields extends HttpServlet {
                 + "<div class=\"col-4 col-sm-3 placeholder\" style=\"\" align=center>\n"
                 + "<label>Visita a:</label><br><input type=text id=\"visita\" class=\"ln form-control\" placeholder='nombre' onchange=saltoinvis()>\n"
                 + "</div><br>\n"
-                + "<section class= \"col-sm-6 offset-sm-3\"><br><input type=\"button\" class=\"btn\" value=\"Iniciar I/O\" onclick=\"inicio_io_invi()\" id=bi><br></section><br>\n"
+                + "<section class= \"col-sm-12 col-sm-10\"><label>Asunto :</label><br><input type=\"text\" class=\"form-control\" id=asunto name=asunto onchange=saltoinvis()></section><br>\n"                
+                + "<section class= \"col-sm-6 offset-sm-3\"><br><input type=\"button\" class=\"btn btn-success\" value=\"Iniciar I/O\" onclick=\"inicio_io_invi()\" id=bi><br></section><br>\n"
                 + "<div id=ensa></div>\n"
                 + "</section></main></div>");
     }

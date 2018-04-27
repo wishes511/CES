@@ -90,7 +90,7 @@ public class Movimientos extends HttpServlet {
             }
             String fechac = año + "-" + mes + "-" + dia;//fecha formada por Calendar.getInstance();               
             String uso = request.getParameter("uso");
-            System.out.println(uso);
+           // System.out.println(uso);
             CES_movs bd = new CES_movs();
             if (uso.equals("proveedor")) {// solo acciones que convienen al proveedor
                 String codigo = request.getParameter("codigo");
@@ -100,11 +100,12 @@ public class Movimientos extends HttpServlet {
                 String depa = request.getParameter("depa");
                 String area = request.getParameter("area").toUpperCase();
                 String obs = request.getParameter("observacion").toUpperCase();
+                String asunto = request.getParameter("asunto").toUpperCase();
 
                 CES_provact bda = new CES_provact();
                 CES_prov provs = new CES_prov();
                 CES_provact prov_p = new CES_provact();
-                //System.out.println(codigo+"/"+numero);
+               // System.out.println(asunto);
                 int clave_prov = provs.buscarprov_id(prov);
                 int clave_autorizado = 0;
                 if (clave_prov != 0) {
@@ -131,6 +132,7 @@ public class Movimientos extends HttpServlet {
                 m.setFecha(fechac);
                 m.setObservaciones("");
                 m.setDirigido(obs);
+                m.setAsunto(asunto);
                 PrintWriter out = response.getWriter();// instanciar objeto para escribir y responder hacia una pagina            
                 out.print("<label>" + bd.nuevomov(m, horas, numero) + "</label>");// regreso <label>Entrada: o SALIDA</label> a las funciones de javascript 
             } else if (uso.equals("invitado")) {// acciones que solo conciernen al invitado
@@ -141,6 +143,7 @@ public class Movimientos extends HttpServlet {
                 String obs = request.getParameter("obs").toUpperCase();
                 String area = request.getParameter("area").toUpperCase();// datos provenientes del jsp, html
                 String procedencia= request.getParameter("procedencia").toUpperCase();
+                String asunto = request.getParameter("asunto").toUpperCase();
                 PrintWriter out = response.getWriter();
                 Movimiento m = new Movimiento();
                 Departamento d = new Departamento();
@@ -154,6 +157,7 @@ public class Movimientos extends HttpServlet {
                 m.setFecha(fechac);
                 m.setObservaciones(procedencia);
                 m.setDirigido(obs);
+                m.setAsunto(asunto);
                 out.print("<label>" + bd.nuevomov(m, horas, numero) + "</label>");// respuesta hacia la pagina del usuario
             }
             if (uso.equals("report")) {// {uso: uso,f1:f1,f2:f2,nombre:nombre,area:area,depa:dep,tipo:tipo}

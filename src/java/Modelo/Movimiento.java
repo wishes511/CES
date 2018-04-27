@@ -22,6 +22,15 @@ public class Movimiento  implements java.io.Serializable {
      private String fecha;
      private String procedencia;
      private String dirigido;
+     private String asunto;
+
+    public String getAsunto() {
+        return this.asunto;
+    }
+
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
+    }
 
     public String getDirigido() {
         return this.dirigido;

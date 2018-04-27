@@ -158,7 +158,7 @@ public void nuevouser(Usuario u) throws ClassNotFoundException, SQLException {
             String s = "insert into usuario values('"+u.getNombre()+"',"+u.getTipoUsuario().getClaveTipo()+","+u.getDepartamento().getClaveDepartamento()+",'"
                     +u.getCodigo()+"','"+u.getStatuo()+"','"+u.getPass()+"','"+u.getEmpresa()+"')";
             st = getConexion().prepareStatement(s);
-            System.out.println(s);
+//            System.out.println(s);
             st.executeUpdate();
         st.close();
             getConexion().commit();

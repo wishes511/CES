@@ -14,8 +14,8 @@ import java.sql.SQLException;
  * @author gateway1
  */
 public class conBD {
-//    private String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;databaseName=CES;databaseName=CES;user=mich; password=mich;";
-   private String url ="jdbc:sqlserver://192.168.6.8\\datos65:9205;databaseName=CES;";
+    private String url = "jdbc:sqlserver://192.168.6.75\\SQLEXPRESS:9205;databaseName=CES;databaseName=CES;user=mich; password=mich;";
+//   private String url ="jdbc:sqlserver://192.168.6.8\\datos65:9205;databaseName=CES;";
     private String drive = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     protected Connection conexion = null;
     public Connection getConexion() {
@@ -26,9 +26,9 @@ public class conBD {
     }
     public void abrir() throws ClassNotFoundException, SQLException {
         Class.forName(drive);
-//        conexion = DriverManager.getConnection(url, "mich", "mich");
-        System.out.println();
-        conexion = DriverManager.getConnection(url, "sa", "Prok2001");
+        conexion = DriverManager.getConnection(url, "mich", "mich");
+        //System.out.println();
+//        conexion = DriverManager.getConnection(url, "sa", "Prok2001");
     }
     public void cerrar() throws SQLException {
         conexion.close();
