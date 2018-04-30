@@ -41,14 +41,14 @@ public class CES_movs extends conBD{
             String query = "";
             if (m.getClaveAutorizado() == 0 && m.getClaveProveedor() == 0 && m.getClaveUsuario() == 0) {
                 query = "SELECT nombre,tipo_mov as 'tipo',folio as 'folio', hora as 'hora'"
-                    + " from  movimiento where fecha='" + m.getFecha() + "' and n_credencial='" + credencial + "' and clave_proveedor=0";
+                    + " from  movimiento where fecha='" + m.getFecha() + "' and n_credencial='" + credencial + "' and clave_proveedor=0 and area='"+m.getArea()+"'";
             } else {
                 query = "SELECT p.clave_proveedor,p.nombre,m.tipo_mov as 'tipo',m.folio as 'folio', m.hora as 'hora'"
                     + " from proveedor p join movimiento m "
                         + "on m.clave_proveedor=p.clave_proveedor where p.clave_proveedor=" + m.getClaveProveedor()
                         + " and m.fecha='" + m.getFecha() + "' and n_credencial='" + credencial + "'";
             }
-           // System.out.println("query nuevo_mov"+query);    
+            System.out.println(m.getClaveAutorizado()+"-"+ m.getClaveProveedor()+"-"+m.getClaveUsuario()+" sql "+query );    
             smt = getConexion().createStatement();
             rs = smt.executeQuery(query);
             while (rs.next()) {

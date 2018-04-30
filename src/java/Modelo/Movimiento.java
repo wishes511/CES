@@ -23,6 +23,24 @@ public class Movimiento  implements java.io.Serializable {
      private String procedencia;
      private String dirigido;
      private String asunto;
+     private String tipo_transporte;
+     private String tipo_usuario;
+
+    public String getTipo_transporte() {
+        return this.tipo_transporte;
+    }
+
+    public void setTipo_transporte(String tipo_transporte) {
+        this.tipo_transporte = tipo_transporte;
+    }
+
+    public String getTipo_usuario() {
+        return this.tipo_usuario;
+    }
+
+    public void setTipo_usuario(String tipo_usuario) {
+        this.tipo_usuario = tipo_usuario;
+    }
 
     public String getAsunto() {
         return this.asunto;
