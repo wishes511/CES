@@ -108,10 +108,10 @@ int año = fecha.get(Calendar.YEAR);
 "          </section>\n" +
 "          <h4 class=>Filtros</h4>     \n"+        
 "          <section class=\"row text-center fondos redondeado\" id=section_prov align=center >\n" +
-"            <div class=\"col-6 col-sm-3 offset-sm-2 placeholder\">\n" +
+"            <div class=\"col-6 col-sm-2 placeholder\">\n" +
 "              <br><input type=\"text\" class=\"form-control\" id=\"nombre\" placeholder=Nombre onkeypress=ver_regs()>\n" +
 "            </div>\n" +
-"            <div class=\"col-6 col-sm-1 placeholder\">\n" +
+"            <div class=\"col-6 col-sm-2 placeholder\">\n" +
 "            <br><input type=\"text\" class=\"form-control\" id=\"area\" placeholder=\"Area\" onkeypress=ver_regs()>\n" +
 "            </div>\n" +          
 "              <div class=\"col-6 col-sm-2 placeholder\">\n" +        
@@ -119,7 +119,13 @@ int año = fecha.get(Calendar.YEAR);
 "              </div>\n" +
 "            <div class=\"col-6 col-sm-2 placeholder\">\n" +
 "             <br><select class=form-control id=mov onchange=ver_regs()><option value=>Ambas</option><option value=E>Entrada</option><option value=S>Salida</option></select>\n" +
-"            </div>\n" +                              
+"            </div>\n" +
+"            <div class=\"col-6 col-sm-2 placeholder\">\n" +
+"             <br><input type=\"text\" class=\"form-control\" id=\"destino\" placeholder=\"Nombre a quien visito\" onkeypress=ver_regs()>\n" +
+"            </div>\n" +         
+"            <div class=\"col-6 col-sm-2 placeholder\">\n" +
+"             <br><select class=form-control id=transporte onchange=ver_regs()><option value=></option><option value=\"SN\">SIN TRANSPORTE</option><option value=\"AUTOMOVIL\">AUTOMOVIL</option><option value=\"MOTOCICLETA\">MOTOCICLETA</option><option value=\"BICICLETA\">BICICLETA</option></select>\n" +
+"            </div>\n" + 
 "          </section>\n" +
 "           <section class=\"row text-center espacio-xs-down\" align=center>\n" +  
 "              <div class=\"col-10 col-sm-8 offset-sm-2 placeholder\">\n" +                              

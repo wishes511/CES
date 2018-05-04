@@ -48,7 +48,7 @@ public class CES_movs extends conBD{
                         + "on m.clave_proveedor=p.clave_proveedor where p.clave_proveedor=" + m.getClaveProveedor()
                         + " and m.fecha='" + m.getFecha() + "' and n_credencial='" + credencial + "'";
             }
-            System.out.println(m.getClaveAutorizado()+"-"+ m.getClaveProveedor()+"-"+m.getClaveUsuario()+" sql "+query );    
+           //System.out.println(m.getClaveAutorizado()+"-"+ m.getClaveProveedor()+"-"+m.getClaveUsuario()+" sql "+query );    
             smt = getConexion().createStatement();
             rs = smt.executeQuery(query);
             while (rs.next()) {
@@ -63,7 +63,7 @@ public class CES_movs extends conBD{
             if (conta == 0) {// verifica si hubo registros en la consulta anterior,si no hubo insertar
                 String s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                         + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'"+m.getDirigido()+"','"+m.getAsunto()+"')";
+                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'"+m.getDirigido()+"','"+m.getAsunto()+"','"+m.getTipo_transporte()+"','"+m.getTipo_usuario()+"')";
                 retorno = "<div class=letra_entrada>Entrada:"+m.getNombre()+"</div><audio src=\"../images/ok.mp3\" autoplay></audio>";
 //                System.out.println(s);
                 st = getConexion().prepareStatement(s);
@@ -73,7 +73,7 @@ public class CES_movs extends conBD{
                 if (movimiento.equals("S")) {
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'"+m.getDirigido()+"','"+m.getAsunto()+"')";
+                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'"+m.getDirigido()+"','"+m.getAsunto()+"','"+m.getTipo_transporte()+"','"+m.getTipo_usuario()+"')";
                     retorno = "<div class=letra_entrada>Entrada: " + m.getNombre()+"</div><audio src=\"../images/ok.mp3\" autoplay></audio>";
                 } else {
                     sentenciaSQL = "update movimiento set horasalida='"+horas+"', tiempo="+tiempo(hora,horas)+",tipo_mov='S' where folio="+folio;
@@ -126,7 +126,7 @@ public class CES_movs extends conBD{
             if (conta == 0) {// verifica si hubo registros en la consulta anterior,si no hubo insertar
                 String s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                         + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'','')";
+                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'','','"+m.getTipo_transporte()+"','"+m.getTipo_usuario()+"')";
                 if(m.getArea().equals("MAQUILAS")){
                 retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones()+"-"+m.getArea()+"</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><br><br><label><big>ENTRADA</big></label></div><audio src=\"../images/ok.mp3\" autoplay></audio>";
                 }else{
@@ -139,7 +139,7 @@ public class CES_movs extends conBD{
                 if (movimiento.equals("S")) {
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'','')";
+                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'','','"+m.getTipo_transporte()+"','"+m.getTipo_usuario()+"')";
                     if(m.getArea().equals("MAQUILAS")){
                     retorno = "<div class=letra_entrada><br><label>Area: </label><label>"+m.getArea()+ "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><br><br><label><big>ENTRADA</big></label></div><audio src=\"../images/ok.mp3\" autoplay></audio>";
                     }else{
@@ -214,19 +214,19 @@ public class CES_movs extends conBD{
         return list;
     }
     
-        public ArrayList<String> search_movs(String f1,String f2,String nombre, String narea,String ndepa,String mov) throws ClassNotFoundException, SQLException {
+        public ArrayList<String> search_movs(String f1,String f2,String nombre, String narea,String ndepa,String mov,String transporte,String destino) throws ClassNotFoundException, SQLException {
         ArrayList<String> list = new ArrayList<>();
         Statement smt;
         ResultSet rs;
         abrir();
         String query= "SELECT m.nombre as 'nombre',isnull(p.nombre,'') as proveedor,a.nombre as 'area',d.nombre as 'depa',u.empresa as 'empresa',m.fecha,"+
-"m.hora,m.tipo_mov,m.horasalida,cast((SUM(m.tiempo)/60)as varchar)+':'+cast((SUM(m.tiempo)%60) as varchar) as tiempo,m.observaciones as 'observacion',m.visita as 'visita' from movimiento m join departamento d on m.clave_departamento= d.clave_departamento\n" +
+"m.hora,m.tipo_mov,m.horasalida,(+'0'+cast((SUM(m.tiempo)/60)as varchar))+':'+(cast((SUM(m.tiempo)%60) as varchar)+':00') as tiempo,m.observaciones as 'observacion',m.visita as 'visita' from movimiento m join departamento d on m.clave_departamento= d.clave_departamento\n" +
 "join area a on a.clave_area=d.clave_area\n" +
 "left join usuario u on m.clave_usuario =u.clave_usuario\n" +
 "left join proveedor p on m.clave_proveedor=p.clave_proveedor\n" +
-"where (m.nombre like '%"+nombre+"%' or p.nombre like '%"+nombre+"%') and m.area like '%"+narea+"%' and d.nombre like '%"+ndepa+"%' and m.tipo_mov like '%"+
- mov+"%' and m.fecha between '"+f1+"' and '"+f2+"' group by a.nombre,m.fecha,d.nombre,m.nombre,p.nombre,u.empresa,m.hora,m.tipo_mov,m.horasalida,m.tiempo,m.observaciones,m.visita";
-//        System.out.println(query);
+"where (m.nombre like '%"+nombre+"%' or p.nombre like '%"+nombre+"%') and m.visita like '%"+destino+"%' and m.tipo_transporte like '%"+transporte+"%' and m.area like '%"+narea+"%' and d.nombre like '%"+ndepa+"%' and m.tipo_mov like '%"+
+ mov+"%' and m.fecha between '"+f1+"' and '"+f2+"' group by a.nombre,m.tipo_persona,m.visita,d.nombre,m.fecha,m.nombre,p.nombre,u.empresa,m.hora,m.tipo_mov,m.horasalida,m.tiempo,m.observaciones,tipo_transporte";
+        //System.out.println(query);
         smt = getConexion().createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {

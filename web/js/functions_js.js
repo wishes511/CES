@@ -271,14 +271,15 @@ function inicio_io(){
     var codigo=$('#codigo').val();
     var obs=$('#observacion').val();
     var asunto="";
+    var transporte=$('#transporte').val();
     var uso="proveedor";
-    if(prov=="" || autorizada=="" || depa=="" || area=="" || obs ==""){
+    if(prov=="" || autorizada=="" || depa=="" || area=="" || obs =="" || transporte==""){
         alert("no pueden ir campos en blanco favor de rectificarlo");
         document.getElementById('proveedor').focus();
     }else{
     $.ajax({
                     type: 'post',
-                    data: {uso: uso,prov:prov,autorizada:autorizada,depa:depa,area:area,codigo:codigo,observacion:obs,asunto:asunto},
+                    data: {uso: uso,prov:prov,autorizada:autorizada,depa:depa,area:area,codigo:codigo,observacion:obs,asunto:asunto,transporte:transporte},
                     url: '../Movimientos',
                     success: function (result) {
                         $('#respuesta').html(result);
@@ -297,13 +298,14 @@ function inicio_io_invi(){
     var codigo=$('#codigo').val();
     var procedencia=$('#procedencia').val();
     var asunto=$('#asunto').val();
+    var transporte=$('#transporte').val();
     var uso="invitado";
-    if(nombre=="" || obs=="" || area=="" || procedencia=="" || depa==""){
+    if(nombre=="" || obs=="" || area=="" || procedencia=="" || depa=="" || transporte==""){
         alert("no pueden ir campos en blanco favor de rectificarlo");
     }else{
     $.ajax({
                     type: 'post',
-                    data: {uso: uso,nombre:nombre,area:area,codigo:codigo,obs:obs,depa:depa,procedencia:procedencia,asunto:asunto},
+                    data: {uso: uso,nombre:nombre,area:area,codigo:codigo,obs:obs,depa:depa,procedencia:procedencia,asunto:asunto,transporte:transporte},
                     url: '../Movimientos',
                     success: function (result) {
                         $('#respuesta').html(result);

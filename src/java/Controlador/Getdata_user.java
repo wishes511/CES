@@ -143,7 +143,7 @@ public class Getdata_user extends HttpServlet {
                     out.print("<option onchange=display_pass() value=" + tipo_u.get(j - 1) + ">" +tipo_u.get(j) + "</option>");
                     cont=0;
                 }else cont++;
-            }out.print("</select><br><div id=field_pass></div><br><button class=btn btn-success id=btn_nuevo_u onclick=nuevo_prov()>Ingresar Nuevo Usuario</button><br><div id=response_nprov></div></div></div>");
+            }out.print("</select><br><label>Empresa:</label><select class=\"form-control\"><option></option><option>ATH</option><option>ATHT</option></select><br><div id=field_pass></div><br><button class=btn btn-success id=btn_nuevo_u onclick=nuevo_prov()>Ingresar Nuevo Usuario</button><br><div id=response_nprov></div></div></div>");
         }else if(uso.equals("nuevo_row")){// Nuevo Usuario uso: uso,user:user,depa:depa,tipo:tipo,pass:pass
             String name=request.getParameter("user").toUpperCase();
             int depa=Integer.parseInt(request.getParameter("depa").toUpperCase());

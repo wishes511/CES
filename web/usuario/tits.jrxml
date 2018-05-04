@@ -31,15 +31,15 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT  m.nombre,'0'+cast((SUM(m.tiempo)/60)as varchar)+':'+cast((SUM(m.tiempo)%60) as varchar)+':00' as tiempo,a.nombre as 'nom' from movimiento m join departamento d on m.clave_departamento= d.clave_departamento
+		<![CDATA[SELECT  m.tipo_persona,'0'+cast((SUM(m.tiempo)/60)as varchar)+':'+cast((SUM(m.tiempo)%60) as varchar)+':00' as tiempo,a.nombre as 'nom' from movimiento m join departamento d on m.clave_departamento= d.clave_departamento
 join area a on a.clave_area=d.clave_area
 left join usuario u on m.clave_usuario =u.clave_usuario
 left join proveedor p on m.clave_proveedor=p.clave_proveedor
 where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_transporte like '%$P!{transporte}%' and m.visita like '%$P!{destino}%' and m.fecha between $P{f1} and $P{f2}
- group by a.nombre,m.nombre
+ group by a.nombre,m.tipo_persona
 order by a.nombre]]>
 	</queryString>
-	<field name="nombre" class="java.lang.String"/>
+	<field name="tipo_persona" class="java.lang.String"/>
 	<field name="tiempo" class="java.lang.String"/>
 	<field name="nom" class="java.lang.String"/>
 	<background>
@@ -50,13 +50,16 @@ order by a.nombre]]>
 			<subreport>
 				<reportElement x="0" y="0" width="802" height="14" uuid="2ebe2923-6f9e-4484-b21d-9489d6ae8e79"/>
 				<subreportParameter name="area">
-					<subreportParameterExpression><![CDATA[$P{area}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{nom}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="tipo">
 					<subreportParameterExpression><![CDATA[$P{tipo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="transporte">
 					<subreportParameterExpression><![CDATA[$P{transporte}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tipo_person">
+					<subreportParameterExpression><![CDATA[$F{tipo_persona}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="f1">
 					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
@@ -71,10 +74,10 @@ order by a.nombre]]>
 					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="nombre">
-					<subreportParameterExpression><![CDATA[$F{nombre}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$P{nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detallemovs_1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "deta.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="15">

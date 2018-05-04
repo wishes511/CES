@@ -38,6 +38,8 @@
             String area = request.getParameter("area");
             String depa = request.getParameter("depa");
             String tipo = request.getParameter("tipo");
+            String transporte = request.getParameter("transporte");
+            String destino = request.getParameter("destino");
             String patt = "\\d{1,2}\\-\\d{1,2}\\-\\d{4}";
             Pattern pat = Pattern.compile(patt);
             Matcher match = pat.matcher(f1);
@@ -54,6 +56,8 @@
                     para.put("area",new String (area));
                     para.put("depa",new String (depa));
                     para.put("tipo",new String (tipo));
+                    para.put("transporte",new String (transporte));
+                    para.put("destino",new String (destino));
                     byte[] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), para, db.getconexion());
                     response.setContentType("application/pdf");
                     response.setContentLength(bytes.length);

@@ -168,13 +168,15 @@ function ver_regs(){
                 var f1 =$('#f1').val();
                 var f2 =$('#f2').val();
                 var nombre =$('#nombre').val();
-                var area =$('#area').val()
+                var area =$('#area').val();
                 var dep = $('#nombre_dep').val();
                 var tipo= $('#mov').val();
+                var transporte=$('#transporte').val();
+                var destino=$('#destino').val();
                 var uso="report";
                $.ajax({
                     type: 'post',
-                    data: {uso: uso,f1:f1,f2:f2,nombre:nombre,area:area,depa:dep,tipo:tipo},
+                    data: {uso: uso,f1:f1,f2:f2,nombre:nombre,area:area,depa:dep,tipo:tipo,transporte:transporte,destino:destino},
                     url: '../Movimientos',
                     success: function (result) {
                         $('#body_table').html(result);
@@ -188,7 +190,9 @@ function reporte(){
                 var area =$('#area').val()
                 var dep = $('#nombre_dep').val();
                 var tipo= $('#mov').val();
-    location='reporte_movs.jsp?f1='+f1+"&f2="+f2+"&nombre="+nombre+"&area="+area+"&depa="+dep+"&tipo="+tipo;
+                var transporte= $('#transporte').val();
+                var destino= $('#destino').val();
+    location='reporte_movs.jsp?f1='+f1+"&f2="+f2+"&nombre="+nombre+"&area="+area+"&depa="+dep+"&tipo="+tipo+"&transporte="+transporte+"&destino="+destino;
 }
 function reporte_det(){
    var f1 =$('#f1').val();
@@ -197,7 +201,9 @@ function reporte_det(){
                 var area =$('#area').val()
                 var dep = $('#nombre_dep').val();
                 var tipo= $('#mov').val();
-    location='reporte_movs_det.jsp?f1='+f1+"&f2="+f2+"&nombre="+nombre+"&area="+area+"&depa="+dep+"&tipo="+tipo;
+                var transporte= $('#transporte').val();
+                var destino= $('#destino').val();                
+    location='reporte_movs_det.jsp?f1='+f1+"&f2="+f2+"&nombre="+nombre+"&area="+area+"&depa="+dep+"&tipo="+tipo+"&transporte="+transporte+"&destino="+destino;
 }
 /* 
  * 

@@ -101,6 +101,7 @@ public class Movimientos extends HttpServlet {
                 String area = request.getParameter("area").toUpperCase();
                 String obs = request.getParameter("observacion").toUpperCase();
                 String asunto = request.getParameter("asunto").toUpperCase();
+                String transporte = request.getParameter("transporte");
 
                 CES_provact bda = new CES_provact();
                 CES_prov provs = new CES_prov();
@@ -133,6 +134,8 @@ public class Movimientos extends HttpServlet {
                 m.setObservaciones("");
                 m.setDirigido(obs);
                 m.setAsunto(asunto);
+                m.setTipo_transporte(transporte);
+                m.setTipo_usuario("P");
                 PrintWriter out = response.getWriter();// instanciar objeto para escribir y responder hacia una pagina            
                 out.print("<label>" + bd.nuevomov(m, horas, numero) + "</label>");// regreso <label>Entrada: o SALIDA</label> a las funciones de javascript 
             } else if (uso.equals("invitado")) {// acciones que solo conciernen al invitado
@@ -144,6 +147,7 @@ public class Movimientos extends HttpServlet {
                 String area = request.getParameter("area").toUpperCase();// datos provenientes del jsp, html
                 String procedencia= request.getParameter("procedencia").toUpperCase();
                 String asunto = request.getParameter("asunto").toUpperCase();
+                String transporte= request.getParameter("transporte");
                 PrintWriter out = response.getWriter();
                 Movimiento m = new Movimiento();
                 Departamento d = new Departamento();
@@ -158,6 +162,8 @@ public class Movimientos extends HttpServlet {
                 m.setObservaciones(procedencia);
                 m.setDirigido(obs);
                 m.setAsunto(asunto);
+                m.setTipo_transporte(transporte);
+                m.setTipo_usuario("I");
                 out.print("<label>" + bd.nuevomov(m, horas, numero) + "</label>");// respuesta hacia la pagina del usuario
             }
             if (uso.equals("report")) {// {uso: uso,f1:f1,f2:f2,nombre:nombre,area:area,depa:dep,tipo:tipo}
@@ -169,9 +175,11 @@ public class Movimientos extends HttpServlet {
                 String area = request.getParameter("area");
                 String depa = request.getParameter("depa");
                 String tipo = request.getParameter("tipo");
+                String transporte = request.getParameter("transporte");
+                String destino = request.getParameter("destino");
                 PrintWriter out = response.getWriter();
                 ArrayList<String> arr = new ArrayList<>();
-                arr = mov.search_movs(f1, f2, nombre, area, depa, tipo);// carga los movimientos de acuerdo a los filtros y los guarda en una lista
+                arr = mov.search_movs(f1, f2, nombre, area, depa, tipo,transporte,destino);// carga los movimientos de acuerdo a los filtros y los guarda en una lista
                 int cont = 0;
                 String a = "";
                 out.print("<tr></tr>");
