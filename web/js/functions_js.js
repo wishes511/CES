@@ -99,17 +99,26 @@ function searchactivo_id(){
                     }
                 });
             }
+function saltotrans(){
+    document.getElementById("transporte").focus();
+}
+function saltoasunto(){
+    document.getElementById("asunto").focus();
+} 
 function saltodepa(){
     document.getElementById("depa").focus();
 }            
 function saltopa(){
-    document.getElementById("pa").focus();
+    document.getElementById("p_activos_n").focus();
 }
 function saltobi(){
     document.getElementById("bi").focus();
 }
 function saltoprocedencia(){
     document.getElementById("nombre").focus();
+}
+function ida(){
+    document.getElementById("observacion").focus();
 }
 function saltop(){
     var auto=document.getElementById('autorizada').value;

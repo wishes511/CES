@@ -333,7 +333,7 @@ public class Getfields extends HttpServlet {
                 + "                              <br>  <input type=text id=\"p_activos_n\" class=\"ln form-control\" placeholder=\"Nombre\" onchange=saltodepa()>\n"
                 + "                        </div>\n"// div persona autorizada
                 + "                        <div class=\"col-4 col-sm-4 placeholder\">\n"
-                + "                                <label>Departamento : </label><select id=\"depa\" onchange=\"\" class=\"form-control\"><option></option>\n");
+                + "                                <label>Departamento : </label><select id=\"depa\" onchange=\"ida()\" class=\"form-control\"><option></option>\n");
         for (int i = 0; i < arr_depa.size(); i++) {
             if (cont == 1) {
                 out.print("<option onchange=searchactivo_id() value=" + arr_depa.get(i - 1) + ">" + arr_depa.get(i) + "</option>");
@@ -341,9 +341,9 @@ public class Getfields extends HttpServlet {
             } else {cont++;}
         }
         out.print("                            </select>\n"
-                + "                         <label>Se dirige con : </label><input type=text id=\"observacion\" class=\"ln form-control\" placeholder=\"Nombre\" onchange=saltobi()>\n"                
+                + "                         <label>Se dirige con : </label><input type=text id=\"observacion\" class=\"ln form-control\" placeholder=\"Nombre\" onchange=saltotrans()>\n"                
                 + "                            </div>\n"
-                + "                      <section class= \"col-sm-6 offset-sm-3\"><br><label>Tipo de transporte:</label><br><select id=\"transporte\" class=form-control><option></option><option value=SN>SIN TRANSPORTE</option><option value=AUTOMOVIL>AUTOMOVIL</option><option value=BICICLETA>BICICLETA</option><option value=MOTOCICLETA>MOTOCICLETA</option></select></section><br>\n"                
+                + "                      <section class= \"col-sm-6 offset-sm-3\"><br><label>Tipo de transporte:</label><br><select onchange=saltoinvis() id=\"transporte\" class=form-control><option></option><option value=SN>SIN TRANSPORTE</option><option value=AUTOMOVIL>AUTOMOVIL</option><option value=BICICLETA>BICICLETA</option><option value=MOTOCICLETA>MOTOCICLETA</option></select></section><br>\n"                
                 + "                      <section class= \"col-sm-6 offset-sm-3\"><br><input type=\"button\" class=\"btn\" value=\"Iniciar I/O\" onclick=\"inicio_io()\" id=bi><br></section><br>\n"
                 + "                        <div id=ensa></div>\n"
                 + "                    </section></main></div>");
@@ -372,10 +372,10 @@ public class Getfields extends HttpServlet {
         }
         out.print("     </select><br></div><br>"
                 + "<div class=\"col-4 col-sm-3 placeholder\" style=\"\" align=center>\n"
-                + "<label>Visita a:</label><br><input type=text id=\"visita\" class=\"ln form-control\" placeholder='nombre' onchange=saltoinvis()>\n"
+                + "<label>Visita a:</label><br><input type=text id=\"visita\" class=\"ln form-control\" placeholder='nombre' onchange=saltoasunto()>\n"
                 + "</div><br>\n"
-                + "<section class= \"col-sm-12 col-sm-10\"><label>Asunto :</label><br><input type=\"text\" class=\"form-control\" id=asunto name=asunto onchange=saltoinvis()></section><br>\n"                
-                + "<section class= \"col-sm-6 offset-sm-3\"><br><label>Tipo de transporte:</label><br><select id=\"transporte\" class=form-control><option></option><option value=SN>SIN TRANSPORTE</option><option value=AUTOMOVIL>AUTOMOVIL</option><option value=BICICLETA>BICICLETA</option><option value=MOTOCICLETA>MOTOCICLETA</option></select></section><br>\n"                
+                + "<section class= \"col-sm-12 col-sm-10\"><label>Asunto :</label><br><input type=\"text\" class=\"form-control\" id=asunto name=asunto onchange=saltotrans()></section><br>\n"                
+                + "<section class= \"col-sm-6 offset-sm-3\"><br><label>Tipo de transporte:</label><br><select onchange=saltoinvis(); id=\"transporte\" class=form-control><option></option><option value=SN>SIN TRANSPORTE</option><option value=AUTOMOVIL>AUTOMOVIL</option><option value=BICICLETA>BICICLETA</option><option value=MOTOCICLETA>MOTOCICLETA</option></select></section><br>\n"                
                 + "<section class= \"col-sm-6 offset-sm-3\"><br><input type=\"button\" class=\"btn btn-success\" value=\"Iniciar I/O\" onclick=\"inicio_io_invi()\" id=bi><br></section><br>\n"
                 + "<div id=ensa></div>\n"
                 + "</section></main></div>");
