@@ -105,6 +105,7 @@ function nuevo_prov(){
                 var user =$('#prov_new1').val();
                 var depa =$('#depa').val();
                 var tipo=$('#tipo_usuario').val();
+                
                 var empresa="";
                 var pass="";
                 var tipo_cod="";
@@ -112,7 +113,7 @@ function nuevo_prov(){
                 if(nametipo == "ADMIN" || nametipo=="VIGILANTE"){
                     pass=$('#pass_u').val();
                     tipo_cod="8";
-                    empresa="ATH";
+                    empresa=$('#empresa').val();
                 }else if(nametipo=="MAQUILA"){
                     pass="123";
                     tipo_cod="3";
@@ -120,7 +121,7 @@ function nuevo_prov(){
                 }else{
                 pass="123";
                 tipo_cod="8";  
-                empresa="ATH";
+                empresa=$('#empresa').val();
                 }
                 var uso="nuevo_row";
                 if(user=="" || depa=="" || tipo== "" || pass==""){
@@ -204,6 +205,17 @@ function reporte_det(){
                 var transporte= $('#transporte').val();
                 var destino= $('#destino').val();                
     location='reporte_movs_det.jsp?f1='+f1+"&f2="+f2+"&nombre="+nombre+"&area="+area+"&depa="+dep+"&tipo="+tipo+"&transporte="+transporte+"&destino="+destino;
+}
+function reporte_movs_usuario(){
+   var f1 =$('#f1').val();
+                var f2 =$('#f2').val();
+                var nombre =$('#nombre').val();
+                var area =$('#area').val()
+                var dep = $('#nombre_dep').val();
+                var tipo= $('#mov').val();
+                var transporte= $('#transporte').val();
+                var destino= $('#destino').val();                
+    location='reporte_movs_usu.jsp?f1='+f1+"&f2="+f2+"&nombre="+nombre+"&area="+area+"&depa="+dep+"&tipo="+tipo+"&transporte="+transporte+"&destino="+destino;
 }
 /* 
  * 

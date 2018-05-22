@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="976de16f-5ab5-4b26-849c-f388c8d525da">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="976de16f-5ab5-4b26-849c-f388c8d525da">
 	<property name="ireport.zoom" value="1.2100000000000026"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -35,7 +35,7 @@
 join area a on a.clave_area=d.clave_area
 left join usuario u on m.clave_usuario =u.clave_usuario
 left join proveedor p on m.clave_proveedor=p.clave_proveedor
-where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_transporte like '%$P!{transporte}%' and m.visita like '%$P!{destino}%' and m.fecha between $P{f1} and $P{f2}
+where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_transporte like '%$P!{transporte}%' and m.visita like '%$P!{destino}%' and m.tipo_persona='U' and m.fecha between $P{f1} and $P{f2}
  group by a.nombre,m.nombre
 order by a.nombre]]>
 	</queryString>
@@ -48,7 +48,7 @@ order by a.nombre]]>
 	<detail>
 		<band height="16" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="0" width="802" height="14" uuid="2ebe2923-6f9e-4484-b21d-9489d6ae8e79"/>
+				<reportElement x="0" y="0" width="555" height="14" uuid="2ebe2923-6f9e-4484-b21d-9489d6ae8e79"/>
 				<subreportParameter name="area">
 					<subreportParameterExpression><![CDATA[$P{area}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -79,14 +79,14 @@ order by a.nombre]]>
 		</band>
 		<band height="15">
 			<staticText>
-				<reportElement x="727" y="0" width="75" height="15" uuid="4924b95d-fdef-4985-a92d-3895630db25a"/>
+				<reportElement x="480" y="0" width="75" height="15" uuid="4924b95d-fdef-4985-a92d-3895630db25a"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="759" y="0" width="43" height="15" uuid="99eeccf3-67d2-44f4-81ea-ec710de099b2"/>
+				<reportElement x="512" y="0" width="43" height="15" uuid="99eeccf3-67d2-44f4-81ea-ec710de099b2"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>

@@ -48,7 +48,7 @@
                    db.abrir();
                try{ 
               // reporte detallado de un progama
-                 File reportfile = new File(application.getRealPath("usuario/titulos.jasper"));
+                 File reportfile = new File(application.getRealPath("usuario/titu_all.jasper"));
                     Map para = new HashMap();
                     para.put("f1", new String(f1));
                     para.put("f2", new String(f2));

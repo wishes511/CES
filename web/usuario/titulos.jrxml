@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="976de16f-5ab5-4b26-849c-f388c8d525da">
-	<property name="ireport.zoom" value="1.1000000000000023"/>
-	<property name="ireport.x" value="21"/>
+	<property name="ireport.zoom" value="1.4641000000000035"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="f1" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -35,7 +35,7 @@
 join area a on a.clave_area=d.clave_area
 left join usuario u on m.clave_usuario =u.clave_usuario
 left join proveedor p on m.clave_proveedor=p.clave_proveedor
-where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_transporte like '%$P!{transporte}%' and m.visita like '%$P!{destino}%' and m.fecha between $P{f1} and $P{f2}
+where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_transporte like '%$P!{transporte}%' and m.visita like '%$P!{destino}%' and m.tipo_persona!='U' and m.fecha between $P{f1} and $P{f2}
  group by a.nombre]]>
 	</queryString>
 	<field name="area" class="java.lang.String"/>
@@ -44,45 +44,45 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="86" splitType="Stretch">
+		<band height="62" splitType="Stretch">
 			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
 				<reportElement x="667" y="0" width="135" height="20" uuid="ce5f28cc-0e2d-4e1b-b05a-bda79529e0a5"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="0" y="32" width="136" height="32" uuid="67d49a8b-60fc-4bf0-8a42-2565a24cc2b1"/>
+				<reportElement x="3" y="0" width="136" height="32" uuid="67d49a8b-60fc-4bf0-8a42-2565a24cc2b1"/>
 				<imageExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\EntradasSalidas\\web\\images\\AF.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="308" y="32" width="203" height="24" uuid="e47be100-3afc-416a-8b02-b9de36a0fd8f"/>
+				<reportElement x="277" y="0" width="289" height="24" uuid="e47be100-3afc-416a-8b02-b9de36a0fd8f"/>
 				<textElement>
 					<font size="14" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Reporte de Entradas y Salidas ]]></text>
+				<text><![CDATA[Reporte Concentrado de Entradas y Salidas ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="427" y="56" width="84" height="24" uuid="5b7cd575-9b79-4582-8899-19d28ea0e89b"/>
+				<reportElement x="430" y="24" width="84" height="24" uuid="5b7cd575-9b79-4582-8899-19d28ea0e89b"/>
 				<textElement>
 					<font size="13" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{f2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="336" y="56" width="67" height="24" uuid="da272548-cd1d-46e0-ae12-0eb969ce896c"/>
+				<reportElement x="339" y="24" width="67" height="24" uuid="da272548-cd1d-46e0-ae12-0eb969ce896c"/>
 				<textElement>
 					<font size="13" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{f1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="403" y="56" width="24" height="24" uuid="326b966b-f424-4990-952a-02c3f875c767"/>
+				<reportElement x="406" y="24" width="24" height="24" uuid="326b966b-f424-4990-952a-02c3f875c767"/>
 				<textElement>
 					<font size="13" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ Al ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="308" y="56" width="28" height="24" uuid="d9311c41-3b1a-4ced-81e4-f517597a10dc"/>
+				<reportElement x="311" y="24" width="28" height="24" uuid="d9311c41-3b1a-4ced-81e4-f517597a10dc"/>
 				<textElement>
 					<font size="13" isBold="false"/>
 				</textElement>
@@ -90,13 +90,10 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 			</staticText>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="4" splitType="Stretch"/>
-	</pageHeader>
 	<detail>
-		<band height="68" splitType="Stretch">
+		<band height="56" splitType="Stretch">
 			<subreport>
-				<reportElement x="2" y="25" width="800" height="42" uuid="da72eaee-f43e-4697-bcc0-429e715ef198"/>
+				<reportElement x="2" y="13" width="800" height="42" uuid="da72eaee-f43e-4697-bcc0-429e715ef198"/>
 				<subreportParameter name="area">
 					<subreportParameterExpression><![CDATA[$F{area}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -125,26 +122,26 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detallemovs.jasper"]]></subreportExpression>
 			</subreport>
 			<rectangle>
-				<reportElement x="2" y="1" width="800" height="20" forecolor="#337AB7" backcolor="#337AB7" uuid="7d33338a-3a2b-4ac0-b7e9-fd702f5538af"/>
+				<reportElement x="2" y="1" width="800" height="12" forecolor="#337AB7" backcolor="#337AB7" uuid="7d33338a-3a2b-4ac0-b7e9-fd702f5538af"/>
 			</rectangle>
 			<textField>
-				<reportElement x="2" y="5" width="107" height="15" forecolor="#FFFFFF" uuid="7778e442-b9fc-4c3d-8603-e8ddc3546b38"/>
+				<reportElement x="2" y="0" width="107" height="13" forecolor="#FFFFFF" uuid="7778e442-b9fc-4c3d-8603-e8ddc3546b38"/>
 				<textElement textAlignment="Center">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{area}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="16">
+		<band height="13">
 			<textField>
-				<reportElement x="769" y="0" width="33" height="16" uuid="99eeccf3-67d2-44f4-81ea-ec710de099b2"/>
+				<reportElement x="769" y="0" width="33" height="13" uuid="99eeccf3-67d2-44f4-81ea-ec710de099b2"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tiempo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="737" y="0" width="32" height="16" uuid="4924b95d-fdef-4985-a92d-3895630db25a"/>
+				<reportElement x="737" y="0" width="32" height="13" uuid="4924b95d-fdef-4985-a92d-3895630db25a"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
@@ -153,19 +150,16 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="22" splitType="Stretch">
+		<band height="14" splitType="Stretch">
 			<textField>
-				<reportElement x="350" y="0" width="80" height="20" uuid="dbc6e16b-23d8-4f14-8275-6f339cd35882"/>
+				<reportElement x="350" y="0" width="80" height="13" uuid="dbc6e16b-23d8-4f14-8275-6f339cd35882"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="430" y="0" width="40" height="20" uuid="2f39002f-5a25-4573-92de-9f53e4acba95"/>
+				<reportElement x="430" y="0" width="40" height="13" uuid="2f39002f-5a25-4573-92de-9f53e4acba95"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="5" splitType="Stretch"/>
-	</summary>
 </jasperReport>

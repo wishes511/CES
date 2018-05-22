@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b379cb8f-73ff-484b-9f89-28ae57495a68">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b379cb8f-73ff-484b-9f89-28ae57495a68">
 	<property name="ireport.zoom" value="1.3310000000000037"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -32,7 +32,7 @@
 join area a on a.clave_area=d.clave_area
 left join usuario u on m.clave_usuario =u.clave_usuario
 left join proveedor p on m.clave_proveedor=p.clave_proveedor
-where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_transporte like '%$P!{transporte}%' and m.visita like '%$P!{destino}%' and m.fecha between $P{f1} and $P{f2}
+where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_transporte like '%$P!{transporte}%' and m.visita like '%$P!{destino}%' and m.tipo_persona='U' and m.fecha between $P{f1} and $P{f2}
  group by a.nombre,m.nombre,m.tipo_persona,m.visita,d.nombre,m.fecha,p.nombre,u.empresa,m.hora,m.tipo_mov,m.horasalida,m.tiempo,m.observaciones,m.asunto,m.tipo_transporte]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String"/>
@@ -57,21 +57,14 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 	<detail>
 		<band height="14" splitType="Stretch">
 			<textField>
-				<reportElement x="759" y="0" width="43" height="12" uuid="900f06fa-37d1-4d8e-b1a6-baa6eae607a8"/>
+				<reportElement x="512" y="0" width="43" height="12" uuid="900f06fa-37d1-4d8e-b1a6-baa6eae607a8"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tiempo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="0" width="131" height="12" uuid="f06ce451-f724-450e-bab1-72c7b0e04934"/>
-				<textElement textAlignment="Center">
-					<font size="7"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{proveedor}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="347" y="0" width="98" height="12" uuid="f0be4ea9-82e2-4d31-a43b-c4d87a8ecf67"/>
+				<reportElement x="156" y="0" width="100" height="12" uuid="f0be4ea9-82e2-4d31-a43b-c4d87a8ecf67"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
@@ -85,48 +78,34 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="445" y="0" width="37" height="12" uuid="94e5e598-5868-43ad-8b8f-78bede63b3c9"/>
+				<reportElement x="478" y="0" width="37" height="12" uuid="94e5e598-5868-43ad-8b8f-78bede63b3c9"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{hora}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="485" y="0" width="43" height="12" uuid="9b23240e-a8ac-48f3-8ebd-4a51936eff7f"/>
+				<reportElement x="435" y="0" width="43" height="12" uuid="9b23240e-a8ac-48f3-8ebd-4a51936eff7f"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{horasalida}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="11" width="802" height="1" uuid="30a92c5b-4df5-4649-923c-ad59b4b9385a"/>
+				<reportElement x="0" y="11" width="555" height="1" uuid="30a92c5b-4df5-4649-923c-ad59b4b9385a"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineStyle="Dashed"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="238" y="0" width="109" height="12" uuid="40cd92ee-4860-4d85-b5f0-3135bcc81a9a"/>
-				<textElement textAlignment="Center">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="528" y="1" width="101" height="10" uuid="0a9ea91c-ef5c-4896-8dbc-a7494879f810"/>
-				<textElement textAlignment="Center">
-					<font size="7"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{visita}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="629" y="1" width="130" height="10" uuid="0b163868-bc56-4c59-a98e-896a99ced076"/>
+				<reportElement x="256" y="0" width="179" height="10" uuid="0b163868-bc56-4c59-a98e-896a99ced076"/>
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{asunto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="181" y="0" width="57" height="11" uuid="ac16635d-fb30-429b-9c02-068fc1ec58fb"/>
+				<reportElement x="50" y="0" width="106" height="11" uuid="ac16635d-fb30-429b-9c02-068fc1ec58fb"/>
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>

@@ -131,7 +131,8 @@ int año = fecha.get(Calendar.YEAR);
 "              <div class=\"col-10 col-sm-8 offset-sm-2 placeholder\">\n" +                              
 "                  <br><button type=\"input\" class=btn  onclick=ver_regs()>Buscar Registros</button>\n" +
 "              <button type=\"input\" class=\"btn btn-success\"  onclick=reporte()>Reporte Condensado</button>\n" +
-"                  <button type=\"input\" class=\"btn btn-success\"  onclick=reporte_det()>Reporte Detallado</button>\n" +        
+"                  <button type=\"input\" class=\"btn btn-success\"  onclick=reporte_det()>Reporte Detallado</button>\n" +  
+"                  <button type=\"input\" class=\"btn btn-warning\"  onclick=reporte_movs_usuario()>Reporte de usuarios</button>\n" +          
 "              </div>\n" +  
 "          </section>\n" +
 "          <div id=table_prov class=\"table-responsive\">\n" +

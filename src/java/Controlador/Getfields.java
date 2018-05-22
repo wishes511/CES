@@ -152,20 +152,51 @@ public class Getfields extends HttpServlet {
                         break;
                     // Personal y maquiladores
                     default:
-                        if (codigo.charAt(1) == '8' || codigo.charAt(1)=='3') {
+                        String resp= "";
+                        if (codigo.charAt(1) == '8' || codigo.charAt(1) == '3') {
                             CES u = new CES();
-                            ArrayList<String> arru = u.buscaru_clave(Integer.parseInt(d4));
-                            //System.out.println(!arru.isEmpty()+"-"+arru.get(4)+","+area);
-                            if (!arru.isEmpty() && area.equals(arru.get(4))) {
-                                tipo_usuario_pm(arru, area, fechac, horas, out, mov);
+                            String asunto = request.getParameter("motivo").toUpperCase();
+                            ArrayList<String> arru = u.buscaru_clave(Integer.parseInt(d4), "");
+//                            System.out.println("-"+asunto+"entre");
+                            if (!arru.isEmpty() && area.equals(arru.get(4))) {    
+                                ArrayList<String> arrmov=mov.searchlast_movuser(arru, fechac) ;
+                                if (!arrmov.isEmpty() && !asunto.equals("")) {
+                                    tipo_usuario_pm(arru, area, fechac, horas, out, mov,asunto);
+                                }else if(!asunto.equals("")){
+                                tipo_usuario_pm(arru, area, fechac, horas, out, mov,asunto);
+                                } else{
+                                    if(arrmov.isEmpty()){
+                                     resp="<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Asunto , Motivo </label><br>"
+                                       + "<input type=text id=motivo class=\"ln form-control\" onchange=\"searchuser1()\"><script>document.getElementById('motivo').focus();</script></section></main>";                                
+                                    }else{
+                                        int cont=0;
+                                       // System.out.println(arrmov.size()+"-"+arrmov.get(0)+"* "+arrmov.get(arrmov.size()-2));
+                                        if(arrmov.get(1).equals("M")){
+                                         //  ArrayList<String> arr=mov.searchlast_movuser(arru, fechac) ;
+                                            if(arrmov.get(arrmov.size()-2).equals("E")){
+                                                tipo_usuario_pm(arru, area, fechac, horas, out, mov,asunto);
+                                            }else resp="<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Asunto , Motivo </label><br><input type=text id=motivo class=\"ln form-control\" onchange=\"searchuser1()\"><script>document.getElementById('motivo').focus();</script></section></main>";                                
+                                        }else{
+                                            if(arrmov.get(arrmov.size()-2).equals("S")){
+                                                tipo_usuario_pm(arru, area, fechac, horas, out, mov,asunto);
+                                            }else resp="<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Asunto , Motivo </label><br><input type=text id=motivo class=\"ln form-control\" onchange=\"searchuser1()\"><script>document.getElementById('motivo').focus();</script></section></main>";                                
+                                       
+                                        }
+                                    }
+                                   //    oute.print("<label class=\"ln\" style=\"color: white\" >Motivo por salida: </label><input type=text id=\"motivo\" class=\"ln non-input\">");
+                                }
                             } else {
-                                out.print("<label>No se encontro Usuario o codigo registrado</label>");
-                                out.print("<script>document.getElementById('codigo').value='';</script>");
+                                resp="<label>No se encontro Usuario o codigo registrado</label><script>document.getElementById('codigo').value='';</script>";
+//                                out.print("<label>No se encontro Usuario o codigo registrado</label>");
+//                                out.print("<script>document.getElementById('codigo').value='';</script>");
                             }
                         } else {
-                            out.print("<label>No se encontro Usuario o codigo registrado</label>");
-                            out.print("<script>document.getElementById('codigo').value='';</script>");
+                            resp="<label>No se encontro Usuario o codigo registrado</label><script>document.getElementById('codigo').value='';</script>";
+//                            out.print("<label>No se encontro Usuario o codigo registrado</label>");
+//                            out.print("<script>document.getElementById('codigo').value='';</script>");
                         }
+                        out.print(resp);
+                        resp="";
                         break;
                 }
             } else {
@@ -282,7 +313,7 @@ public class Getfields extends HttpServlet {
         }
     }
 
-    public void tipo_usuario_pm(ArrayList<String> arru, String area, String fecha, String horas, PrintWriter out, CES_movs movs) throws ClassNotFoundException, SQLException {
+    public void tipo_usuario_pm(ArrayList<String> arru, String area, String fecha, String horas, PrintWriter out, CES_movs movs,String asunto) throws ClassNotFoundException, SQLException {
         Movimiento m = new Movimiento();
         Departamento dep = new Departamento();
         dep.setClaveDepartamento(Integer.parseInt(arru.get(2)));
@@ -295,8 +326,13 @@ public class Getfields extends HttpServlet {
         m.setObservaciones("");
         m.setFecha(fecha);
         m.setDirigido("");
+        m.setAsunto(asunto);
         m.setTipo_transporte("AUTOMOVIL");
-        m.setTipo_usuario("U");
+        if (arru.get(5).equals("PERSONAL") || arru.get(5).equals("ADMIN")) {
+            m.setTipo_usuario("U");
+        } else {
+            m.setTipo_usuario("M");
+        }
         String credencial = "";
 
         if (arru.get(2).equals("") || arru.get(0).equals("")) {
@@ -312,8 +348,8 @@ public class Getfields extends HttpServlet {
         int cont = 0;
         out.print("<div class=\" \" align=\"center\"> "
                 + "<main class=\"col-sm-12 pt-2\" >"
-                +"<section><label class=\"ln\" style=\"color: red\" >Area : </label><input type=text id=\"area\" class=\"ln non-input\" value=" + area + " disabled>\n" 
-                +"</section>"
+                + "<section><label class=\"ln\" style=\"color: red\" >Area : </label><input type=text id=\"area\" class=\"ln non-input\" value=" + area + " disabled>\n"
+                + "</section>"
                 + "<section class=\"row text-center fondos redondeado\" id=section_prov align=center  >\n"
                 + "<div class=\"col-4 col-sm-4 placeholder\" align=\"center\"  >\n"
                 + "<label>Proveedor :</label><select id=\"proveedor\" name=\"proveedor\" onchange=\"searchactivo_id()\" class=\"form-control\"><option></option>");
@@ -321,14 +357,16 @@ public class Getfields extends HttpServlet {
             if (cont == 1) {
                 out.print("<option onchange=searchactivo_id() value=" + arr.get(i) + ">" + arr.get(i) + "</option>");
                 cont = 0;
-            } else {cont++; }
+            } else {
+                cont++;
+            }
         }
         out.print("                             </select>\n"
                 + "                                <br><input type=text id=\"proveed\" class=\"ln form-control\" placeholder=\"Nuevo Proveedor\" onchange=saltopa()>\n"
                 + "                        </div>\n"
                 + "                        "
                 + "                        <div class=\"col-4 col-sm-3 placeholder\" align=\"center\" >\n"
-//                + "                            <label>Persona Autorizada :</label><select id=\"pa\" class=\"form-control\">\n"
+                //                + "                            <label>Persona Autorizada :</label><select id=\"pa\" class=\"form-control\">\n"
                 + "                            <div id=\"p_activos\"></div>"
                 + "                              <br>  <input type=text id=\"p_activos_n\" class=\"ln form-control\" placeholder=\"Nombre\" onchange=saltodepa()>\n"
                 + "                        </div>\n"// div persona autorizada
@@ -338,12 +376,14 @@ public class Getfields extends HttpServlet {
             if (cont == 1) {
                 out.print("<option onchange=searchactivo_id() value=" + arr_depa.get(i - 1) + ">" + arr_depa.get(i) + "</option>");
                 cont = 0;
-            } else {cont++;}
+            } else {
+                cont++;
+            }
         }
         out.print("                            </select>\n"
-                + "                         <label>Se dirige con : </label><input type=text id=\"observacion\" class=\"ln form-control\" placeholder=\"Nombre\" onchange=saltotrans()>\n"                
+                + "                         <label>Se dirige con : </label><input type=text id=\"observacion\" class=\"ln form-control\" placeholder=\"Nombre\" onchange=saltotrans()>\n"
                 + "                            </div>\n"
-                + "                      <section class= \"col-sm-6 offset-sm-3\"><br><label>Tipo de transporte:</label><br><select onchange=saltoinvis() id=\"transporte\" class=form-control><option></option><option value=SN>SIN TRANSPORTE</option><option value=AUTOMOVIL>AUTOMOVIL</option><option value=BICICLETA>BICICLETA</option><option value=MOTOCICLETA>MOTOCICLETA</option></select></section><br>\n"                
+                + "                      <section class= \"col-sm-6 offset-sm-3\"><br><label>Tipo de transporte:</label><br><select onchange=saltoinvis() id=\"transporte\" class=form-control><option></option><option value=SN>SIN TRANSPORTE</option><option value=AUTOMOVIL>AUTOMOVIL</option><option value=BICICLETA>BICICLETA</option><option value=MOTOCICLETA>MOTOCICLETA</option></select></section><br>\n"
                 + "                      <section class= \"col-sm-6 offset-sm-3\"><br><input type=\"button\" class=\"btn\" value=\"Iniciar I/O\" onclick=\"inicio_io()\" id=bi><br></section><br>\n"
                 + "                        <div id=ensa></div>\n"
                 + "                    </section></main></div>");
@@ -353,9 +393,9 @@ public class Getfields extends HttpServlet {
         int cont = 0;
         out.print("<div >\n"
                 + "<main class=\"col-sm-12 pt-2\" >"
-                +"<section><label class=\"ln\" style=\"color: red\" >Area : </label><input type=text id=\"area\" class=\"ln non-input\" value=" + area + " disabled>\n" 
-                +"</section>" 
-                +"<section class=\"row text-center fondos redondeado\" id=section_prov align=center >"        
+                + "<section><label class=\"ln\" style=\"color: red\" >Area : </label><input type=text id=\"area\" class=\"ln non-input\" value=" + area + " disabled>\n"
+                + "</section>"
+                + "<section class=\"row text-center fondos redondeado\" id=section_prov align=center >"
                 + "<div class=\"col-4 col-sm-3 placeholder\" style=\"\" align=center >\n"
                 + "     <label>Procedencia :</label><br><input type=text id=\"procedencia\" class=\"ln form-control\" placeholder='' onchange=saltoprocedencia()>\n"
                 + "</div><br>\n"
@@ -368,14 +408,16 @@ public class Getfields extends HttpServlet {
             if (cont == 1) {
                 out.print("<option onchange=searchactivo_id() value=" + arr_depa.get(i - 1) + ">" + arr_depa.get(i) + "</option>");
                 cont = 0;
-            } else {cont++;}
+            } else {
+                cont++;
+            }
         }
         out.print("     </select><br></div><br>"
                 + "<div class=\"col-4 col-sm-3 placeholder\" style=\"\" align=center>\n"
                 + "<label>Visita a:</label><br><input type=text id=\"visita\" class=\"ln form-control\" placeholder='nombre' onchange=saltoasunto()>\n"
                 + "</div><br>\n"
-                + "<section class= \"col-sm-12 col-sm-10\"><label>Asunto :</label><br><input type=\"text\" class=\"form-control\" id=asunto name=asunto onchange=saltotrans()></section><br>\n"                
-                + "<section class= \"col-sm-6 offset-sm-3\"><br><label>Tipo de transporte:</label><br><select onchange=saltoinvis(); id=\"transporte\" class=form-control><option></option><option value=SN>SIN TRANSPORTE</option><option value=AUTOMOVIL>AUTOMOVIL</option><option value=BICICLETA>BICICLETA</option><option value=MOTOCICLETA>MOTOCICLETA</option></select></section><br>\n"                
+                + "<section class= \"col-sm-12 col-sm-10\"><label>Asunto :</label><br><input type=\"text\" class=\"form-control\" id=asunto name=asunto onchange=saltotrans()></section><br>\n"
+                + "<section class= \"col-sm-6 offset-sm-3\"><br><label>Tipo de transporte:</label><br><select onchange=saltoinvis(); id=\"transporte\" class=form-control><option></option><option value=SN>SIN TRANSPORTE</option><option value=AUTOMOVIL>AUTOMOVIL</option><option value=BICICLETA>BICICLETA</option><option value=MOTOCICLETA>MOTOCICLETA</option></select></section><br>\n"
                 + "<section class= \"col-sm-6 offset-sm-3\"><br><input type=\"button\" class=\"btn btn-success\" value=\"Iniciar I/O\" onclick=\"inicio_io_invi()\" id=bi><br></section><br>\n"
                 + "<div id=ensa></div>\n"
                 + "</section></main></div>");

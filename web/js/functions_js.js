@@ -6,10 +6,11 @@
 
 function searchuser(){
                 var codigo =$('#codigo').val();
+                var motivo ="";
                 var uso="check";
                 $.ajax({
                     type: 'post',
-                    data: {uso: uso,codigo:codigo},
+                    data: {uso: uso,codigo:codigo,motivo:motivo},
                     url: '../Getfields',
                     success: function (result) {
                         $('#respuesta').html(result);
@@ -17,7 +18,21 @@ function searchuser(){
                     }
                 });
             }
-
+function searchuser1(){
+                var codigo =$('#codigo').val();
+                var motivo =$('#motivo').val();
+                var uso="check";
+                $.ajax({
+                    type: 'post',
+                    data: {uso: uso,codigo:codigo,motivo:motivo},
+                    url: '../Getfields',
+                    success: function (result) {
+                        $('#respuesta').html(result);
+                        document.getElementById("codigo").focus();
+                        //document.getElementById("proveedor").focus;
+                    }
+                });
+            }
 //
 
 function autosearch_provs(){
@@ -93,8 +108,10 @@ function searchactivo_id(){
                     url: '../Getdata_prov_personal',
                     success: function (result) {
                         $('#p_activos').html(result);
-                        var auto=document.getElementById('proveedor').value;
-                        document.getElementById('proveed').value=auto;
+                        //obtener valor del selected document.getElementById('proveedor').value;
+                        var auto=document.getElementById('proveedor');
+                        var selected=auto.options[auto.selectedIndex].text;
+                        document.getElementById('proveed').value=selected;
                         document.getElementById("proveed").focus();
                     }
                 });
@@ -121,8 +138,9 @@ function ida(){
     document.getElementById("observacion").focus();
 }
 function saltop(){
-    var auto=document.getElementById('autorizada').value;
-    document.getElementById('p_activos_n').value=auto;
+    var auto=document.getElementById('autorizada');
+    var selected=auto.options[auto.selectedIndex].text;
+    document.getElementById('p_activos_n').value=selected;
     document.getElementById('depa').focus();
 }            
 function nuevo_prov_data(){

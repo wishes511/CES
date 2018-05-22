@@ -57,9 +57,9 @@ public String buscaru(String usuario, String pass) throws ClassNotFoundException
         smt.close();
         return ids;
     }
-public ArrayList<String> buscaru_clave(int clave) throws ClassNotFoundException, SQLException {
+public ArrayList<String> buscaru_clave(int clave, String otro) throws ClassNotFoundException, SQLException {
         ArrayList<String> ids= new ArrayList<>();
-        String query = "select clave_usuario,u.nombre as 'nombre',u.clave_departamento as 'clave_departamento',empresa,a.nombre as 'area' from usuario u "
+        String query = "select clave_usuario,u.nombre as 'nombre',u.clave_departamento as 'clave_departamento',empresa,a.nombre as 'area',tu.nombre as 'tipo' from tipo_usuario tu join usuario u on u.clave_tipo=tu.clave_tipo "
                 + "join departamento p on u.clave_departamento = p.clave_departamento join area a on p.clave_area=a.clave_area where u.statuo!='0' and u.clave_usuario="+clave;
         Statement smt;
         ResultSet df;
@@ -73,6 +73,7 @@ public ArrayList<String> buscaru_clave(int clave) throws ClassNotFoundException,
             ids.add(df.getString("clave_departamento"));
             ids.add(df.getString("empresa"));
             ids.add(df.getString("area"));
+            ids.add(df.getString("tipo"));
             
         }
         df.close();

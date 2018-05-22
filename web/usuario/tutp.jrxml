@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="976de16f-5ab5-4b26-849c-f388c8d525da">
-	<property name="ireport.zoom" value="1.1000000000000025"/>
+	<property name="ireport.zoom" value="1.3310000000000033"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="f1" class="java.lang.String">
@@ -35,7 +35,7 @@
 join area a on a.clave_area=d.clave_area
 left join usuario u on m.clave_usuario =u.clave_usuario
 left join proveedor p on m.clave_proveedor=p.clave_proveedor
-where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_transporte like '%$P!{transporte}%' and m.visita like '%$P!{destino}%' and m.fecha between $P{f1} and $P{f2}
+where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_transporte like '%$P!{transporte}%' and m.visita like '%$P!{destino}%' and m.tipo_persona!='U' and m.fecha between $P{f1} and $P{f2}
  group by a.nombre
 order by a.nombre]]>
 	</queryString>
@@ -44,45 +44,45 @@ order by a.nombre]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="86" splitType="Stretch">
+		<band height="64" splitType="Stretch">
 			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
 				<reportElement x="667" y="0" width="135" height="20" uuid="ce5f28cc-0e2d-4e1b-b05a-bda79529e0a5"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="0" y="32" width="136" height="32" uuid="67d49a8b-60fc-4bf0-8a42-2565a24cc2b1"/>
+				<reportElement x="2" y="0" width="136" height="32" uuid="67d49a8b-60fc-4bf0-8a42-2565a24cc2b1"/>
 				<imageExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\EntradasSalidas\\web\\images\\AF.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="297" y="32" width="203" height="24" uuid="e47be100-3afc-416a-8b02-b9de36a0fd8f"/>
+				<reportElement x="259" y="0" width="273" height="24" uuid="e47be100-3afc-416a-8b02-b9de36a0fd8f"/>
 				<textElement>
 					<font size="14" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Reporte de Entradas y Salidas ]]></text>
+				<text><![CDATA[Reporte Detallado de Entradas y Salidas ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="416" y="56" width="84" height="24" uuid="5b7cd575-9b79-4582-8899-19d28ea0e89b"/>
+				<reportElement x="418" y="24" width="84" height="24" uuid="5b7cd575-9b79-4582-8899-19d28ea0e89b"/>
 				<textElement>
 					<font size="13" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{f2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="325" y="56" width="67" height="24" uuid="da272548-cd1d-46e0-ae12-0eb969ce896c"/>
+				<reportElement x="327" y="24" width="67" height="24" uuid="da272548-cd1d-46e0-ae12-0eb969ce896c"/>
 				<textElement>
 					<font size="13" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{f1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="392" y="56" width="24" height="24" uuid="326b966b-f424-4990-952a-02c3f875c767"/>
+				<reportElement x="394" y="24" width="24" height="24" uuid="326b966b-f424-4990-952a-02c3f875c767"/>
 				<textElement>
 					<font size="13" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ Al ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="297" y="56" width="28" height="24" uuid="d9311c41-3b1a-4ced-81e4-f517597a10dc"/>
+				<reportElement x="299" y="24" width="28" height="24" uuid="d9311c41-3b1a-4ced-81e4-f517597a10dc"/>
 				<textElement>
 					<font size="13" isBold="false"/>
 				</textElement>
@@ -90,139 +90,140 @@ order by a.nombre]]>
 			</staticText>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="4" splitType="Stretch"/>
-	</pageHeader>
 	<detail>
-		<band height="84" splitType="Stretch">
+		<band height="78" splitType="Stretch">
 			<rectangle>
-				<reportElement x="2" y="1" width="800" height="20" forecolor="#337AB7" backcolor="#337AB7" uuid="7d33338a-3a2b-4ac0-b7e9-fd702f5538af"/>
+				<reportElement x="2" y="1" width="800" height="14" forecolor="#337AB7" backcolor="#337AB7" uuid="7d33338a-3a2b-4ac0-b7e9-fd702f5538af"/>
 			</rectangle>
 			<textField>
-				<reportElement x="2" y="5" width="107" height="15" forecolor="#FFFFFF" uuid="7778e442-b9fc-4c3d-8603-e8ddc3546b38"/>
+				<reportElement x="2" y="0" width="107" height="15" forecolor="#FFFFFF" uuid="7778e442-b9fc-4c3d-8603-e8ddc3546b38"/>
 				<textElement textAlignment="Center">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{area}]]></textFieldExpression>
 			</textField>
-			<subreport>
-				<reportElement x="0" y="41" width="800" height="41" uuid="648ce1e5-0e04-4618-91d3-c0435f97b2d1"/>
-				<subreportParameter name="area">
-					<subreportParameterExpression><![CDATA[$F{area}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="tipo">
-					<subreportParameterExpression><![CDATA[$P{tipo}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="transporte">
-					<subreportParameterExpression><![CDATA[$P{transporte}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="f1">
-					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="destino">
-					<subreportParameterExpression><![CDATA[$P{destino}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="f2">
-					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="depa">
-					<subreportParameterExpression><![CDATA[$P{depa}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="nombre">
-					<subreportParameterExpression><![CDATA[$P{nombre}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "tits.jasper"]]></subreportExpression>
-			</subreport>
 			<staticText>
-				<reportElement x="0" y="21" width="50" height="20" uuid="c4ea77aa-a5e5-4416-bf74-a826b45a9596"/>
-				<textElement textAlignment="Center">
+				<reportElement x="1" y="15" width="50" height="20" uuid="c4ea77aa-a5e5-4416-bf74-a826b45a9596"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="528" y="23" width="101" height="10" uuid="cb107712-fd26-4c93-a0c4-d52875ebd19d"/>
-				<textElement textAlignment="Center">
+				<reportElement x="422" y="15" width="80" height="10" uuid="cb107712-fd26-4c93-a0c4-d52875ebd19d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[VISITA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="629" y="21" width="130" height="12" uuid="dcf151cc-2b3c-4e48-a479-24e10b16a37b"/>
+				<reportElement x="502" y="15" width="130" height="12" uuid="dcf151cc-2b3c-4e48-a479-24e10b16a37b"/>
 				<textElement textAlignment="Center">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ASUNTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="445" y="21" width="37" height="20" uuid="5568819b-5886-40ab-a492-5b4b4237f070"/>
+				<reportElement x="223" y="15" width="100" height="20" uuid="029c7e98-f06a-47fd-a726-b068b89fa5c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROCEDENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="760" y="15" width="43" height="20" uuid="e3222198-b4c7-4afd-b19c-5f0cea90e722"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[DURACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="15" width="57" height="20" uuid="3ab69a66-95b2-4388-bf7f-efd8862e81bc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="323" y="15" width="98" height="20" uuid="41bd9699-c22b-4744-a613-23082649c964"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[DEPARTAMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="51" y="15" width="115" height="20" uuid="17135dbf-4e87-44bd-82ef-f880f0bee885"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[PROVEEDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="691" y="15" width="37" height="20" uuid="5568819b-5886-40ab-a492-5b4b4237f070"/>
 				<textElement textAlignment="Center">
 					<font size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
 				<text><![CDATA[HORA ENTRADA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="238" y="21" width="109" height="20" uuid="029c7e98-f06a-47fd-a726-b068b89fa5c1"/>
-				<textElement textAlignment="Center">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[PROCEDENCIA]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="759" y="21" width="43" height="20" uuid="e3222198-b4c7-4afd-b19c-5f0cea90e722"/>
-				<textElement textAlignment="Center">
-					<font size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
-				</textElement>
-				<text><![CDATA[DURACION]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="485" y="21" width="43" height="20" uuid="9c9b508a-7598-498c-96d8-a41352a34a12"/>
+				<reportElement x="728" y="15" width="32" height="20" uuid="9c9b508a-7598-498c-96d8-a41352a34a12"/>
 				<textElement textAlignment="Center">
 					<font size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
 				<text><![CDATA[HORA SALIDA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="181" y="21" width="57" height="20" uuid="3ab69a66-95b2-4388-bf7f-efd8862e81bc"/>
+				<reportElement x="632" y="15" width="59" height="20" uuid="f815426e-a41c-4efc-8e3e-5456a339d40b"/>
 				<textElement textAlignment="Center">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[NOMBRE]]></text>
+				<text><![CDATA[TIPO TRANSPORTE]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="347" y="21" width="98" height="20" uuid="41bd9699-c22b-4744-a613-23082649c964"/>
-				<textElement textAlignment="Center">
-					<font size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
-				</textElement>
-				<text><![CDATA[DEPARTAMENTO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="50" y="21" width="131" height="20" uuid="17135dbf-4e87-44bd-82ef-f880f0bee885"/>
-				<textElement textAlignment="Center">
-					<font size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
-				</textElement>
-				<text><![CDATA[PROVEEDOR]]></text>
-			</staticText>
+			<subreport>
+				<reportElement x="2" y="35" width="800" height="43" uuid="7029a316-48ef-4832-b94b-e0226c814307"/>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="nombre">
+					<subreportParameterExpression><![CDATA[$P{nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="area">
+					<subreportParameterExpression><![CDATA[$F{area}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="depa">
+					<subreportParameterExpression><![CDATA[$P{depa}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tipo">
+					<subreportParameterExpression><![CDATA[$P{tipo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="transporte">
+					<subreportParameterExpression><![CDATA[$P{transporte}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="destino">
+					<subreportParameterExpression><![CDATA[$P{destino}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "tits.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="22" splitType="Stretch">
+		<band height="14" splitType="Stretch">
 			<textField>
-				<reportElement x="312" y="0" width="80" height="20" uuid="dbc6e16b-23d8-4f14-8275-6f339cd35882"/>
+				<reportElement x="312" y="0" width="80" height="14" uuid="dbc6e16b-23d8-4f14-8275-6f339cd35882"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="392" y="0" width="40" height="20" uuid="2f39002f-5a25-4573-92de-9f53e4acba95"/>
+				<reportElement x="392" y="0" width="40" height="14" uuid="2f39002f-5a25-4573-92de-9f53e4acba95"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="5" splitType="Stretch"/>
-	</summary>
 </jasperReport>
