@@ -54,11 +54,11 @@ order by a.nombre]]>
 				<imageExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\EntradasSalidas\\web\\images\\AF.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="259" y="0" width="273" height="24" uuid="e47be100-3afc-416a-8b02-b9de36a0fd8f"/>
+				<reportElement x="240" y="0" width="330" height="24" uuid="e47be100-3afc-416a-8b02-b9de36a0fd8f"/>
 				<textElement>
 					<font size="14" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Reporte Detallado de Entradas y Salidas ]]></text>
+				<text><![CDATA[Reporte Detallado de Entradas y Salidas Externo]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="418" y="24" width="84" height="24" uuid="5b7cd575-9b79-4582-8899-19d28ea0e89b"/>

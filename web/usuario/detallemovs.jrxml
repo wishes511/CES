@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b379cb8f-73ff-484b-9f89-28ae57495a68">
-	<property name="ireport.zoom" value="2.593742460100008"/>
+	<property name="ireport.zoom" value="2.3579476910000072"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="nombre" class="java.lang.String">
@@ -33,7 +33,8 @@ join area a on a.clave_area=d.clave_area
 left join usuario u on m.clave_usuario =u.clave_usuario
 left join proveedor p on m.clave_proveedor=p.clave_proveedor
 where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%')and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_transporte like '%$P!{transporte}%' and m.visita like '%$P!{destino}%' and m.tipo_persona!='U' and m.fecha between $P{f1} and $P{f2}
- group by a.nombre,m.tipo_persona,m.visita,d.nombre,m.fecha,m.nombre,p.nombre,u.empresa,m.hora,m.tipo_mov,m.horasalida,m.tiempo,m.observaciones,m.asunto,m.tipo_transporte]]>
+ group by a.nombre,m.tipo_persona,m.visita,d.nombre,m.fecha,m.nombre,p.nombre,u.empresa,m.hora,m.tipo_mov,m.horasalida,m.tiempo,m.observaciones,m.asunto,m.tipo_transporte
+order by hora]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="proveedor" class="java.lang.String"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b379cb8f-73ff-484b-9f89-28ae57495a68">
 	<property name="ireport.zoom" value="1.3310000000000037"/>
-	<property name="ireport.x" value="209"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="nombre" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -31,12 +31,13 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT m.nombre,isnull(p.nombre,'') as proveedor,a.nombre as 'area',d.nombre as 'depa',u.empresa as 'empresa',m.fecha,m.hora,m.tipo_mov,m.horasalida,m.tipo_mov,m.horasalida,'0'+cast((SUM(m.tiempo)/60)as varchar)+':'+cast((SUM(m.tiempo)%60) as varchar)+':00' as tiempo,m.observaciones,m.visita,m.asunto,m.tipo_transporte from movimiento m join departamento d on m.clave_departamento= d.clave_departamento
+		<![CDATA[SELECT m.nombre,isnull(p.nombre,'') as proveedor,a.nombre as 'area',d.nombre as 'depa',u.empresa as 'empresa',m.fecha,m.hora,m.tipo_mov,m.horasalida,m.tipo_mov,m.horasalida,'0'+cast((SUM(m.tiempo)/60)as varchar)+':'+cast((SUM(m.tiempo)%60) as varchar)+':00' as tiempo,m.observaciones,m.visita,m.asunto,m.tipo_transporte,replace(m.tipo_persona,'I','V')as 'tipo_persona' from movimiento m join departamento d on m.clave_departamento= d.clave_departamento
 join area a on a.clave_area=d.clave_area
 left join usuario u on m.clave_usuario =u.clave_usuario
 left join proveedor p on m.clave_proveedor=p.clave_proveedor
 where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_transporte like '%$P!{transporte}%' and m.visita like '%$P!{destino}%' and (m.tipo_persona!='U' and m.tipo_persona=$P{tipo_persona}) and m.fecha between $P{f1} and $P{f2}
- group by a.nombre,m.nombre,m.tipo_persona,m.visita,d.nombre,m.fecha,p.nombre,u.empresa,m.hora,m.tipo_mov,m.horasalida,m.tiempo,m.observaciones,m.asunto,m.tipo_transporte]]>
+ group by a.nombre,m.nombre,m.tipo_persona,m.visita,d.nombre,m.fecha,p.nombre,u.empresa,m.hora,m.tipo_mov,m.horasalida,m.tiempo,m.observaciones,m.asunto,m.tipo_transporte
+order by m.tipo_persona ASC]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="proveedor" class="java.lang.String"/>
@@ -52,6 +53,7 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 	<field name="visita" class="java.lang.String"/>
 	<field name="asunto" class="java.lang.String"/>
 	<field name="tipo_transporte" class="java.lang.String"/>
+	<field name="tipo_persona" class="java.lang.String"/>
 	<variable name="tiempo_1" class="java.lang.Integer" resetType="Column" calculation="Count">
 		<variableExpression><![CDATA[$F{tiempo}]]></variableExpression>
 	</variable>
@@ -68,7 +70,7 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 				<textFieldExpression><![CDATA[$F{tiempo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="0" width="116" height="12" uuid="f06ce451-f724-450e-bab1-72c7b0e04934"/>
+				<reportElement x="62" y="0" width="104" height="12" uuid="f06ce451-f724-450e-bab1-72c7b0e04934"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
@@ -82,7 +84,7 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 				<textFieldExpression><![CDATA[$F{depa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="50" height="12" uuid="2fb7e520-cc27-4f9f-8027-82f06f2a827a"/>
+				<reportElement x="12" y="0" width="50" height="12" uuid="2fb7e520-cc27-4f9f-8027-82f06f2a827a"/>
 				<textElement textAlignment="Center">
 					<font size="7"/>
 				</textElement>
@@ -142,6 +144,13 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipo_transporte}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="12" height="12" uuid="bb90e44f-168b-41ce-b8bb-0ac090f3f9a1"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_persona}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

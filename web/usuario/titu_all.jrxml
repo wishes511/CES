@@ -58,7 +58,7 @@ order by a.nombre]]>
 				<textElement>
 					<font size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Reporte de Entradas y Salidas por usuarios]]></text>
+				<text><![CDATA[Reporte de Entradas y Salidas de Personal]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="296" y="24" width="84" height="24" uuid="5b7cd575-9b79-4582-8899-19d28ea0e89b"/>
