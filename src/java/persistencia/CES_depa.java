@@ -52,6 +52,22 @@ public String busca_area_cod(char area) throws ClassNotFoundException, SQLExcept
         smt.close();
         return areas;
     }
+public ArrayList<String> busca_dep_pt() throws ClassNotFoundException, SQLException {  
+    ArrayList <String> arr=new ArrayList<>();
+    String query = "select clave_departamento,nombre from departamento where statuo='1' and nombre like '%ALMACEN PT%'";
+    Statement smt;
+        ResultSet df;
+        abrir();
+        smt = getConexion().createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {
+            arr.add(df.getString("clave_departamento"));
+            arr.add(df.getString("nombre"));
+        }
+        df.close();
+        smt.close();
+        return arr;
+    }
 public ArrayList<String> busca_depa_general(ArrayList<String> lista) throws ClassNotFoundException, SQLException {  
     
     String query = "select clave_departamento,nombre from departamento where statuo='1' order by nombre";
@@ -86,6 +102,22 @@ public int busca_area_depa(int claved) throws ClassNotFoundException, SQLExcepti
         smt.close();
         return clave;
     }
-
+public String busca_nombrearea(int claved) throws ClassNotFoundException, SQLException {  
+        String clave="";
+    String query = "select a.nombre as 'nombre' from departamento d join area a on d.clave_area=a.clave_area where d.statuo='1' and d.clave_departamento="+claved;
+        Statement smt;
+        ResultSet df;
+        
+        abrir();
+        smt = 
+                getConexion().createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {
+            clave=df.getString("nombre");
+        }
+        df.close();
+        smt.close();
+        return clave;
+    }
 
 }

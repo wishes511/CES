@@ -48,33 +48,33 @@ public class CES_movs extends conBD {
                         + " and m.fecha='" + m.getFecha() + "' and n_credencial='" + credencial + "'";
             }
             //System.out.println(m.getClaveAutorizado()+"-"+ m.getClaveProveedor()+"-"+m.getClaveUsuario()+" sql "+query );    
-            smt = getConexion().createStatement();
+            smt = getConexion().createStatement();// obtenemos la conexion a la bd
             rs = smt.executeQuery(query);
-            while (rs.next()) {
+            while (rs.next()) { // obtener datos de un registro encontrado
                 conta++;
                 movimiento = rs.getString("tipo");
                 folio = rs.getInt("folio");
                 hora = rs.getString("hora");
                 nombre = rs.getString("nombre");
             }// fin de busqueda del proveedor en los movimientos actuales
-            rs.close();
+            rs.close();// cerrar la consulta
             String sentenciaSQL = "";
             if (conta == 0) {// verifica si hubo registros en la consulta anterior,si no hubo insertar
                 String s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                         + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                         + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'" + m.getDirigido() + "','" + m.getAsunto() + "','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
-                retorno = "<div class=letra_entrada>Entrada:" + m.getNombre() + "</div><audio src=\"../images/ok.mp3\" autoplay></audio>";
+            retorno = "<div class=letra_entrada>Entrada:" + m.getNombre() + "</div><audio src=\"../images/ok.mp3\" autoplay></audio>";// retorno de datos, incluye el audio
 //                System.out.println(s);
                 st = getConexion().prepareStatement(s);
                 st.executeUpdate();
                 st.close();
             } else if (conta != 0) {
-                if (movimiento.equals("S")) {
+                if (movimiento.equals("S")) {// si es salida crear nuevo registro
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                             + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'" + m.getDirigido() + "','" + m.getAsunto() + "','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
                     retorno = "<div class=letra_entrada>Entrada: " + m.getNombre() + "</div><audio src=\"../images/ok.mp3\" autoplay></audio>";
-                } else {
+                } else {// actualizar registro anterior
                     sentenciaSQL = "update movimiento set horasalida='" + horas + "', tiempo=" + tiempo(hora, horas) + ",tipo_mov='S' where folio=" + folio;
                     retorno = "<div class=letra_salida>Salida: " + m.getNombre() + "<br><br> Hora de entrada: " + hora + "<br> Hora de salida: " + horas + "</div><audio src=\"../images/exit.mp3\" autoplay></audio>";
                 }
@@ -114,6 +114,27 @@ public class CES_movs extends conBD {
         }catch(Exception e){}
         return array;
     }
+        public ArrayList<String> searchlast_movmaq(ArrayList<String> arr, String fecha){
+      ArrayList<String> array= new ArrayList<>();
+        Statement smt;
+        ResultSet rs;
+        try {
+            abrir();
+            String query = "select d.clave_departamento as 'clave',m.tipo_mov as 'tipo',m.tipo_persona as tpersona "
+                    + " from departamento d join movimiento m on m.clave_departamento = d.clave_departamento where "
+                    + "d.nombre like '%ALMACEN PT%' and m.clave_usuario=" + arr.get(0) + " and m.fecha='" + fecha + "'";
+//            System.out.println("query maq"+query);    
+            smt = getConexion().createStatement();
+            rs = smt.executeQuery(query);
+            while (rs.next()) {
+               array.add(rs.getString("tipo")); 
+               array.add(rs.getString("tpersona"));
+               array.add(rs.getString("clave"));
+            }// fin de busqueda del proveedor en los movimientos actuales
+            rs.close();
+        }catch(Exception e){}
+        return array;
+    }
     
     public String nuevomov_maqp(Movimiento m, String horas, String credencial) throws ClassNotFoundException, SQLException {
         PreparedStatement st = null;
@@ -131,8 +152,8 @@ public class CES_movs extends conBD {
             abrir();
             getConexion().setAutoCommit(false);
             String query = "select d.nombre as 'nombres',m.tipo_mov as 'tipo',m.folio as 'folio', m.hora as 'hora', m.horasalida as 'salida' "
-                    + " from departamento d join movimiento m on m.clave_departamento = d.clave_departamento where m.clave_departamento=" + m.getDepartamento().getClaveDepartamento() + " and m.clave_usuario=" + m.getClaveUsuario() + " and m.fecha='" + m.getFecha() + "'";
-            //System.out.println("query nuevo_mov"+query);    
+                    + " from departamento d join movimiento m on m.clave_departamento = d.clave_departamento where m.clave_departamento=" +
+                    m.getDepartamento().getClaveDepartamento() + " and m.clave_usuario=" + m.getClaveUsuario() + " and m.fecha='" + m.getFecha() + "'";
             smt = getConexion().createStatement();
             rs = smt.executeQuery(query);
             while (rs.next()) {
@@ -145,16 +166,18 @@ public class CES_movs extends conBD {
             }// fin de busqueda del proveedor en los movimientos actuales
             rs.close();
             String sentenciaSQL = "";
-            if (conta == 0) {// verifica si hubo registros en la consulta anterior,si no hubo insertar
+            if (conta == 0) {// verifica si hubo registros en la consulta anterior,si no hubo insertara un nuevo registro
                 String s = "";
                 if (m.getTipo_usuario().equals("M")) {
                     s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
+                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas +
+                            "','" + credencial + "','',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
                 } else {
                     s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','S','" + m.getArea() + "',"
-                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','','" + credencial + "','" + horas + "',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
+                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','','" + credencial + 
+                            "','" + horas + "',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
                 }
 
                 if (m.getTipo_usuario().equals("M")) {
@@ -166,23 +189,23 @@ public class CES_movs extends conBD {
                 st.executeUpdate();
                 st.close();
             } else if (conta != 0) {
-                if (movimiento.equals("S")) {
-                    if (m.getTipo_usuario().equals("M")) {
+                if (movimiento.equals("S")) {// verifica si el tipo de movimiento es una salida
+                    if (m.getTipo_usuario().equals("M")) {// si es una maquila creara un nuevo registro como entrada
                         sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                                 + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                                 + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
-                    } else {
+                    } else {// sino actualizara el registro de la salida del personal
                         sentenciaSQL = "update movimiento set hora='" + horas + "', tiempo=" + tiempo(salida, horas) + ",tipo_mov='E' where folio=" + folio;
                     }
-                    if (m.getTipo_usuario().equals("M")) {
+                    if (m.getTipo_usuario().equals("M")) {// despliegue de menu de acuerdo al tipo de usuario
                         retorno = "<div class=letra_entrada><br><label>Area: </label><label>" + m.getArea() + "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><br><br><label><big>ENTRADA</big></label></div><audio src=\"../images/ok.mp3\" autoplay></audio>";
                     } else {
                         retorno = "<div class=letra_entrada><br><label>Area :</label><label>" + m.getArea() + "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>ENTRADA</big></label></div><audio src=\"../images/ok.mp3\" autoplay></audio>";
                     }
                 } else {
-                    if (m.getTipo_usuario().equals("M")) {
+                    if (m.getTipo_usuario().equals("M")) {// en esta condicional  tambien se verifica que tipo de usuario es y asignar la consulta adecuada
                         sentenciaSQL = "update movimiento set horasalida='" + horas + "', tiempo=" + tiempo(hora, horas) + ",tipo_mov='S' where folio=" + folio;
-                    } else {
+                    } else {// si no es maquila se inserta, ya que como es personal primero sale y luego entra
                         sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                                 + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','S','" + m.getArea() + "',"
                                 + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','','" + credencial + "','" + horas + "',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
@@ -224,7 +247,6 @@ public class CES_movs extends conBD {
         abrir();
         getConexion().setAutoCommit(false);
         String query;
-
         if (tipo_mov.equals("prov")) {
             query = "SELECT m.folio,m.clave_usuario,m.clave_proveedor,m.clave_autorizado,m.nombre,m.tipo_mov,m.area,"
                     + "m.clave_departamento,m.observaciones,m.fecha,m.hora,m.n_credencial,p.nombre as nombres from proveedor p join movimiento m "
@@ -232,8 +254,6 @@ public class CES_movs extends conBD {
         } else {
             query = "SELECT * from movimiento where fecha='" + fecha + "' and n_credencial='" + numero + "' and area ='" + area + "' and clave_proveedor =0";
         }
-
-        //System.out.println(query);
         smt = getConexion().createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {

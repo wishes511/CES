@@ -113,15 +113,15 @@ public class Getfields extends HttpServlet {
                     horas += minuto;
                 }
                 //    System.out.println(horas);
-                String n_tarjeta = String.valueOf(codigo.charAt(6)) + codigo.charAt(7);
-                CES_movs mov = new CES_movs();
+                String n_tarjeta = String.valueOf(codigo.charAt(6)) + codigo.charAt(7);// tomamos los ultimos valores del codigo
+                CES_movs mov = new CES_movs();// declaramos e instanciamos el objeto mov
                 area = depa.busca_area_cod(codigo.charAt(0));// busca el area de acuerdo al codigo
-                ArrayList<String> array;
+                ArrayList<String> array; // declaramos una lista
                 PrintWriter out = response.getWriter();
-                switch (Integer.parseInt(d4)) {
+                switch (Integer.parseInt(d4)) {// verifica los 4 digitos
                     // proveedores
                     case 9999:
-                        if (codigo.charAt(1) == '1' && codigo.charAt(7) != '0') {
+                        if (codigo.charAt(1) == '1' && codigo.charAt(7) != '0') {// verifica el segundo digito del codigo y el ultimo por la tarjeta
                             array = mov.search_lastmov(area, fechac, n_tarjeta, "prov"); //busca ultimo movimiento al uso de la tarjeta
                             select_tipo_user(n_tarjeta, array, out, mov, arr, arr_depa, prov, depa, codigo, area, "9999", horas);
                         } else {
@@ -152,51 +152,89 @@ public class Getfields extends HttpServlet {
                         break;
                     // Personal y maquiladores
                     default:
-                        String resp= "";
+                        String resp = "";
                         if (codigo.charAt(1) == '8' || codigo.charAt(1) == '3') {
                             CES u = new CES();
                             String asunto = request.getParameter("motivo").toUpperCase();
+                            String id_depa = request.getParameter("depa_cambio");
                             ArrayList<String> arru = u.buscaru_clave(Integer.parseInt(d4), "");
-//                            System.out.println("-"+asunto+"entre");
-                            if (!arru.isEmpty() && area.equals(arru.get(4))) {    
-                                ArrayList<String> arrmov=mov.searchlast_movuser(arru, fechac) ;
-                                if (!arrmov.isEmpty() && !asunto.equals("")) {
-                                    tipo_usuario_pm(arru, area, fechac, horas, out, mov,asunto);
-                                }else if(!asunto.equals("")){
-                                tipo_usuario_pm(arru, area, fechac, horas, out, mov,asunto);
-                                } else{
-                                    if(arrmov.isEmpty()){
-                                     resp="<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Asunto , Motivo </label><br>"
-                                       + "<input type=text id=motivo class=\"ln form-control\" onchange=\"searchuser1()\"><script>document.getElementById('motivo').focus();</script></section></main>";                                
-                                    }else{
-                                        int cont=0;
-                                       // System.out.println(arrmov.size()+"-"+arrmov.get(0)+"* "+arrmov.get(arrmov.size()-2));
-                                        if(arrmov.get(1).equals("M")){
-                                         //  ArrayList<String> arr=mov.searchlast_movuser(arru, fechac) ;
-                                            if(arrmov.get(arrmov.size()-2).equals("E")){
-                                                tipo_usuario_pm(arru, area, fechac, horas, out, mov,asunto);
-                                            }else resp="<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Asunto , Motivo </label><br><input type=text id=motivo class=\"ln form-control\" onchange=\"searchuser1()\"><script>document.getElementById('motivo').focus();</script></section></main>";                                
-                                        }else{
-                                            if(arrmov.get(arrmov.size()-2).equals("S")){
-                                                tipo_usuario_pm(arru, area, fechac, horas, out, mov,asunto);
-                                            }else resp="<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Asunto , Motivo </label><br><input type=text id=motivo class=\"ln form-control\" onchange=\"searchuser1()\"><script>document.getElementById('motivo').focus();</script></section></main>";                                
-                                       
+                            ArrayList<String> arr_maq = depa.busca_dep_pt();
+                            if (!arru.isEmpty() && area.equals(arru.get(4))) {// verifica si hay un ultimo registro 
+                                ArrayList<String> arrmov = new ArrayList<>();
+                                if (arru.get(5).equals("MAQUILA")) {// verifica si ese espacio en los registros que encontro es maquila
+                                    arrmov = mov.searchlast_movmaq(arru, fechac);// recupera datos del ultimo registro
+                                    if (!arrmov.isEmpty()) {// comprueba que no este vacio
+                                        // arru.set(2, arrmov.get(2));
+                                        String aux = arrmov.get(arrmov.size() - 1);
+                                        arru.set(2, aux);// modifica el arreglo de acuerdo a la posicion y el valor que lo sustituira
+                                    }
+                                } else {
+                                    arrmov = mov.searchlast_movuser(arru, fechac);// recupera datos que no sea maquilas, solo personal
+                                }
+                                if (!arrmov.isEmpty() && !asunto.equals("")) {// verificar si hay entradas o salidas y el asunto no esta vacio
+                                    tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa);
+                                } else if (!asunto.equals("")) {// si el asunto es diferente de vacio
+                                    tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa);
+                                } else {// si ninguna de las opciones anteriores entra
+                                    if (arrmov.isEmpty()) {// verificar si mi lista de ultimo moviminto esta vacia
+                                        if (codigo.charAt(1) == '8') {// verificar si es personal y despliega un menu con el campo asunto
+                                            resp = "<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Asunto , Motivo </label><br>"
+                                                    + "<input type=text id=motivo class=\"ln form-control\" onchange=\"searchuser1()\"><script>document.getElementById('motivo').focus();</script></section></main>";
+                                        } else {// si no despliega un menu con el campo asunto y el Almacen de PT
+                                            int cont = 0;
+                                            resp = "<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Departamento </label><br>"
+                                                    + "<select id=depa_maq class=form-control>";
+                                            for (int i = 0; i < arr_maq.size(); i++) {
+                                                if (cont == 1) {
+                                                    resp += "<option value=" + arr_maq.get(i - 1) + ">" + arr_maq.get(i) + "</option>";
+                                                    cont = 0;
+                                                } else {
+                                                    cont++;
+                                                }
+                                            }
+                                            resp += "</select><br><label class=\"ln\" >Asunto , Motivo </label><br><input type=text id=motivo class=\"ln form-control\" onchange=\"searchuser1()\"><script>document.getElementById('motivo').focus();</script></section></main>";
+                                        }
+                                    } else {// si ya hay registros acerca del usuario comparar para saber que tipo de accion se va a realizar
+                                        int cont = 0;
+                                        if (arrmov.get(arrmov.size() - 2).equals("M")) {// verifica si el tipo de usuario fue una maquila
+                                            //  ArrayList<String> arr=mov.searchlast_movuser(arru, fechac) ;
+                                            if (arrmov.get(arrmov.size() - 3).equals("E")) {// y si ese movimiento fue una entrada
+                                                tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa);
+                                            } else {
+                                                cont = 0;
+                                                resp = "<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Departamento </label><br>"
+                                                        + "<select id=depa_maq class=form-control>";
+                                                for (int i = 0; i < arr_maq.size(); i++) {
+                                                    if (cont == 1) {
+                                                        resp += "<option value=" + arr_maq.get(i - 1) + ">" + arr_maq.get(i) + "</option>";
+                                                        cont = 0;
+                                                    } else {
+                                                        cont++;
+                                                    }
+                                                }
+                                                resp += "</select><br><label class=\"ln\" >Asunto , Motivo </label><br><input type=text id=motivo class=\"ln form-control\" onchange=\"searchuser1()\"><script>document.getElementById('motivo').focus();</script></section></main>";
+                                            }
+                                        } else {
+                                            if (arrmov.get(arrmov.size() - 2).equals("S")) {
+                                                tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa);
+                                            } else {
+                                                resp = "<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Asunto , Motivo </label><br><input type=text id=motivo class=\"ln form-control\" onchange=\"searchuser1()\"><script>document.getElementById('motivo').focus();</script></section></main>";
+                                            }
                                         }
                                     }
-                                   //    oute.print("<label class=\"ln\" style=\"color: white\" >Motivo por salida: </label><input type=text id=\"motivo\" class=\"ln non-input\">");
                                 }
                             } else {
-                                resp="<label>No se encontro Usuario o codigo registrado</label><script>document.getElementById('codigo').value='';</script>";
+                                resp = "<label>No se encontro Usuario o codigo registrado</label><script>document.getElementById('codigo').value='';</script>";
 //                                out.print("<label>No se encontro Usuario o codigo registrado</label>");
 //                                out.print("<script>document.getElementById('codigo').value='';</script>");
                             }
                         } else {
-                            resp="<label>No se encontro Usuario o codigo registrado</label><script>document.getElementById('codigo').value='';</script>";
+                            resp = "<label>No se encontro Usuario o codigo registrado</label><script>document.getElementById('codigo').value='';</script>";
 //                            out.print("<label>No se encontro Usuario o codigo registrado</label>");
 //                            out.print("<script>document.getElementById('codigo').value='';</script>");
                         }
                         out.print(resp);
-                        resp="";
+                        resp = "";
                         break;
                 }
             } else {
@@ -220,7 +258,7 @@ public class Getfields extends HttpServlet {
         } catch (Exception e) {
             PrintWriter out = response.getWriter();
             out.print("<label>Codigo 2.3: Problemas al ingresar correctamente los datos<br>" + e + "</label>");
-            System.out.println(e);
+            Logger.getLogger(Getfields.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -240,8 +278,8 @@ public class Getfields extends HttpServlet {
         if (!array.isEmpty()) {// verifica si encontro algun registro con anterioridad en el uso de la tarjeta
             Departamento d = new Departamento();
             Movimiento m = new Movimiento();
-            for (int i = 0; i < array.size(); i++) {
-                if (i == 11 && (array.size() / 12) == 1) {// i=11
+            for (int i = 0; i < array.size(); i++) {//contara el numero total de elementos guardados
+                if (i == 11 && (array.size() / 12) == 1) {// i=11 ejecutara al tener el numero de elementos para cada fila
                     if (array.get(i - 6).equals("S")) {
                         if (cod_usuario.equals("9999")) {
                             arr = prov.buscarprov(arr);//carga de proveedores
@@ -252,9 +290,7 @@ public class Getfields extends HttpServlet {
                             invitado_fields(area, out, arr_depa);// carga menu de invitados
                         }
                     } else {
-                        // System.out.println(i+"=11"+array.size());
                         d.setClaveDepartamento(Integer.parseInt(array.get(i - 4)));
-                        //    System.out.println(i+"/"+array.get(i-11)+","+array.get(i-10)+","+array.get(i-9)+","+array.get(i-8)+","+array.get(i-7)+","+array.get(i-6)+","+array.get(i-5)+","+array.get(i-4)+","+array.get(i-3)+","+array.get(i-2)+","+array.get(i-1)+","+array.get(i));
                         m.setFolio(Integer.parseInt(array.get(i - 11)));
                         m.setClaveUsuario(Integer.parseInt(array.get(i - 10)));
                         m.setClaveProveedor(Integer.parseInt(array.get(i - 9)));
@@ -269,8 +305,8 @@ public class Getfields extends HttpServlet {
                         out.print("<label>" + mov.nuevomov(m, hora_salida, credencial) + "</label>");
                         out.print("<script>document.getElementById('codigo').value='';</script>");
                     }
-                } else if ((array.size() / 12) > 1 && i > 11) {// AQUI ME QUEDE COMPROBANDO LAS SALIDAS 
-                    int h = 12 * ((array.size() / 12) - 1);
+                } else if ((array.size() / 12) > 1 && i > 11) {// si es mas de 12 espacios
+                    int h = 12 * ((array.size() / 12) - 1); //12 x ((tamano de la lista / 12)-1) marca el inicio del ultimo renglon
                     if (array.get(h + 5).equals("E")) {
                         //System.out.println("entre a E");
                         d.setClaveDepartamento(Integer.parseInt(array.get(h + 7)));
@@ -313,10 +349,27 @@ public class Getfields extends HttpServlet {
         }
     }
 
-    public void tipo_usuario_pm(ArrayList<String> arru, String area, String fecha, String horas, PrintWriter out, CES_movs movs,String asunto) throws ClassNotFoundException, SQLException {
+    public void tipo_usuario_pm(ArrayList<String> arru, String area, String fecha, String horas, PrintWriter out, CES_movs movs, String asunto, String newdepa) throws ClassNotFoundException, SQLException {
         Movimiento m = new Movimiento();
+        CES_depa depa = new CES_depa();
         Departamento dep = new Departamento();
-        dep.setClaveDepartamento(Integer.parseInt(arru.get(2)));
+        boolean nulo = true;
+        if (newdepa != (null)) {
+            nulo = false;
+        } else {
+            dep.setClaveDepartamento(Integer.parseInt(arru.get(2)));
+        }
+        if (nulo) {
+            dep.setClaveDepartamento(Integer.parseInt(arru.get(2)));
+        } else {
+            if (newdepa.equals("")) {
+                dep.setClaveDepartamento(Integer.parseInt(arru.get(2)));
+            } else {
+                dep.setClaveDepartamento(Integer.parseInt(newdepa));
+                area = depa.busca_nombrearea(Integer.parseInt(newdepa));
+            }
+        }
+
         m.setClaveUsuario(Integer.parseInt(arru.get(0)));
         m.setClaveProveedor(0);
         m.setClaveAutorizado(0);
@@ -344,7 +397,7 @@ public class Getfields extends HttpServlet {
         }
     }
 
-    private void prov_fields(ArrayList<String> arr, ArrayList<String> arr_depa, String area, PrintWriter out) {//menu proveedor
+    private void prov_fields(ArrayList<String> arr, ArrayList<String> arr_depa, String area, PrintWriter out) {// menu proveedor
         int cont = 0;
         out.print("<div class=\" \" align=\"center\"> "
                 + "<main class=\"col-sm-12 pt-2\" >"

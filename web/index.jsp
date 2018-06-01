@@ -53,20 +53,7 @@
     <body class="" style="background-image: linear-gradient(rgb(255, 255, 255), rgb(153, 153, 255)); background-repeat: no-repeat">
         <div align="lest"><a href="http://athleticfootwear.com.mx/"><img src="images/AF.png" width="150px" height="70px" class="img-responsive"/></a></div>
         <br>
-
         <div align="center">
-            <%      if (usuario != null && tipos != null && tipos.equals("INTERMEDIO")) {
-                    out.println("<div class=container-fluid align=left> ");
-                    out.println("<div class=row>");
-                    out.println("<form action=capturador/index.jsp> ");
-                    out.println("<label>Conectado como:</label>");
-                    out.println("<input type=submit value=" + usuario + " class=btn btn-default>");
-                    out.println("</form>");
-                    out.println("</div>");
-                    out.println("</div>");
-                } else {
-                }
-            %>
             <div class="container-fluid" align="center">
                 <div class="container espacio-md-up espacio-md-down" >
                     <div class="row" >

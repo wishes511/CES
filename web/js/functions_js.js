@@ -7,10 +7,11 @@
 function searchuser(){
                 var codigo =$('#codigo').val();
                 var motivo ="";
+                var depa="";
                 var uso="check";
                 $.ajax({
                     type: 'post',
-                    data: {uso: uso,codigo:codigo,motivo:motivo},
+                    data: {uso: uso,codigo:codigo,motivo:motivo,depa_cambio:depa},
                     url: '../Getfields',
                     success: function (result) {
                         $('#respuesta').html(result);
@@ -21,10 +22,11 @@ function searchuser(){
 function searchuser1(){
                 var codigo =$('#codigo').val();
                 var motivo =$('#motivo').val();
+                var depa =$('#depa_maq').val();
                 var uso="check";
                 $.ajax({
                     type: 'post',
-                    data: {uso: uso,codigo:codigo,motivo:motivo},
+                    data: {uso: uso,codigo:codigo,motivo:motivo,depa_cambio:depa},
                     url: '../Getfields',
                     success: function (result) {
                         $('#respuesta').html(result);

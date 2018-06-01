@@ -93,7 +93,7 @@ public class Movimientos extends HttpServlet {
            // System.out.println(uso);
             CES_movs bd = new CES_movs();
             if (uso.equals("proveedor")) {// solo acciones que convienen al proveedor
-                String codigo = request.getParameter("codigo");
+                String codigo = request.getParameter("codigo");// obtenemos la informaciond e cada uno de los campos
                 String numero = String.valueOf(codigo.charAt(6)) + codigo.charAt(7);
                 String prov = request.getParameter("prov");
                 String prov_activo = request.getParameter("autorizada").toUpperCase();
@@ -102,27 +102,24 @@ public class Movimientos extends HttpServlet {
                 String obs = request.getParameter("observacion").toUpperCase();
                 String asunto = request.getParameter("asunto").toUpperCase();
                 String transporte = request.getParameter("transporte");
-
                 CES_provact bda = new CES_provact();
                 CES_prov provs = new CES_prov();
                 CES_provact prov_p = new CES_provact();
-               // System.out.println(asunto);
-                int clave_prov = provs.buscarprov_id(prov);
+                int clave_prov = provs.buscarprov_id(prov);// buscamos el id del proveedor seleccionado
                 int clave_autorizado = 0;
-                if (clave_prov != 0) {
+                if (clave_prov != 0) {// si existe
                     clave_autorizado = bda.buscarprov_act_caseta(prov_activo, clave_prov);// busca si existe el nombre respecto al proveedor
-                    if (clave_autorizado == 0) {// si no existe, lo crea
+                    if (clave_autorizado == 0) {// si no existe, lo crea pero el personal del proveedor
                         clave_autorizado = bda.nuevoprov_autorizado_caseta(prov_activo, clave_prov);
                     }
-                } else {
-                    provs.nuevoprov(prov);
-                    clave_prov = provs.buscarprov_id(prov);
-                    prov_p.nuevoprov_autorizado(prov_activo, clave_prov);
-                    clave_autorizado = bda.buscarprov_act_caseta(prov_activo, clave_prov);
+                } else {// si no existe
+                    provs.nuevoprov(prov); // crea el nuevo proveedor
+                    clave_prov = provs.buscarprov_id(prov);// y obtenemos su id
+                    prov_p.nuevoprov_autorizado(prov_activo, clave_prov);// por consecuente tambien un nuevo personal
+                    clave_autorizado = bda.buscarprov_act_caseta(prov_activo, clave_prov);// obtenermos el id del personal del prov.
                 }
-
                 Movimiento m = new Movimiento(); // establecer obejeto para pasar datos a la consulta de la bd
-                Departamento d = new Departamento();
+                Departamento d = new Departamento();// de aqui en adelante introducimos informacion al objeto para despues pasarlo a la BD
                 d.setClaveDepartamento(Integer.parseInt(depa));
                 m.setClaveUsuario(0);
                 m.setClaveProveedor(clave_prov);
