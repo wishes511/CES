@@ -8,6 +8,9 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
     String tipo = "";
+    try{
+    
+    
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -124,3 +127,6 @@
         </footer>
     </body>
 </html>
+<%
+}catch(Exception e){}
+%>
