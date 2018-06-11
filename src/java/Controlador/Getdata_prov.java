@@ -129,7 +129,8 @@ public class Getdata_prov extends HttpServlet {
             
         }else if(uso.equals("nuevo")){// despliega interfaz de un nuevo prov
             PrintWriter out = response.getWriter();
-            out.print("<div align=center class=container-fluid><div class=col-sm   align=center><input type=text class=form-control id=prov_new1 placeholder=\"Nombre del Proveedor\" onchange=nuevo_prov()><br><button class=btn btn-success onclick=nuevo_prov()>Ingresar Nuevo Proveedor</button><br><div id=response_nprov></div></div></div>");
+            out.print("<div align=center class=container-fluid><div class=col-sm   align=center><input type=text class=form-control id=prov_new1 "
+                    + "placeholder=\"Nombre del Proveedor\" onchange=nuevo_prov()><br><button class=btn btn-success onclick=nuevo_prov()>Ingresar Nuevo Proveedor</button><br><div id=response_nprov></div></div></div>");
         }else if(uso.equals("nuevo_row")){
             String name_prov=request.getParameter("prov").toUpperCase();
             CES_prov prov = new CES_prov();            
