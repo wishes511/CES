@@ -67,7 +67,7 @@ public class Getdata_user extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        HttpSession objSesion = request.getSession(true);
+        HttpSession objSesion = request.getSession(false);
         try {
             String usuario = (String) objSesion.getAttribute("usuario");
         String tipos = (String) objSesion.getAttribute("tipo");
