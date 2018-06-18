@@ -198,4 +198,44 @@ order by a.nombre]]>
 			</textField>
 		</band>
 	</pageFooter>
+	<summary>
+		<band height="59">
+			<subreport>
+				<reportElement x="0" y="30" width="555" height="28" uuid="909eace0-c5cf-4c5b-9b47-32a24676c42c"/>
+				<subreportParameter name="area">
+					<subreportParameterExpression><![CDATA[$P{area}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tipo">
+					<subreportParameterExpression><![CDATA[$P{tipo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="transporte">
+					<subreportParameterExpression><![CDATA[$P{transporte}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="destino">
+					<subreportParameterExpression><![CDATA[$P{destino}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="depa">
+					<subreportParameterExpression><![CDATA[$P{depa}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="nombre">
+					<subreportParameterExpression><![CDATA[$P{nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detallesummary.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="237" y="10" width="100" height="20" uuid="59525397-27ff-4014-bcb7-e79a9878df82"/>
+				<text><![CDATA[Personal sin Entrada]]></text>
+			</staticText>
+		</band>
+	</summary>
 </jasperReport>

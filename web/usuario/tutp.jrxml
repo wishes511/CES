@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="976de16f-5ab5-4b26-849c-f388c8d525da">
-	<property name="ireport.zoom" value="1.3310000000000033"/>
+	<property name="ireport.zoom" value="1.2100000000000029"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="f1" class="java.lang.String">
@@ -226,4 +226,41 @@ order by a.nombre]]>
 			</textField>
 		</band>
 	</pageFooter>
+	<summary>
+		<band height="63">
+			<subreport>
+				<reportElement x="0" y="36" width="802" height="26" uuid="ba5155aa-3c86-4535-b465-43ef77e6169d"/>
+				<subreportParameter name="nombre">
+					<subreportParameterExpression><![CDATA[$P{nombre}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="area">
+					<subreportParameterExpression><![CDATA[$P{area}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tipo">
+					<subreportParameterExpression><![CDATA[$P{tipo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="depa">
+					<subreportParameterExpression><![CDATA[$P{depa}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="transporte">
+					<subreportParameterExpression><![CDATA[$P{transporte}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="destino">
+					<subreportParameterExpression><![CDATA[$P{destino}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detallado_summary.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="276" y="16" width="226" height="20" uuid="0efd6eca-f83b-4e93-8f28-8cb679b87698"/>
+				<text><![CDATA[Usuarios que no entregaron su pase de salida]]></text>
+			</staticText>
+		</band>
+	</summary>
 </jasperReport>
