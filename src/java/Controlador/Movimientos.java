@@ -173,9 +173,10 @@ public class Movimientos extends HttpServlet {
                 String tipo = request.getParameter("tipo");
                 String transporte = request.getParameter("transporte");
                 String destino = request.getParameter("destino");
+                String nombre_empresa = request.getParameter("empresa");
                 PrintWriter out = response.getWriter();
                 ArrayList<String> arr = new ArrayList<>();
-                arr = mov.search_movs(f1, f2, nombre, area, depa, tipo,transporte,destino);// carga los movimientos de acuerdo a los filtros y los guarda en una lista
+                arr = mov.search_movs(f1, f2, nombre, area, depa, tipo,transporte,destino,nombre_empresa);// carga los movimientos de acuerdo a los filtros y los guarda en una lista
                 int cont = 0;
                 String a = "";
                 out.print("<tr></tr>");

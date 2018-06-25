@@ -174,10 +174,11 @@ function ver_regs(){
                 var tipo= $('#mov').val();
                 var transporte=$('#transporte').val();
                 var destino=$('#destino').val();
+                var empresa=$('#empresa').val();
                 var uso="report";
                $.ajax({
                     type: 'post',
-                    data: {uso: uso,f1:f1,f2:f2,nombre:nombre,area:area,depa:dep,tipo:tipo,transporte:transporte,destino:destino},
+                    data: {uso: uso,f1:f1,f2:f2,nombre:nombre,area:area,depa:dep,tipo:tipo,transporte:transporte,destino:destino,empresa:empresa},
                     url: '../Movimientos',
                     success: function (result) {
                         $('#body_table').html(result);

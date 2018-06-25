@@ -278,7 +278,7 @@ public class CES_movs extends conBD {
         return list;
     }
 
-    public ArrayList<String> search_movs(String f1, String f2, String nombre, String narea, String ndepa, String mov, String transporte, String destino) throws ClassNotFoundException, SQLException {
+    public ArrayList<String> search_movs(String f1, String f2, String nombre, String narea, String ndepa, String mov, String transporte, String destino,String empresa) throws ClassNotFoundException, SQLException {
         ArrayList<String> list = new ArrayList<>();
         Statement smt;
         ResultSet rs;
@@ -289,7 +289,7 @@ public class CES_movs extends conBD {
                 + "left join usuario u on m.clave_usuario =u.clave_usuario\n"
                 + "left join proveedor p on m.clave_proveedor=p.clave_proveedor\n"
                 + "where (m.nombre like '%" + nombre + "%' or p.nombre like '%" + nombre + "%') and m.visita like '%" + destino + "%' and m.tipo_transporte like '%" + transporte + "%' and m.area like '%" + narea + "%' and d.nombre like '%" + ndepa + "%' and m.tipo_mov like '%"
-                + mov + "%' and m.fecha between '" + f1 + "' and '" + f2 + "' group by a.nombre,m.tipo_persona,m.visita,d.nombre,m.fecha,m.nombre,p.nombre,u.empresa,m.hora,m.tipo_mov,m.horasalida,m.tiempo,m.observaciones,tipo_transporte";
+                + mov + "%' and m.nombre_empresa like '%"+empresa+"%' and m.fecha between '" + f1 + "' and '" + f2 + "' group by a.nombre,m.tipo_persona,m.visita,d.nombre,m.fecha,m.nombre,p.nombre,u.empresa,m.hora,m.tipo_mov,m.horasalida,m.tiempo,m.observaciones,tipo_transporte";
         smt = getConexion().createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -304,7 +304,6 @@ public class CES_movs extends conBD {
             list.add(rs.getString("tiempo"));
             list.add(rs.getString("observacion"));
             list.add(rs.getString("visita"));
-
         }// fin de busqueda 
         rs.close();
         return list;
