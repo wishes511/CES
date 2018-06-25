@@ -67,8 +67,7 @@ public class Movimientos extends HttpServlet {
 
         HttpSession objSesion = request.getSession(true);
         try {
-            String usuario = (String) objSesion.getAttribute("usuario");
-            String tipos = (String) objSesion.getAttribute("tipo");
+            String empresa = (String) objSesion.getAttribute("empresa");
             Calendar fecha = Calendar.getInstance(); //intanciar informacion del calendiario respecto al sistema
             int año = fecha.get(Calendar.YEAR);
             int mes = fecha.get(Calendar.MONTH) + 1;
@@ -134,7 +133,7 @@ public class Movimientos extends HttpServlet {
                 m.setTipo_transporte(transporte);
                 m.setTipo_usuario("P");
                 PrintWriter out = response.getWriter();// instanciar objeto para escribir y responder hacia una pagina            
-                out.print("<label>" + bd.nuevomov(m, horas, numero) + "</label>");// regreso <label>Entrada: o SALIDA</label> a las funciones de javascript 
+                out.print("<label>" + bd.nuevomov(m, horas, numero,empresa) + "</label>");// regreso <label>Entrada: o SALIDA</label> a las funciones de javascript 
             } else if (uso.equals("invitado")) {// acciones que solo conciernen al invitado
                 String codigo = request.getParameter("codigo");
                 String numero = String.valueOf(codigo.charAt(6)) + codigo.charAt(7);
@@ -161,7 +160,7 @@ public class Movimientos extends HttpServlet {
                 m.setAsunto(asunto);
                 m.setTipo_transporte(transporte);
                 m.setTipo_usuario("I");
-                out.print("<label>" + bd.nuevomov(m, horas, numero) + "</label>");// respuesta hacia la pagina del usuario
+                out.print("<label>" + bd.nuevomov(m, horas, numero,empresa) + "</label>");// respuesta hacia la pagina del usuario
             }
             if (uso.equals("report")) {// {uso: uso,f1:f1,f2:f2,nombre:nombre,area:area,depa:dep,tipo:tipo}
                 //Recordar que es la tabla que se cargara al filtrar los datos deseados  

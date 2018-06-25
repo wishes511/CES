@@ -5,6 +5,7 @@
  */
 package persistencia;
 
+import Modelo.Movimiento;
 import Modelo.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -41,9 +42,10 @@ public ArrayList<String> buscar_tipo_u(ArrayList<String> arr) throws ClassNotFou
         return arr;
     }
     // Busquedas--------------
-public String buscaru(String usuario, String pass) throws ClassNotFoundException, SQLException {
-        String ids="n";
-        String query = "select t.nombre from usuario u join tipo_usuario t on u.clave_tipo=t.clave_tipo where u.nombre ='"+usuario+"' and pass='"+pass+"'";
+        public Movimiento buscaru(String usuario, String pass) throws ClassNotFoundException, SQLException {
+        Movimiento m = new Movimiento();
+        m.setTipo_usuario("n");
+        String query = "select t.nombre,u.empresa from usuario u join tipo_usuario t on u.clave_tipo=t.clave_tipo where statuo='1' and u.nombre ='"+usuario+"' and pass='"+pass+"'";
         Statement smt;
         ResultSet df;
         abrir();
@@ -51,11 +53,12 @@ public String buscaru(String usuario, String pass) throws ClassNotFoundException
         smt = conect.createStatement();
         df = smt.executeQuery(query);
         while (df.next()) {
-            ids=df.getString("nombre");
+            m.setTipo_usuario(df.getString("nombre"));
+            m.setNombre_empresa(df.getString("empresa"));
         }
         df.close();
         smt.close();
-        return ids;
+        return m;
     }
 public ArrayList<String> buscaru_clave(int clave, String otro) throws ClassNotFoundException, SQLException {
         ArrayList<String> ids= new ArrayList<>();

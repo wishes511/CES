@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import persistencia.CES;
 import persistencia.CES_depa;
 import persistencia.CES_movs;
@@ -73,9 +74,11 @@ public class Getfields extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
+        HttpSession objSesion = request.getSession(false);
+        String empresa = (String) objSesion.getAttribute("empresa");
         String codigo = request.getParameter("codigo");
         String uso = request.getParameter("uso");
+        
         ArrayList<String> arr = new ArrayList<>();
         ArrayList<String> arr_depa = new ArrayList<>();
         CES_prov prov = new CES_prov();
@@ -123,7 +126,7 @@ public class Getfields extends HttpServlet {
                     case 9999:
                         if (codigo.charAt(1) == '1' && codigo.charAt(7) != '0') {// verifica el segundo digito del codigo y el ultimo por la tarjeta
                             array = mov.search_lastmov(area, fechac, n_tarjeta, "prov"); //busca ultimo movimiento al uso de la tarjeta
-                            select_tipo_user(n_tarjeta, array, out, mov, arr, arr_depa, prov, depa, codigo, area, "9999", horas);
+                            select_tipo_user(n_tarjeta, array, out, mov, arr, arr_depa, prov, depa, codigo, area, "9999", horas,empresa);
                         } else {
                             out.print("<label>Error en el codigo asignado intentelo de nuevo</label>");
                             out.print("<script>document.getElementById('codigo').value='';</script>");
@@ -133,7 +136,7 @@ public class Getfields extends HttpServlet {
                     case 9998:
                         if (codigo.charAt(0) == '6' && codigo.charAt(1) == '6' && codigo.charAt(7) != '0') {
                             array = mov.search_lastmov(area, fechac, n_tarjeta, "invitado"); //busca ultimo movimiento al uso de la tarjeta
-                            select_tipo_user(n_tarjeta, array, out, mov, arr, arr_depa, prov, depa, codigo, area, "9997", horas);
+                            select_tipo_user(n_tarjeta, array, out, mov, arr, arr_depa, prov, depa, codigo, area, "9997", horas,empresa);
                         } else {
                             out.print("<label>Error en el codigo asignado, intentelo de nuevo</label>");
                             out.print("<script>document.getElementById('codigo').value='';</script>");
@@ -144,7 +147,7 @@ public class Getfields extends HttpServlet {
                         // invitado_fields(area,out,depa);
                         if (codigo.charAt(1) == '7' && codigo.charAt(7) != '0' && codigo.charAt(1) != '6') {
                             array = mov.search_lastmov(area, fechac, n_tarjeta, "invitado"); //busca ultimo movimiento al uso de la tarjeta
-                            select_tipo_user(n_tarjeta, array, out, mov, arr, arr_depa, prov, depa, codigo, area, "9997", horas);
+                            select_tipo_user(n_tarjeta, array, out, mov, arr, arr_depa, prov, depa, codigo, area, "9997", horas,empresa);
                         } else {
                             out.print("<label>Error rn el codigo asignado intentelo de nuevo</label>");
                             out.print("<script>document.getElementById('codigo').value='';</script>");
@@ -172,9 +175,9 @@ public class Getfields extends HttpServlet {
                                     arrmov = mov.searchlast_movuser(arru, fechac);// recupera datos que no sea maquilas, solo personal
                                 }
                                 if (!arrmov.isEmpty() && !asunto.equals("")) {// verificar si hay entradas o salidas y el asunto no esta vacio
-                                    tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa);
+                                    tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa,empresa);
                                 } else if (!asunto.equals("")) {// si el asunto es diferente de vacio
-                                    tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa);
+                                    tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa,empresa);
                                 } else {// si ninguna de las opciones anteriores entra
                                     if (arrmov.isEmpty()) {// verificar si mi lista de ultimo moviminto esta vacia
                                         if (codigo.charAt(1) == '8') {// verificar si es personal y despliega un menu con el campo asunto
@@ -199,7 +202,7 @@ public class Getfields extends HttpServlet {
                                         if (arrmov.get(arrmov.size() - 2).equals("M")) {// verifica si el tipo de usuario fue una maquila
                                             //  ArrayList<String> arr=mov.searchlast_movuser(arru, fechac) ;
                                             if (arrmov.get(arrmov.size() - 3).equals("E")) {// y si ese movimiento fue una entrada
-                                                tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa);
+                                                tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa,empresa);
                                             } else {
                                                 cont = 0;
                                                 resp = "<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Departamento </label><br>"
@@ -216,7 +219,7 @@ public class Getfields extends HttpServlet {
                                             }
                                         } else {
                                             if (arrmov.get(arrmov.size() - 2).equals("S")) {
-                                                tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa);
+                                                tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa,empresa);
                                             } else {
                                                 resp = "<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Asunto , Motivo </label><br><input type=text id=motivo class=\"ln form-control\" onchange=\"searchuser1()\"><script>document.getElementById('motivo').focus();</script></section></main>";
                                             }
@@ -273,7 +276,7 @@ public class Getfields extends HttpServlet {
     }// </editor-fold>
 
     private void select_tipo_user(String n_tarjeta, ArrayList<String> array, PrintWriter out, CES_movs mov, ArrayList<String> arr,
-            ArrayList<String> arr_depa, CES_prov prov, CES_depa depa, String codigo, String area, String cod_usuario, String hora_salida) throws ClassNotFoundException, SQLException {
+            ArrayList<String> arr_depa, CES_prov prov, CES_depa depa, String codigo, String area, String cod_usuario, String hora_salida,String empresa) throws ClassNotFoundException, SQLException {
         //System.out.println(array.size());
         if (!array.isEmpty()) {// verifica si encontro algun registro con anterioridad en el uso de la tarjeta
             Departamento d = new Departamento();
@@ -302,7 +305,7 @@ public class Getfields extends HttpServlet {
                         m.setObservaciones(array.get(i - 3));
                         m.setFecha(array.get(i - 2));
                         String credencial = array.get(i);
-                        out.print("<label>" + mov.nuevomov(m, hora_salida, credencial) + "</label>");
+                        out.print("<label>" + mov.nuevomov(m, hora_salida, credencial,empresa) + "</label>");
                         out.print("<script>document.getElementById('codigo').value='';</script>");
                     }
                 } else if ((array.size() / 12) > 1 && i > 11) {// si es mas de 12 espacios
@@ -321,7 +324,7 @@ public class Getfields extends HttpServlet {
                         m.setObservaciones(array.get(h + 8));
                         m.setFecha(array.get(h + 9));
                         String credencial = array.get(h + 11);
-                        out.print("<label>" + mov.nuevomov(m, hora_salida, credencial) + "</label>"); //nuevasalida
+                        out.print("<label>" + mov.nuevomov(m, hora_salida, credencial,empresa) + "</label>"); //nuevasalida
                         out.print("<script>document.getElementById('codigo').value='';</script>");
                     } else {
                         if (cod_usuario.equals("9999")) {
@@ -349,7 +352,7 @@ public class Getfields extends HttpServlet {
         }
     }
 
-    public void tipo_usuario_pm(ArrayList<String> arru, String area, String fecha, String horas, PrintWriter out, CES_movs movs, String asunto, String newdepa) throws ClassNotFoundException, SQLException {
+    public void tipo_usuario_pm(ArrayList<String> arru, String area, String fecha, String horas, PrintWriter out, CES_movs movs, String asunto, String newdepa,String empresa) throws ClassNotFoundException, SQLException {
         Movimiento m = new Movimiento();
         CES_depa depa = new CES_depa();
         Departamento dep = new Departamento();
@@ -369,7 +372,6 @@ public class Getfields extends HttpServlet {
                 area = depa.busca_nombrearea(Integer.parseInt(newdepa));
             }
         }
-
         m.setClaveUsuario(Integer.parseInt(arru.get(0)));
         m.setClaveProveedor(0);
         m.setClaveAutorizado(0);
@@ -392,7 +394,7 @@ public class Getfields extends HttpServlet {
             out.print("<label>Algun campo esta vacio,no se puede continuar</label>");
             out.print("<script>document.getElementById('codigo').value='';</script>");
         } else {
-            out.print("<div>" + movs.nuevomov_maqp(m, horas, credencial) + "</div>");
+            out.print("<div>" + movs.nuevomov_maqp(m, horas, credencial,empresa) + "</div>");
             out.print("<script>document.getElementById('codigo').value='';</script>");
         }
     }

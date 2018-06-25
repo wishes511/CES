@@ -5,6 +5,7 @@
  */
 package Controlador;
 
+import Modelo.Movimiento;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -81,7 +82,6 @@ public class Validar extends HttpServlet {
         try {
             String nombre = request.getParameter("usu");
             String contrasena = request.getParameter("pass");
-            //System.out.println("," + nombre + "," + contrasena + ",");
             boolean flag = false;
             int interv = 180;
             PrintWriter out = response.getWriter();
@@ -104,28 +104,31 @@ public class Validar extends HttpServlet {
                     out.println("</script>");
                 } else {
                     // Definir variable de referencia a un objeto de tipo Usuario
-                    String tipo = "";
+                    //String tipo = "";
+                    Movimiento m = new Movimiento();
                     // Consultar Base de datos
-                    tipo = a.buscaru(nombre, contrasena);// busca elusuario con los datos proporcionados y guarda el tipo de usuario en 'tipo'
-                    if (tipo.equals("n")) {// si no encontro nada
+                    m = a.buscaru(nombre, contrasena);// busca elusuario con los datos proporcionados y guarda el tipo de usuario en 'tipo'
+                    if (m.getTipo_usuario().equals("n")) {// si no encontro nada
                         out.println("<script type=\"text/javascript\">");
                         out.println("alert('Usuario o contrasena incorrectos');");
                         out.println("location='index.jsp';");
                         out.println("</script>");
                     } else {
-                        switch (tipo) {
+                        switch (m.getTipo_usuario()) {
                             //usuario administrador
                             case "ADMIN":
                                 objSesion.setMaxInactiveInterval(interv + 10000);
                                 objSesion.setAttribute("usuario", nombre);
-                                objSesion.setAttribute("tipo", tipo);
+                                objSesion.setAttribute("tipo", m.getTipo_usuario());
+                                objSesion.setAttribute("empresa", m.getNombre_empresa());
                                 response.sendRedirect("usuario/index.jsp");
                                 break;
                             case "USUARIO":
                                 //usuario normal
-                                objSesion.setMaxInactiveInterval(interv + 1000);
+                                objSesion.setMaxInactiveInterval(interv + 10000);
                                 objSesion.setAttribute("usuario", nombre);
-                                objSesion.setAttribute("tipo", tipo);
+                                objSesion.setAttribute("tipo", m.getTipo_usuario());
+                                objSesion.setAttribute("empresa", m.getNombre_empresa());
                                 response.sendRedirect("usuario/index.jsp");
                                 break;
                             case "ADMINPROV":
@@ -138,7 +141,8 @@ public class Validar extends HttpServlet {
                                 //posible usuario para inicio de la pagina
                                 objSesion.setMaxInactiveInterval(interv + 15000);
                                 objSesion.setAttribute("usuario", nombre);
-                                objSesion.setAttribute("tipo", tipo);
+                                objSesion.setAttribute("tipo", m.getTipo_usuario());
+                                objSesion.setAttribute("empresa", m.getNombre_empresa());
                                 response.sendRedirect("usuario/index.jsp");
                                 break;    
                             default:// si lo que encontro es diferente a lo antes descrito manda un msj y lo regresa a ala pagina de inicio

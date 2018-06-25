@@ -9,6 +9,7 @@
     String usuario = (String) objSesion.getAttribute("usuario");
     try {
         String tipos = (String) objSesion.getAttribute("tipo");
+        String empresa = (String) objSesion.getAttribute("empresa");
         String ids = String.valueOf(objSesion.getAttribute("i_d"));
         if(tipos.equals("USUARIO") ){
             response.sendRedirect("reportes.jsp");

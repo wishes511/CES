@@ -25,6 +25,15 @@ public class Movimiento  implements java.io.Serializable {
      private String asunto;
      private String tipo_transporte;
      private String tipo_usuario;
+     private String nombre_empresa;
+
+    public String getNombre_empresa() {
+        return this.nombre_empresa;
+    }
+
+    public void setNombre_empresa(String nombre_empresa) {
+        this.nombre_empresa = nombre_empresa;
+    }
 
     public String getTipo_transporte() {
         return this.tipo_transporte;

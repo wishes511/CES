@@ -24,7 +24,7 @@ public class CES_movs extends conBD {
     // Busquedas--------------
 // Fin busquedas
     //insercion de datos a la bd
-    public String nuevomov(Movimiento m, String horas, String credencial) throws ClassNotFoundException, SQLException {
+    public String nuevomov(Movimiento m, String horas, String credencial,String empresa) throws ClassNotFoundException, SQLException {
         PreparedStatement st = null;
         Statement smt;
         ResultSet rs;
@@ -62,7 +62,8 @@ public class CES_movs extends conBD {
             if (conta == 0) {// verifica si hubo registros en la consulta anterior,si no hubo insertar
                 String s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                         + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'" + m.getDirigido() + "','" + m.getAsunto() + "','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
+                        + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" +
+                        credencial + "','',0,'" + m.getDirigido() + "','" + m.getAsunto() + "','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "','"+empresa+"')";
             retorno = "<div class=letra_entrada>Entrada:" + m.getNombre() + "</div><audio src=\"../images/ok.mp3\" autoplay></audio>";// retorno de datos, incluye el audio
 //                System.out.println(s);
                 st = getConexion().prepareStatement(s);
@@ -72,7 +73,8 @@ public class CES_movs extends conBD {
                 if (movimiento.equals("S")) {// si es salida crear nuevo registro
                     sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'" + m.getDirigido() + "','" + m.getAsunto() + "','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
+                            + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" +
+                            credencial + "','',0,'" + m.getDirigido() + "','" + m.getAsunto() + "','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "','"+empresa+"')";
                     retorno = "<div class=letra_entrada>Entrada: " + m.getNombre() + "</div><audio src=\"../images/ok.mp3\" autoplay></audio>";
                 } else {// actualizar registro anterior
                     sentenciaSQL = "update movimiento set horasalida='" + horas + "', tiempo=" + tiempo(hora, horas) + ",tipo_mov='S' where folio=" + folio;
@@ -114,7 +116,7 @@ public class CES_movs extends conBD {
         }catch(Exception e){}
         return array;
     }
-        public ArrayList<String> searchlast_movmaq(ArrayList<String> arr, String fecha){
+    public ArrayList<String> searchlast_movmaq(ArrayList<String> arr, String fecha){
       ArrayList<String> array= new ArrayList<>();
         Statement smt;
         ResultSet rs;
@@ -136,7 +138,7 @@ public class CES_movs extends conBD {
         return array;
     }
     
-    public String nuevomov_maqp(Movimiento m, String horas, String credencial) throws ClassNotFoundException, SQLException {
+    public String nuevomov_maqp(Movimiento m, String horas, String credencial,String empresa) throws ClassNotFoundException, SQLException {
         PreparedStatement st = null;
         Statement smt;
         ResultSet rs;
@@ -172,12 +174,12 @@ public class CES_movs extends conBD {
                     s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                             + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas +
-                            "','" + credencial + "','',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
+                            "','" + credencial + "','',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "','"+empresa+"')";
                 } else {
                     s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','S','" + m.getArea() + "',"
                             + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','','" + credencial + 
-                            "','" + horas + "',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
+                            "','" + horas + "',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "','"+empresa+"')";
                 }
 
                 if (m.getTipo_usuario().equals("M")) {
@@ -193,7 +195,8 @@ public class CES_movs extends conBD {
                     if (m.getTipo_usuario().equals("M")) {// si es una maquila creara un nuevo registro como entrada
                         sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                                 + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
-                                + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" + credencial + "','',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
+                                + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" +
+                                credencial + "','',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "','"+empresa+"')";
                     } else {// sino actualizara el registro de la salida del personal
                         sentenciaSQL = "update movimiento set hora='" + horas + "', tiempo=" + tiempo(salida, horas) + ",tipo_mov='E' where folio=" + folio;
                     }
@@ -208,7 +211,8 @@ public class CES_movs extends conBD {
                     } else {// si no es maquila se inserta, ya que como es personal primero sale y luego entra
                         sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                                 + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','S','" + m.getArea() + "',"
-                                + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','','" + credencial + "','" + horas + "',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "')";
+                                + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','','" +
+                                credencial + "','" + horas + "',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "','"+empresa+"')";
                     }
                     if (m.getTipo_usuario().equals("M")) {
                         retorno = "<div class=letra_salida><br><label>Area: </label><label>" + m.getArea() + "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Departamento:&nbsp" + nombre + "</label><br><br><label><big>SALIDA</big><br> Hora de entrada: " + hora + "<br> Hora de salida: " + horas + "</label></div><audio src=\"../images/exit.mp3\" autoplay></audio>";
