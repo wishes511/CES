@@ -8,6 +8,7 @@
     boolean estado;
     String usuario = (String) objSesion.getAttribute("usuario");
     try {
+
         String tipos = (String) objSesion.getAttribute("tipo");
         String empresa = (String) objSesion.getAttribute("empresa");
         String ids = String.valueOf(objSesion.getAttribute("i_d"));

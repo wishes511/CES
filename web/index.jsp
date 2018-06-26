@@ -3,12 +3,25 @@
     Author     : mich
 --%>
 <%
-    HttpSession objSesion = request.getSession(false);
-    String usuario = (String) objSesion.getAttribute("usuario");
-    String tipos = (String) objSesion.getAttribute("tipo");
-    String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    String tipo = "";
-    try{        
+   
+    try{ 
+        HttpSession objSesion = request.getSession(false);
+if(request.getCookies()!=null){
+        Cookie [] saves= request.getCookies();
+        for(int i =0;i<saves.length;i++){
+            if(saves[i].getName().equals("empresa")){
+                out.println(saves[i].getValue()+" "+i);                
+                objSesion.setAttribute("empresa", saves[i].getValue());
+                response.sendRedirect("usuario/index.jsp");
+            }else if(saves[i].getName().equals("tipo")){
+             out.println(saves[i].getValue()+" "+i);                
+                objSesion.setAttribute("tipo", saves[i].getValue());
+            }else if(saves[i].getName().equals("user")){
+             out.println(saves[i].getValue()+" "+i);                
+                objSesion.setAttribute("usuario", saves[i].getValue());
+            }
+        }
+        }
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -66,7 +79,9 @@
                                         <input  type="text" id="usu" class="form-control input-sm chat-input" name="usu" placeholder="Usuario" onclick="erasefield()" required/>
                                         <br>
                                         <input type="password" id="pass" class="form-control input-sm chat-input" name="pass" placeholder="password" onkeypress="valida_envia()" required/>
-                                        <br>
+                                        <br><div align="left">
+                                            <label class="">Recordar&nbsp;&nbsp;&nbsp;&nbsp;</label><input type="checkbox" name="save" value="ok" checked="checked" />
+                                        </div>
                                         <div class="wrapper">
                                             <span class="group-btn">     
                                                 <input type="submit" value="Entrar" class="btn btn-default navbar-btn" />

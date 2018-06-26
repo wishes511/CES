@@ -8,6 +8,7 @@ package Controlador;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,12 +50,21 @@ public class Logout extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         try {
-        HttpSession objSesion = request.getSession(true);
-        objSesion.invalidate();
-        response.sendRedirect("index.jsp");
-        }catch(Exception e){
-        response.sendRedirect("index.jsp");
-        
+            HttpSession objSesion = request.getSession(true);
+            objSesion.invalidate();
+            Cookie galle_nombre = new Cookie("user", "");
+            Cookie tipo = new Cookie("tipo", "");
+            Cookie empresa = new Cookie("empresa", "");
+            galle_nombre.setMaxAge(0);
+            tipo.setMaxAge(0);
+            empresa.setMaxAge(0);
+            response.addCookie(tipo);
+            response.addCookie(galle_nombre);
+            response.addCookie(empresa);            
+            response.sendRedirect("index.jsp");
+        } catch (Exception e) {
+            response.sendRedirect("index.jsp");
+
         }
     }
 
@@ -70,13 +80,22 @@ public class Logout extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-    try {
-        HttpSession objSesion = request.getSession(true);
-        objSesion.invalidate();
-        response.sendRedirect("index.jsp");
-        }catch(Exception e){
-        response.sendRedirect("index.jsp");
-        
+        try {
+            HttpSession objSesion = request.getSession(true);
+            objSesion.invalidate();
+            Cookie galle_nombre = new Cookie("user", "");
+            Cookie tipo = new Cookie("tipo", "");
+            Cookie empresa = new Cookie("empresa", "");
+            galle_nombre.setMaxAge(0);
+            tipo.setMaxAge(0);
+            empresa.setMaxAge(0);
+            response.addCookie(tipo);
+            response.addCookie(galle_nombre);
+            response.addCookie(empresa);
+            response.sendRedirect("index.jsp");
+        } catch (Exception e) {
+            response.sendRedirect("index.jsp");
+
         }
     }
 

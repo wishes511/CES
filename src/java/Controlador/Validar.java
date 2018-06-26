@@ -15,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,10 +79,13 @@ public class Validar extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        HttpSession objSesion = request.getSession(true);
+        HttpSession objSesion = request.getSession(false);
         try {
             String nombre = request.getParameter("usu");
             String contrasena = request.getParameter("pass");
+            String save = request.getParameter("save");
+            if(save!=null){
+            }else save="no";
             boolean flag = false;
             int interv = 180;
             PrintWriter out = response.getWriter();
@@ -114,6 +118,17 @@ public class Validar extends HttpServlet {
                         out.println("location='index.jsp';");
                         out.println("</script>");
                     } else {
+                        if(save.equals("ok")){
+                            Cookie galle_nombre = new Cookie("user",nombre);
+                            Cookie tipo = new Cookie("tipo",m.getTipo_usuario());
+                            Cookie empresa = new Cookie("empresa",m.getNombre_empresa());
+                            galle_nombre.setMaxAge(60*60*24*30*12);
+                            tipo.setMaxAge(60*60*24*30*12);
+                            empresa.setMaxAge(60*60*24*30*12);
+                            response.addCookie(tipo);
+                            response.addCookie(galle_nombre);
+                            response.addCookie(empresa);
+                        }
                         switch (m.getTipo_usuario()) {
                             //usuario administrador
                             case "ADMIN":
