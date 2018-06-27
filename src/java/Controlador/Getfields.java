@@ -156,11 +156,14 @@ public class Getfields extends HttpServlet {
                     // Personal y maquiladores
                     default:
                         String resp = "";
+                        String cods=codigo.charAt(0)+""+codigo.charAt(1)+""+d4;
+                        System.out.println((codigo.charAt(1) == '8')+" "+(codigo.charAt(1) == '3') );
                         if (codigo.charAt(1) == '8' || codigo.charAt(1) == '3') {
                             CES u = new CES();
                             String asunto = request.getParameter("motivo").toUpperCase();
                             String id_depa = request.getParameter("depa_cambio");
-                            ArrayList<String> arru = u.buscaru_clave(Integer.parseInt(d4), "");
+//                            ArrayList<String> arru = u.buscaru_clave(Integer.parseInt(d4), "");
+                            ArrayList<String> arru = u.buscaru_cod(cods, "");
                             ArrayList<String> arr_maq = depa.busca_dep_pt();
                             if (!arru.isEmpty() && area.equals(arru.get(4))) {// verifica si hay un ultimo registro 
                                 ArrayList<String> arrmov = new ArrayList<>();

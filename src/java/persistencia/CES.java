@@ -64,6 +64,7 @@ public ArrayList<String> buscaru_clave(int clave, String otro) throws ClassNotFo
         ArrayList<String> ids= new ArrayList<>();
         String query = "select clave_usuario,u.nombre as 'nombre',u.clave_departamento as 'clave_departamento',empresa,a.nombre as 'area',tu.nombre as 'tipo' from tipo_usuario tu join usuario u on u.clave_tipo=tu.clave_tipo "
                 + "join departamento p on u.clave_departamento = p.clave_departamento join area a on p.clave_area=a.clave_area where u.statuo!='0' and u.clave_usuario="+clave;
+        System.out.println(query);
         Statement smt;
         ResultSet df;
         abrir();
@@ -79,10 +80,38 @@ public ArrayList<String> buscaru_clave(int clave, String otro) throws ClassNotFo
             ids.add(df.getString("tipo"));
             
         }
+        System.out.println(ids.isEmpty());
         df.close();
         smt.close();
         return ids;
     }
+
+public ArrayList<String> buscaru_cod(String cod, String otro) throws ClassNotFoundException, SQLException {
+        ArrayList<String> ids= new ArrayList<>();
+        String query = "select clave_usuario,u.nombre as 'nombre',u.clave_departamento as 'clave_departamento',empresa,a.nombre as 'area',tu.nombre as 'tipo' from tipo_usuario tu join usuario u on u.clave_tipo=tu.clave_tipo "
+                + "join departamento p on u.clave_departamento = p.clave_departamento join area a on p.clave_area=a.clave_area where u.statuo!='0' and u.codigo="+cod;
+        System.out.println(query);
+        Statement smt;
+        ResultSet df;
+        abrir();
+        Connection conect=getConexion();
+        smt = conect.createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {
+            ids.add(df.getString("clave_usuario"));
+            ids.add(df.getString("nombre"));
+            ids.add(df.getString("clave_departamento"));
+            ids.add(df.getString("empresa"));
+            ids.add(df.getString("area"));
+            ids.add(df.getString("tipo"));
+            
+        }
+        System.out.println(ids.isEmpty());
+        df.close();
+        smt.close();
+        return ids;
+    }
+
 public boolean buscarusuarios() throws ClassNotFoundException, SQLException {
         boolean respo =false;
         String query = "select top(1) nombre from usuario";
