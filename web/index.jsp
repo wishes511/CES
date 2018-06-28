@@ -5,7 +5,7 @@
 <%
    
     try{ 
-        HttpSession objSesion = request.getSession(false);
+/*     HttpSession objSesion = request.getSession(false);
 if(request.getCookies()!=null){
         Cookie [] saves= request.getCookies();
         for(int i =0;i<saves.length;i++){
@@ -21,7 +21,7 @@ if(request.getCookies()!=null){
                 objSesion.setAttribute("usuario", saves[i].getValue());
             }
         }
-        }
+        }*/
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

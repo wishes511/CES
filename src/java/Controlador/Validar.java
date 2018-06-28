@@ -132,7 +132,7 @@ public class Validar extends HttpServlet {
                         switch (m.getTipo_usuario()) {
                             //usuario administrador
                             case "ADMIN":
-                                objSesion.setMaxInactiveInterval(interv + 10000);
+                                objSesion.setMaxInactiveInterval(interv + 100000);
                                 objSesion.setAttribute("usuario", nombre);
                                 objSesion.setAttribute("tipo", m.getTipo_usuario());
                                 objSesion.setAttribute("empresa", m.getNombre_empresa());
@@ -154,7 +154,7 @@ public class Validar extends HttpServlet {
                                 break;
                             case "VIGILANTE":
                                 //posible usuario para inicio de la pagina
-                                objSesion.setMaxInactiveInterval(interv + 15000);
+                                objSesion.setMaxInactiveInterval(interv + 150000);
                                 objSesion.setAttribute("usuario", nombre);
                                 objSesion.setAttribute("tipo", m.getTipo_usuario());
                                 objSesion.setAttribute("empresa", m.getNombre_empresa());
