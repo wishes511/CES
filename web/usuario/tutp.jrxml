@@ -258,8 +258,8 @@ order by a.nombre]]>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detallado_summary.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement x="276" y="16" width="226" height="20" uuid="0efd6eca-f83b-4e93-8f28-8cb679b87698"/>
-				<text><![CDATA[Usuarios que no entregaron su pase de salida]]></text>
+				<reportElement x="344" y="16" width="105" height="20" uuid="0efd6eca-f83b-4e93-8f28-8cb679b87698"/>
+				<text><![CDATA[Usuarios sin registro]]></text>
 			</staticText>
 		</band>
 	</summary>

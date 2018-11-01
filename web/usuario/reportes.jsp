@@ -11,7 +11,7 @@
    try{
        String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO")) ) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("USUARIO") ||tipos.equals("VIGILANTE")) ) {
        // out.println(usuario);
     } else {
         response.sendRedirect("../index.jsp");
@@ -71,7 +71,7 @@ int año = fecha.get(Calendar.YEAR);
                         + "<a class=\"nav-link active\" href=\"reportes.jsp\">Reportes<span class=\"sr-only\">(current)</span></a>");
                 }else{
                     if(tipos.equals("VIGILANTE")){
-                    out.print("<a class=\"nav-link\" href=\"index.jsp\">Entradas / Salidas<span class=\"sr-only\">(current)</span></a>");
+                    out.print("<a class=\"nav-link\" href=\"index.jsp\">Entradas / Salidas<span class=\"sr-only\">(current)</span></a><a class=\"nav-link\" href=\"reportes.jsp\">Reportes</a>");
                     }
                 out.print("<a class=\"nav-link active\">Reportes<span class=\"sr-only\">(current)</span></a>");
                 //pendiente al usuario

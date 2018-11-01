@@ -118,7 +118,7 @@ public class Validar extends HttpServlet {
                         out.println("location='index.jsp';");
                         out.println("</script>");
                     } else {
-                        if(save.equals("ok")){
+                     /*/*   if(save.equals("ok")){
                             Cookie galle_nombre = new Cookie("user",nombre);
                             Cookie tipo = new Cookie("tipo",m.getTipo_usuario());
                             Cookie empresa = new Cookie("empresa",m.getNombre_empresa());
@@ -128,7 +128,7 @@ public class Validar extends HttpServlet {
                             response.addCookie(tipo);
                             response.addCookie(galle_nombre);
                             response.addCookie(empresa);
-                        }
+                        }/*/
                         switch (m.getTipo_usuario()) {
                             //usuario administrador
                             case "ADMIN":

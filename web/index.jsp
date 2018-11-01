@@ -12,6 +12,7 @@ if(request.getCookies()!=null){
             if(saves[i].getName().equals("empresa")){
                 out.println(saves[i].getValue()+" "+i);                
                 objSesion.setAttribute("empresa", saves[i].getValue());
+                objSesion.setMaxInactiveInterval(1000000);
                 response.sendRedirect("usuario/index.jsp");
             }else if(saves[i].getName().equals("tipo")){
              out.println(saves[i].getValue()+" "+i);                

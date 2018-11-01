@@ -34,7 +34,7 @@ left join usuario u on m.clave_usuario =u.clave_usuario
 left join proveedor p on m.clave_proveedor=p.clave_proveedor
 where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%')and m.area like '%$P!{area}%' and d.nombre like '%$P!{depa}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_mov like '%$P!{tipo}%' and m.tipo_transporte like '%$P!{transporte}%' and m.visita like '%$P!{destino}%' and m.tipo_persona!='U' and m.fecha between $P{f1} and $P{f2}
  group by a.nombre,m.tipo_persona,m.visita,d.nombre,m.fecha,m.nombre,p.nombre,u.empresa,m.hora,m.tipo_mov,m.horasalida,m.tiempo,m.observaciones,m.asunto,m.tipo_transporte
-order by hora]]>
+order by m.fecha]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="proveedor" class="java.lang.String"/>

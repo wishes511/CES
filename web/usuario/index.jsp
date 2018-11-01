@@ -64,7 +64,7 @@
                                         + "<a class=\"nav-link\" href=\"reportes.jsp\">Reportes</a>");
                             } else {
                                 if(tipos.equals("VIGILANTE")){
-                                    out.print("<a class=\"nav-link active\" href=\"\">Inicio<span class=\"sr-only\">(current)</span></a>");
+                                    out.print("<a class=\"nav-link active\" href=\"\">Inicio<span class=\"sr-only\">(current)</span></a><a class=\"nav-link\" href=\"reportes.jsp\">Reportes</a>");
                                 }else{
                                   out.print("<a class=\"nav-link \" href=\"reportes.jsp\">Reportes<span class=\"sr-only\">(current)</span></a>");  
                                 }
