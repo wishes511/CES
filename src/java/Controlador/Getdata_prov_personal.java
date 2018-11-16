@@ -188,6 +188,17 @@ public class Getdata_prov_personal extends HttpServlet {
             db.altaprov_a(id);
             PrintWriter out = response.getWriter();
             out.print("Alta exitosa");
+        }else if(uso.equals("foto")){
+            CES_provact db = new CES_provact();
+            String codigo = request.getParameter("codigo");
+            PrintWriter out = response.getWriter();
+            if(codigo.charAt(1)=='9'){
+            codigo=(codigo.length()==6)?codigo:acomodacodigo(codigo);
+            out.print(db.buscarfoto(codigo));
+            }else {
+            out.print("");
+            }
+           
         }
         
         } catch (SQLException ex) {
@@ -203,6 +214,13 @@ public class Getdata_prov_personal extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.print("Codigo 4.2:<br> "+ex);
         }
+    }
+    private String acomodacodigo(String codigo){
+        String aux = "";
+        for(int i =0;i<6;i++){
+            aux+=codigo.charAt(i);
+        }
+        return aux;
     }
     private void autosearch_activo(PrintWriter out){
         out.print("" +

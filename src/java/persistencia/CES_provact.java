@@ -84,6 +84,20 @@ public boolean buscarprov_act(String nombre, int clave_prov) throws ClassNotFoun
         smt.close();
         return p;
     }
+public String buscarfoto(String codigo) throws ClassNotFoundException, SQLException {  
+        String ruta="";
+    String query = "select ruta from codigos p join usuario u on p.clave_usuario=u.clave_usuario\n" +
+"where u.codigo='"+codigo+"'";
+        Statement smt;
+        ResultSet df;
+        abrir();
+        smt = getConexion().createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {ruta=df.getString("ruta");}
+        df.close();
+        smt.close();
+        return ruta;
+    }
 public int buscarprov_act_caseta(String nombre, int clave_prov) throws ClassNotFoundException, SQLException {  
         int id=0;
     String query = "select clave_autorizado from p_autorizado where nombre='"+nombre+"' and clave_proveedor="+clave_prov;

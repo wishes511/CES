@@ -115,7 +115,7 @@ public class Getfields extends HttpServlet {
                 if (minuto > 9) {
                     horas += minuto;
                 }
-                //    System.out.println(horas);
+                 //   System.out.println(horas);
                 String n_tarjeta = String.valueOf(codigo.charAt(6)) + codigo.charAt(7);// tomamos los ultimos valores del codigo
                 CES_movs mov = new CES_movs();// declaramos e instanciamos el objeto mov
                 area = depa.busca_area_cod(codigo.charAt(0));// busca el area de acuerdo al codigo
@@ -158,7 +158,7 @@ public class Getfields extends HttpServlet {
                         String resp = "";
                         String cods=codigo.charAt(0)+""+codigo.charAt(1)+""+d4;
                         System.out.println((codigo.charAt(1) == '8')+" "+(codigo.charAt(1) == '3') );
-                        if (codigo.charAt(1) == '8' || codigo.charAt(1) == '3') {
+                        if (codigo.charAt(1) == '8' || codigo.charAt(1) == '3' || codigo.charAt(1) == '9') {
                             CES u = new CES();
                             String asunto = request.getParameter("motivo").toUpperCase();
                             String id_depa = request.getParameter("depa_cambio");
@@ -167,7 +167,7 @@ public class Getfields extends HttpServlet {
                             ArrayList<String> arr_maq = depa.busca_dep_pt();
                             if (!arru.isEmpty() && area.equals(arru.get(4))) {// verifica si hay un ultimo registro 
                                 ArrayList<String> arrmov = new ArrayList<>();
-                                if (arru.get(5).equals("MAQUILA")) {// verifica si ese espacio en los registros que encontro es maquila
+                                if (arru.get(5).equals("MAQUILA") || arru.get(5).equals("ESPECIAL")) {// verifica si ese espacio en los registros que encontro es maquila
                                     arrmov = mov.searchlast_movmaq(arru, fechac);// recupera datos del ultimo registro
                                     if (!arrmov.isEmpty()) {// comprueba que no este vacio
                                         // arru.set(2, arrmov.get(2));
@@ -178,12 +178,14 @@ public class Getfields extends HttpServlet {
                                     arrmov = mov.searchlast_movuser(arru, fechac);// recupera datos que no sea maquilas, solo personal
                                 }
                                 if (!arrmov.isEmpty() && !asunto.equals("")) {// verificar si hay entradas o salidas y el asunto no esta vacio
-                                    tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa,empresa);
+                                    tipo_usuario_pm(arru, area, fechac, horas, out, mov, "ESPECIAL", id_depa,empresa);
                                 } else if (!asunto.equals("")) {// si el asunto es diferente de vacio
                                     tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa,empresa);
                                 } else {// si ninguna de las opciones anteriores entra
                                     if (arrmov.isEmpty()) {// verificar si mi lista de ultimo moviminto esta vacia
-                                        if (codigo.charAt(1) == '8') {// verificar si es personal y despliega un menu con el campo asunto
+                                        if(codigo.charAt(1)=='9'){
+                                            tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa,empresa);
+                                        }else if (codigo.charAt(1) == '8') {// verificar si es personal y despliega un menu con el campo asunto
                                             resp = "<main class=\"col-sm-12 pt-2\" ><section><label class=\"ln\" >Asunto , Motivo </label><br>"
                                                     + "<input type=text id=motivo class=\"ln form-control\" onchange=\"searchuser1()\"><script>document.getElementById('motivo').focus();</script></section></main>";
                                         } else {// si no despliega un menu con el campo asunto y el Almacen de PT
@@ -202,7 +204,7 @@ public class Getfields extends HttpServlet {
                                         }
                                     } else {// si ya hay registros acerca del usuario comparar para saber que tipo de accion se va a realizar
                                         int cont = 0;
-                                        if (arrmov.get(arrmov.size() - 2).equals("M")) {// verifica si el tipo de usuario fue una maquila
+                                        if (arrmov.get(arrmov.size() - 2).equals("M") || arrmov.get(arrmov.size() - 2).equals("Z")) {// verifica si el tipo de usuario fue una maquila
                                             //  ArrayList<String> arr=mov.searchlast_movuser(arru, fechac) ;
                                             if (arrmov.get(arrmov.size() - 3).equals("E")) {// y si ese movimiento fue una entrada
                                                 tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa,empresa);
@@ -388,6 +390,8 @@ public class Getfields extends HttpServlet {
         m.setTipo_transporte("AUTOMOVIL");
         if (arru.get(5).equals("PERSONAL") || arru.get(5).equals("ADMIN")) {
             m.setTipo_usuario("U");
+        }else if(arru.get(5).equals("ESPECIAL") ){
+            m.setTipo_usuario("Z");
         } else {
             m.setTipo_usuario("M");
         }

@@ -118,6 +118,10 @@ function nuevo_prov(){
                     pass="123";
                     tipo_cod="3";
                     empresa=$('#maquilas').val();
+                }else if(nametipo=="ESPECIAL"){
+                    pass="123";
+                    tipo_cod="9";
+                    empresa=$('#maquilas').val();
                 }else{
                 pass="123";
                 tipo_cod="8";  
@@ -144,8 +148,8 @@ function display_pass(){
                 if(tipo=="ADMIN" || tipo=="VIGILANTE"){
                     document.getElementById("field_pass").innerHTML="<input type=password id=pass_u class=form-control onchange=salto_btn placeholder='contrasena'>";
                     document.getElementById("pass_u").focus();
-                }else if(tipo=="MAQUILA"){ 
-                    document.getElementById("field_pass").innerHTML="<input type=text id=maquilas class=form-control onchange=salto_btn placeholder='Nombre Maquila'>";
+                }else if(tipo=="MAQUILA"||tipo=="ESPECIAL"){ 
+                    document.getElementById("field_pass").innerHTML="<input type=text id=maquilas class=form-control onchange=salto_btn placeholder='Nombre'>";
                     document.getElementById("maquilas").focus();
                 }else{
                     document.getElementById("field_pass").innerHTML="<label></label>";
@@ -218,6 +222,7 @@ function reporte_movs_usuario(){
                 var destino= $('#destino').val();                
     location='reporte_movs_usu.jsp?f1='+f1+"&f2="+f2+"&nombre="+nombre+"&area="+area+"&depa="+dep+"&tipo="+tipo+"&transporte="+transporte+"&destino="+destino;
 }
+
 /* 
  * 
   catch(ClassNotFoundException c){

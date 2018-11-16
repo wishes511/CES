@@ -166,6 +166,7 @@ public class Getdata_user extends HttpServlet {
                 if(usuario.equals("ADMINPROV")){
                 codigo=area+tipo_cod+(codigo("1"));
                 }else{codigo=area+tipo_cod+(codigo(String.valueOf(prov.lastuser()+1)));}
+                System.out.println(codigo);
                 departamento.setClaveDepartamento(depa);
                 tp.setClaveTipo(tipo);
                 Usuario u = new Usuario();

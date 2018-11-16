@@ -170,7 +170,7 @@ public class CES_movs extends conBD {
             String sentenciaSQL = "";
             if (conta == 0) {// verifica si hubo registros en la consulta anterior,si no hubo insertara un nuevo registro
                 String s = "";
-                if (m.getTipo_usuario().equals("M")) {
+                if (m.getTipo_usuario().equals("M")||m.getTipo_usuario().equals("Z")) {
                     s = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                             + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                             + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas +
@@ -182,7 +182,7 @@ public class CES_movs extends conBD {
                             "','" + horas + "',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "','"+empresa+"')";
                 }
 
-                if (m.getTipo_usuario().equals("M")) {
+                if (m.getTipo_usuario().equals("M")||m.getTipo_usuario().equals("Z")) {
                     retorno = "<div class=letra_entrada><br><label>Pertenece a&nbsp&nbsp</label><label>" + m.getObservaciones() + "-" + m.getArea() + "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><br><br><label><big>ENTRADA</big></label></div><audio src=\"../images/ok.mp3\" autoplay></audio>";
                 } else {
                     retorno = "<div class=letra_entrada><br><label>Area:&nbsp</label><label>" + m.getArea() + "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><br><br><label><big>SALIDA</big></label></div><audio src=\"../images/ok.mp3\" autoplay></audio>";
@@ -192,7 +192,7 @@ public class CES_movs extends conBD {
                 st.close();
             } else if (conta != 0) {
                 if (movimiento.equals("S")) {// verifica si el tipo de movimiento es una salida
-                    if (m.getTipo_usuario().equals("M")) {// si es una maquila creara un nuevo registro como entrada
+                    if (m.getTipo_usuario().equals("M")||m.getTipo_usuario().equals("Z")) {// si es una maquila creara un nuevo registro como entrada
                         sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
                                 + "," + m.getClaveAutorizado() + ",'" + m.getNombre() + "','E','" + m.getArea() + "',"
                                 + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','" + horas + "','" +
@@ -200,13 +200,13 @@ public class CES_movs extends conBD {
                     } else {// sino actualizara el registro de la salida del personal
                         sentenciaSQL = "update movimiento set hora='" + horas + "', tiempo=" + tiempo(salida, horas) + ",tipo_mov='E' where folio=" + folio;
                     }
-                    if (m.getTipo_usuario().equals("M")) {// despliegue de menu de acuerdo al tipo de usuario
+                    if (m.getTipo_usuario().equals("M")||m.getTipo_usuario().equals("Z")) {// despliegue de menu de acuerdo al tipo de usuario
                         retorno = "<div class=letra_entrada><br><label>Area: </label><label>" + m.getArea() + "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><br><br><label><big>ENTRADA</big></label></div><audio src=\"../images/ok.mp3\" autoplay></audio>";
                     } else {
                         retorno = "<div class=letra_entrada><br><label>Area :</label><label>" + m.getArea() + "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Depto:&nbsp" + nombre + "</label><br><br><label><big>ENTRADA</big></label></div><audio src=\"../images/ok.mp3\" autoplay></audio>";
                     }
                 } else {
-                    if (m.getTipo_usuario().equals("M")) {// en esta condicional  tambien se verifica que tipo de usuario es y asignar la consulta adecuada
+                    if (m.getTipo_usuario().equals("M")||m.getTipo_usuario().equals("Z")) {// en esta condicional  tambien se verifica que tipo de usuario es y asignar la consulta adecuada
                         sentenciaSQL = "update movimiento set horasalida='" + horas + "', tiempo=" + tiempo(hora, horas) + ",tipo_mov='S' where folio=" + folio;
                     } else {// si no es maquila se inserta, ya que como es personal primero sale y luego entra
                         sentenciaSQL = "insert into movimiento values(" + m.getClaveUsuario() + "," + m.getClaveProveedor()
@@ -214,7 +214,7 @@ public class CES_movs extends conBD {
                                 + m.getDepartamento().getClaveDepartamento() + ",'" + m.getObservaciones() + "','" + m.getFecha() + "','','" +
                                 credencial + "','" + horas + "',0,'','"+m.getAsunto()+"','" + m.getTipo_transporte() + "','" + m.getTipo_usuario() + "','"+empresa+"')";
                     }
-                    if (m.getTipo_usuario().equals("M")) {
+                    if (m.getTipo_usuario().equals("M")||m.getTipo_usuario().equals("Z")) {
                         retorno = "<div class=letra_salida><br><label>Area: </label><label>" + m.getArea() + "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Departamento:&nbsp" + nombre + "</label><br><br><label><big>SALIDA</big><br> Hora de entrada: " + hora + "<br> Hora de salida: " + horas + "</label></div><audio src=\"../images/exit.mp3\" autoplay></audio>";
                     } else {
                         retorno = "<div class=letra_salida><br><label>Area: </label><label>" + m.getArea() + "</label><br><label>Personal:&nbsp" + m.getNombre() + "</label><br><label>Departamento:&nbsp" + nombre + "</label><br><br><label><big>SALIDA</big><br> Hora de salida: " + horas + "</label></div><audio src=\"../images/exit.mp3\" autoplay></audio>";

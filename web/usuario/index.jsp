@@ -54,7 +54,7 @@
                 <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" ><img src="../images/AF.png;base64" width="170px" height="50"></a>
+                <a class="navbar-brand" ><img src="../images/AF.png;base64" width="170px" height="50" onclick="reporte_last_usuario()"></a>
                 <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                     <ul class="navbar-nav mr-auto">
                         <%
@@ -64,7 +64,7 @@
                                         + "<a class=\"nav-link\" href=\"reportes.jsp\">Reportes</a>");
                             } else {
                                 if(tipos.equals("VIGILANTE")){
-                                    out.print("<a class=\"nav-link active\" href=\"\">Inicio<span class=\"sr-only\">(current)</span></a><a class=\"nav-link\" href=\"reportes.jsp\">Reportes</a>");
+                                    out.print("<a class=\"nav-link active\" href=\"\">Inicio<span class=\"sr-only\">(current)</span></a><a class=\"nav-link \" onclick=\"reporte_last_usuario()\">Personal fuera</a>");
                                 }else{
                                   out.print("<a class=\"nav-link \" href=\"reportes.jsp\">Reportes<span class=\"sr-only\">(current)</span></a>");  
                                 }
@@ -132,11 +132,15 @@
                                 + "            </table>\n"
                                 + "          </div>\n"
                                 + "        </main>");
-                    }else if(tipos.equals("VIGILANTE")){          
+                    }else if(tipos.equals("VIGILANTE")){     
+             out.print("<section class=\"col-sm-1 offset-sm-1 col-md-4 offset-md-4 \" id=main_foto>\n"+"<div class=\"\">\n" +
+
+"        </div>\n" +
+"           </section>");
             out.print("<main class=\"col-sm-9 offset-sm-3 col-md-10 offset-md-1  \" id=main_prov>\n"+"<div class=\"\">\n" +
 "            <div id=\"fondoES\" class=\"container-fluid espacio-lg-down\" align=\"center\">\n" +
 "                <div class=\"btn\" >\n" +
-"                    <div class=\"\" align=\"center\" >\n" +
+"                    <div class=\"\" align=\"center\" >\n" +                  
 "                        <br><label class=\"\">Codigo</label><input type=\"text\" id=\"codigo\" name=\"codigo\" onchange=\"searchuser()\" class=\"form-control \" onclick=erasefield()>\n" +
 "                    </div>\n" +
 "                </div>  \n" +
@@ -145,6 +149,7 @@
 "            </div>\n" +
 "        </div>\n" +
 "           </main>");
+
                     
                     }
                 %>

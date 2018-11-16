@@ -18,6 +18,24 @@ function searchuser(){
                         //document.getElementById("proveedor").focus;
                     }
                 });
+                uso="foto"
+                $.ajax({
+                    type: 'post',
+                    data: {uso: uso,codigo:codigo},
+                    url: '../Getdata_prov_personal',
+                    success: function (result) {
+                        if(result!=""){
+                             $('#main_foto').html("<div id=\"\" class=\"container-fluid \" align=\"center\">\n" +
+"                <div class=\"btn\" >\n" +
+"                    <div class=\"\" align=\"center\" >\n" +                  
+"                        <br><img class=imagens1 src=\"../imageuser/"+result+"\">\n" +
+"                    </div>\n" +
+"                </div>  \n" +
+"            </div>");
+                        }
+                       
+                    }
+                });
             }
 function searchuser1(){
                 var codigo =$('#codigo').val();
@@ -145,6 +163,20 @@ function saltop(){
     document.getElementById('p_activos_n').value=selected;
     document.getElementById('depa').focus();
 }            
+function reporte_last_usuario(){
+                var f=new Date();
+                var mes = f.getMonth()+1
+                var f1 =f.getDate() + "-" + mes+ "-" + f.getFullYear();
+                var f2 =f1;
+                var nombre ="";
+                var area ="";
+                var dep = "";
+                var tipo= "";
+                var transporte= "";
+                var destino= "";       
+                //alert(f1);
+    location='reporte_movs_usu.jsp?f1='+f1+"&f2="+f2+"&nombre="+nombre+"&area="+area+"&depa="+dep+"&tipo="+tipo+"&transporte="+transporte+"&destino="+destino;
+}
 function nuevo_prov_data(){
                 var pactivo =$('#prov_new').val();
                 var uso="nuevo";
