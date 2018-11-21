@@ -80,9 +80,10 @@ if(request.getCookies()!=null){
                                         <input  type="text" id="usu" class="form-control input-sm chat-input" name="usu" placeholder="Usuario" onclick="erasefield()" required/>
                                         <br>
                                         <input type="password" id="pass" class="form-control input-sm chat-input" name="pass" placeholder="password" onkeypress="valida_envia()" required/>
-                                        <br><div align="left">
+                                        <br><br>
+                                        <!--<div align="left">
                                             <label class="">Recordar&nbsp;&nbsp;&nbsp;&nbsp;</label><input type="checkbox" name="save" value="ok" checked="checked" />
-                                        </div>
+                                        </div>-->
                                         <div class="wrapper">
                                             <span class="group-btn">     
                                                 <input type="submit" value="Entrar" class="btn btn-default navbar-btn" />

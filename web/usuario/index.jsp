@@ -5,7 +5,6 @@
 --%>
 <%
     HttpSession objSesion = request.getSession(false);
-    boolean estado;
     String usuario = (String) objSesion.getAttribute("usuario");
     try {
 

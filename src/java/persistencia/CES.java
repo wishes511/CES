@@ -64,7 +64,7 @@ public ArrayList<String> buscaru_clave(int clave, String otro) throws ClassNotFo
         ArrayList<String> ids= new ArrayList<>();
         String query = "select clave_usuario,u.nombre as 'nombre',u.clave_departamento as 'clave_departamento',empresa,a.nombre as 'area',tu.nombre as 'tipo' from tipo_usuario tu join usuario u on u.clave_tipo=tu.clave_tipo "
                 + "join departamento p on u.clave_departamento = p.clave_departamento join area a on p.clave_area=a.clave_area where u.statuo!='0' and u.clave_usuario="+clave;
-        System.out.println(query);
+//        System.out.println(query);
         Statement smt;
         ResultSet df;
         abrir();
@@ -80,7 +80,7 @@ public ArrayList<String> buscaru_clave(int clave, String otro) throws ClassNotFo
             ids.add(df.getString("tipo"));
             
         }
-        System.out.println(ids.isEmpty());
+//        System.out.println(ids.isEmpty());
         df.close();
         smt.close();
         return ids;
@@ -90,7 +90,7 @@ public ArrayList<String> buscaru_cod(String cod, String otro) throws ClassNotFou
         ArrayList<String> ids= new ArrayList<>();
         String query = "select clave_usuario,u.nombre as 'nombre',u.clave_departamento as 'clave_departamento',empresa,a.nombre as 'area',tu.nombre as 'tipo' from tipo_usuario tu join usuario u on u.clave_tipo=tu.clave_tipo "
                 + "join departamento p on u.clave_departamento = p.clave_departamento join area a on p.clave_area=a.clave_area where u.statuo!='0' and u.codigo="+cod;
-        System.out.println(query);
+//        System.out.println(query);
         Statement smt;
         ResultSet df;
         abrir();
@@ -106,7 +106,7 @@ public ArrayList<String> buscaru_cod(String cod, String otro) throws ClassNotFou
             ids.add(df.getString("tipo"));
             
         }
-        System.out.println(ids.isEmpty());
+//        System.out.println(ids.isEmpty());
         df.close();
         smt.close();
         return ids;

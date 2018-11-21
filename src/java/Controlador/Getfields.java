@@ -77,7 +77,6 @@ public class Getfields extends HttpServlet {
         HttpSession objSesion = request.getSession(false);
         String empresa = (String) objSesion.getAttribute("empresa");
         String codigo = request.getParameter("codigo");
-        String uso = request.getParameter("uso");
         
         ArrayList<String> arr = new ArrayList<>();
         ArrayList<String> arr_depa = new ArrayList<>();
@@ -102,20 +101,8 @@ public class Getfields extends HttpServlet {
                 String fechac = año + "-" + mes + "-" + dia;
                 int hora = fecha.get(Calendar.HOUR_OF_DAY);
                 int minuto = fecha.get(Calendar.MINUTE);
-                String horas = "";
-                if (hora > 9) {
-                    horas = hora + ":";
-                }
-                if (hora < 10) {
-                    horas = "0" + hora + ":";
-                }
-                if (minuto < 10) {
-                    horas = horas + "0" + minuto;
-                }
-                if (minuto > 9) {
-                    horas += minuto;
-                }
-                 //   System.out.println(horas);
+                String horas =formatofecha(hora,minuto);
+                   //System.out.println(d4);
                 String n_tarjeta = String.valueOf(codigo.charAt(6)) + codigo.charAt(7);// tomamos los ultimos valores del codigo
                 CES_movs mov = new CES_movs();// declaramos e instanciamos el objeto mov
                 area = depa.busca_area_cod(codigo.charAt(0));// busca el area de acuerdo al codigo
@@ -124,7 +111,7 @@ public class Getfields extends HttpServlet {
                 switch (Integer.parseInt(d4)) {// verifica los 4 digitos
                     // proveedores
                     case 9999:
-                        if (codigo.charAt(1) == '1' && codigo.charAt(7) != '0') {// verifica el segundo digito del codigo y el ultimo por la tarjeta
+                        if (codigo.charAt(1) == '1' && Integer.parseInt(n_tarjeta)!=0) {// verifica el segundo digito del codigo y el ultimo por la tarjeta
                             array = mov.search_lastmov(area, fechac, n_tarjeta, "prov"); //busca ultimo movimiento al uso de la tarjeta
                             select_tipo_user(n_tarjeta, array, out, mov, arr, arr_depa, prov, depa, codigo, area, "9999", horas,empresa);
                         } else {
@@ -134,7 +121,7 @@ public class Getfields extends HttpServlet {
                         break;
                     // Sr pablo
                     case 9998:
-                        if (codigo.charAt(0) == '6' && codigo.charAt(1) == '6' && codigo.charAt(7) != '0') {
+                        if (codigo.charAt(0) == '6' && codigo.charAt(1) == '6' && Integer.parseInt(n_tarjeta)!=0) {
                             array = mov.search_lastmov(area, fechac, n_tarjeta, "invitado"); //busca ultimo movimiento al uso de la tarjeta
                             select_tipo_user(n_tarjeta, array, out, mov, arr, arr_depa, prov, depa, codigo, area, "9997", horas,empresa);
                         } else {
@@ -145,7 +132,7 @@ public class Getfields extends HttpServlet {
                     // invitados
                     case 9997:
                         // invitado_fields(area,out,depa);
-                        if (codigo.charAt(1) == '7' && codigo.charAt(7) != '0' && codigo.charAt(1) != '6') {
+                        if (codigo.charAt(1) == '7' && codigo.charAt(1) != '6' && Integer.parseInt(n_tarjeta)!=0) {
                             array = mov.search_lastmov(area, fechac, n_tarjeta, "invitado"); //busca ultimo movimiento al uso de la tarjeta
                             select_tipo_user(n_tarjeta, array, out, mov, arr, arr_depa, prov, depa, codigo, area, "9997", horas,empresa);
                         } else {
@@ -157,7 +144,7 @@ public class Getfields extends HttpServlet {
                     default:
                         String resp = "";
                         String cods=codigo.charAt(0)+""+codigo.charAt(1)+""+d4;
-                        System.out.println((codigo.charAt(1) == '8')+" "+(codigo.charAt(1) == '3') );
+                        //System.out.println((codigo.charAt(1) == '8')+" "+(codigo.charAt(1) == '3') );
                         if (codigo.charAt(1) == '8' || codigo.charAt(1) == '3' || codigo.charAt(1) == '9') {
                             CES u = new CES();
                             String asunto = request.getParameter("motivo").toUpperCase();
@@ -279,7 +266,26 @@ public class Getfields extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
+    private String formatofecha(int hora,int minuto){
+    String horas = "";
+                if (hora > 9) {
+                    horas = hora + ":";
+                }
+                if (hora < 10) {
+                    horas = "0" + hora + ":";
+                }
+                if (minuto < 10) {
+                    horas = horas + "0" + minuto;
+                }
+                if (minuto > 9) {
+                    horas += minuto;
+                }
+                //System.out.println(horas);
+                horas=(horas.length()==5)?horas:"0"+horas;
+                return horas;
+    }
+    
     private void select_tipo_user(String n_tarjeta, ArrayList<String> array, PrintWriter out, CES_movs mov, ArrayList<String> arr,
             ArrayList<String> arr_depa, CES_prov prov, CES_depa depa, String codigo, String area, String cod_usuario, String hora_salida,String empresa) throws ClassNotFoundException, SQLException {
         //System.out.println(array.size());

@@ -190,7 +190,7 @@ public boolean buscarmov_prov_a(int id) throws ClassNotFoundException, SQLExcept
             abrir();
             getConexion().setAutoCommit(false);
             String s = "delete p_autorizado where clave_autorizado="+id;
-            System.out.println(s);
+//            System.out.println(s);
             st = getConexion().prepareStatement(s);
             st.executeUpdate();
         st.close();
