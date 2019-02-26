@@ -22,7 +22,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\EntradasSalidas\\web\\usuario\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\af\\CES\\reps\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="transporte" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -51,7 +51,7 @@ order by a.nombre]]>
 			</textField>
 			<image>
 				<reportElement x="2" y="0" width="136" height="32" uuid="67d49a8b-60fc-4bf0-8a42-2565a24cc2b1"/>
-				<imageExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\EntradasSalidas\\web\\images\\AF.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\af\\CES\\images\\AF.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="240" y="0" width="330" height="24" uuid="e47be100-3afc-416a-8b02-b9de36a0fd8f"/>
@@ -209,7 +209,7 @@ order by a.nombre]]>
 					<subreportParameterExpression><![CDATA[$P{destino}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "tits.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\af\\CES\\reps\\tits.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
@@ -255,7 +255,7 @@ order by a.nombre]]>
 					<subreportParameterExpression><![CDATA[$P{destino}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detallado_summary.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\af\\CES\\reps\\detallado_summary.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement x="344" y="16" width="105" height="20" uuid="0efd6eca-f83b-4e93-8f28-8cb679b87698"/>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="976de16f-5ab5-4b26-849c-f388c8d525da">
-	<property name="ireport.zoom" value="1.3310000000000035"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.9487171000000056"/>
+	<property name="ireport.x" value="86"/>
+	<property name="ireport.y" value="16"/>
 	<parameter name="f1" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -91,19 +91,19 @@ order by a.nombre]]>
 		</band>
 	</title>
 	<detail>
-		<band height="76" splitType="Stretch">
+		<band height="55" splitType="Stretch">
 			<rectangle>
-				<reportElement x="2" y="1" width="553" height="14" forecolor="#337AB7" backcolor="#337AB7" uuid="7d33338a-3a2b-4ac0-b7e9-fd702f5538af"/>
+				<reportElement x="2" y="1" width="553" height="11" forecolor="#337AB7" backcolor="#337AB7" uuid="7d33338a-3a2b-4ac0-b7e9-fd702f5538af"/>
 			</rectangle>
 			<textField>
-				<reportElement x="2" y="0" width="107" height="15" forecolor="#FFFFFF" uuid="7778e442-b9fc-4c3d-8603-e8ddc3546b38"/>
-				<textElement textAlignment="Center">
+				<reportElement x="2" y="0" width="107" height="12" forecolor="#FFFFFF" uuid="7778e442-b9fc-4c3d-8603-e8ddc3546b38"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{area}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="0" y="35" width="555" height="41" uuid="648ce1e5-0e04-4618-91d3-c0435f97b2d1"/>
+				<reportElement x="0" y="35" width="555" height="17" uuid="648ce1e5-0e04-4618-91d3-c0435f97b2d1"/>
 				<subreportParameter name="area">
 					<subreportParameterExpression><![CDATA[$F{area}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -186,7 +186,7 @@ order by a.nombre]]>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="17" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="217" y="2" width="80" height="15" uuid="dbc6e16b-23d8-4f14-8275-6f339cd35882"/>
 				<textElement textAlignment="Right"/>
@@ -199,9 +199,9 @@ order by a.nombre]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="59">
+		<band height="52">
 			<subreport>
-				<reportElement x="0" y="30" width="555" height="28" uuid="909eace0-c5cf-4c5b-9b47-32a24676c42c"/>
+				<reportElement x="0" y="30" width="555" height="14" uuid="909eace0-c5cf-4c5b-9b47-32a24676c42c"/>
 				<subreportParameter name="area">
 					<subreportParameterExpression><![CDATA[$P{area}]]></subreportParameterExpression>
 				</subreportParameter>

@@ -69,16 +69,17 @@
                     e.printStackTrace();
                     
                   //  response.sendRedirect("verpares.jsp");
-                    
+                  out.print("<script>window.location='reportes.jsp'</script>");  
                 } finally {
                     if (db.getconexion() != null) {
                         db.cerrar();
+                        out.print("<script>window.location='index.jsp'</script>");
                        // response.sendRedirect("verpares.jsp");
                     }
                 }
             } else {
                 System.out.println("NO ES FECHA");
-                out.print("<script>window.location='lote_detenido.jsp'</script>");
+                out.print("<script>window.location='reportes.jsp'</script>");
                // response.sendRedirect("index.jsp");
             }
 

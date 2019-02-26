@@ -165,7 +165,7 @@ public class Getfields extends HttpServlet {
                                     arrmov = mov.searchlast_movuser(arru, fechac);// recupera datos que no sea maquilas, solo personal
                                 }
                                 if (!arrmov.isEmpty() && !asunto.equals("")) {// verificar si hay entradas o salidas y el asunto no esta vacio
-                                    tipo_usuario_pm(arru, area, fechac, horas, out, mov, "ESPECIAL", id_depa,empresa);
+                                    tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa,empresa);
                                 } else if (!asunto.equals("")) {// si el asunto es diferente de vacio
                                     tipo_usuario_pm(arru, area, fechac, horas, out, mov, asunto, id_depa,empresa);
                                 } else {// si ninguna de las opciones anteriores entra
@@ -281,7 +281,7 @@ public class Getfields extends HttpServlet {
                 if (minuto > 9) {
                     horas += minuto;
                 }
-                //System.out.println(horas);
+                System.out.println(horas);
                 horas=(horas.length()==5)?horas:"0"+horas;
                 return horas;
     }
@@ -398,6 +398,7 @@ public class Getfields extends HttpServlet {
             m.setTipo_usuario("U");
         }else if(arru.get(5).equals("ESPECIAL") ){
             m.setTipo_usuario("Z");
+            m.setAsunto("ESPECIAL");
         } else {
             m.setTipo_usuario("M");
         }

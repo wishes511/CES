@@ -21,6 +21,7 @@
     <body>
 
         <% HttpSession objSesion = request.getSession(true);
+        ServletOutputStream outs = response.getOutputStream();
 //i_d 
             boolean estado;
             String usuario = (String) objSesion.getAttribute("usuario");
@@ -75,6 +76,7 @@
                         db.cerrar();
                        // response.sendRedirect("verpares.jsp");
                     }
+                    out.clear();
                 }
             } else {
                 System.out.println("NO ES FECHA");

@@ -63,7 +63,10 @@ public class Validar extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        response.sendRedirect("index.jsp");
+        PrintWriter out = response.getWriter();
+        out.println("<script type=\"text/javascript\">");
+        out.println("location='usuario/usuarios.jsp';");
+        out.println("</script>");
     }
 
     /**
@@ -78,13 +81,15 @@ public class Validar extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        HttpSession objSesion = request.getSession(false);
+        HttpSession objSesion = request.getSession(true);
         try {
             String nombre = request.getParameter("usu");
             String contrasena = request.getParameter("pass");
             String save = request.getParameter("save");
-            if(save!=null){
-            }else save="no";
+            if (save != null) {
+            } else {
+                save = "no";
+            }
             boolean flag = false;
             int interv = 180;
             PrintWriter out = response.getWriter();
@@ -93,7 +98,9 @@ public class Validar extends HttpServlet {
             if (!a.buscarusuarios()) {// al inicio del sistema se otorga este permiso para crear un usuario como administrador
                 objSesion.setAttribute("usuario", "ADMINPROV");
                 objSesion.setAttribute("tipo", "ADMINPROV");
-                response.sendRedirect("usuario/usuarios.jsp");
+                out.println("<script type=\"text/javascript\">");
+                out.println("location='usuario/usuarios.jsp';");
+                out.println("</script>");
             } else {
                 if (nombre.equals(null) || contrasena.equals(null) || nombre.equals("") || contrasena.equals("")) {// se regresa al inicio si el usuario o contrasena son vacios
                     out.println("<script type=\"text/javascript\">");
@@ -110,24 +117,13 @@ public class Validar extends HttpServlet {
                     //String tipo = "";
                     Movimiento m = new Movimiento();
                     // Consultar Base de datos
-                    m = a.buscaru(nombre, contrasena);// busca elusuario con los datos proporcionados y guarda el tipo de usuario en 'tipo'
+                    m = a.buscaru(nombre, contrasena);// busca el usuario con los datos proporcionados y guarda el tipo de usuario en 'tipo'
                     if (m.getTipo_usuario().equals("n")) {// si no encontro nada
                         out.println("<script type=\"text/javascript\">");
                         out.println("alert('Usuario o contrasena incorrectos');");
                         out.println("location='index.jsp';");
                         out.println("</script>");
                     } else {
-                     /*/*   if(save.equals("ok")){
-                            Cookie galle_nombre = new Cookie("user",nombre);
-                            Cookie tipo = new Cookie("tipo",m.getTipo_usuario());
-                            Cookie empresa = new Cookie("empresa",m.getNombre_empresa());
-                            galle_nombre.setMaxAge(60*60*24*30*12);
-                            tipo.setMaxAge(60*60*24*30*12);
-                            empresa.setMaxAge(60*60*24*30*12);
-                            response.addCookie(tipo);
-                            response.addCookie(galle_nombre);
-                            response.addCookie(empresa);
-                        }/*/
                         switch (m.getTipo_usuario()) {
                             //usuario administrador
                             case "ADMIN":
@@ -158,7 +154,7 @@ public class Validar extends HttpServlet {
                                 objSesion.setAttribute("tipo", m.getTipo_usuario());
                                 objSesion.setAttribute("empresa", m.getNombre_empresa());
                                 response.sendRedirect("usuario/index.jsp");
-                                break;    
+                                break;
                             default:// si lo que encontro es diferente a lo antes descrito manda un msj y lo regresa a ala pagina de inicio
                                 out.println("<script type=\"text/javascript\">");
                                 out.println("alert('Usuario o contrasena incorrectos');");
@@ -181,7 +177,7 @@ public class Validar extends HttpServlet {
             out.println("<script type=\"text/javascript\">");
             out.println("location='index.jsp';alert('Codigo 1.1: " + ex + "');");
             out.println("</script>");
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Validar.class.getName()).log(Level.SEVERE, null, ex);
             PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");

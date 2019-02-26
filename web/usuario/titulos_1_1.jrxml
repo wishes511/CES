@@ -22,7 +22,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[C:\\af\\CES\\reps\\]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="transporte" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -46,9 +46,9 @@ order by a.nombre]]>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="16" splitType="Stretch">
+		<band height="11" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="0" width="555" height="14" uuid="2ebe2923-6f9e-4484-b21d-9489d6ae8e79"/>
+				<reportElement x="0" y="0" width="555" height="10" uuid="2ebe2923-6f9e-4484-b21d-9489d6ae8e79"/>
 				<subreportParameter name="area">
 					<subreportParameterExpression><![CDATA[$P{area}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -77,16 +77,16 @@ order by a.nombre]]>
 				<subreportExpression><![CDATA["C:\\af\\CES\\reps\\detallemovs_1.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="15">
+		<band height="12">
 			<staticText>
-				<reportElement x="480" y="0" width="75" height="15" uuid="4924b95d-fdef-4985-a92d-3895630db25a"/>
+				<reportElement x="480" y="0" width="75" height="11" uuid="4924b95d-fdef-4985-a92d-3895630db25a"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="512" y="0" width="43" height="15" uuid="99eeccf3-67d2-44f4-81ea-ec710de099b2"/>
+				<reportElement x="512" y="0" width="43" height="11" uuid="99eeccf3-67d2-44f4-81ea-ec710de099b2"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>

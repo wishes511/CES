@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="976de16f-5ab5-4b26-849c-f388c8d525da">
-	<property name="ireport.zoom" value="1.2100000000000029"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.9487171000000054"/>
+	<property name="ireport.x" value="752"/>
+	<property name="ireport.y" value="26"/>
 	<parameter name="f1" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -51,7 +51,7 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 			</textField>
 			<image>
 				<reportElement x="3" y="0" width="136" height="32" uuid="67d49a8b-60fc-4bf0-8a42-2565a24cc2b1"/>
-				<imageExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\EntradasSalidas\\web\\images\\AF.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\af\\CES\\images\\AF.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="246" y="0" width="328" height="24" uuid="e47be100-3afc-416a-8b02-b9de36a0fd8f"/>
@@ -93,7 +93,7 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 	<detail>
 		<band height="56" splitType="Stretch">
 			<subreport>
-				<reportElement x="2" y="13" width="800" height="42" uuid="da72eaee-f43e-4697-bcc0-429e715ef198"/>
+				<reportElement x="0" y="13" width="802" height="42" uuid="da72eaee-f43e-4697-bcc0-429e715ef198"/>
 				<subreportParameter name="area">
 					<subreportParameterExpression><![CDATA[$F{area}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -119,10 +119,10 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 					<subreportParameterExpression><![CDATA[$P{nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detallemovs.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\af\\CES\\reps\\detallemovs.jasper"]]></subreportExpression>
 			</subreport>
 			<rectangle>
-				<reportElement x="2" y="1" width="800" height="12" forecolor="#337AB7" backcolor="#337AB7" uuid="7d33338a-3a2b-4ac0-b7e9-fd702f5538af"/>
+				<reportElement x="0" y="1" width="802" height="12" forecolor="#337AB7" backcolor="#337AB7" uuid="7d33338a-3a2b-4ac0-b7e9-fd702f5538af"/>
 			</rectangle>
 			<textField>
 				<reportElement x="2" y="0" width="107" height="13" forecolor="#FFFFFF" uuid="7778e442-b9fc-4c3d-8603-e8ddc3546b38"/>
@@ -165,7 +165,7 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 	<summary>
 		<band height="65">
 			<subreport>
-				<reportElement x="2" y="33" width="799" height="31" uuid="7b6f8c7d-157c-457a-bfca-91913452f9da"/>
+				<reportElement x="0" y="33" width="801" height="31" uuid="7b6f8c7d-157c-457a-bfca-91913452f9da"/>
 				<subreportParameter name="nombre">
 					<subreportParameterExpression><![CDATA[$P{nombre}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -191,7 +191,7 @@ where (m.nombre like '%$P!{nombre}%' or p.nombre like '%$P!{nombre}%') and m.are
 					<subreportParameterExpression><![CDATA[$P{destino}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "condensado_summary.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\af\\CES\\reps\\condensado_summary.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement x="350" y="13" width="230" height="20" uuid="31dc9a0f-b8c3-498c-9034-7d7ee7fdd9c1"/>

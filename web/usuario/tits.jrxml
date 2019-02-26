@@ -22,7 +22,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\EntradasSalidas\\web\\usuario\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\af\\CES\\reps\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="transporte" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -77,7 +77,7 @@ order by tipo_persona desc]]>
 					<subreportParameterExpression><![CDATA[$P{nombre}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "deta.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\af\\CES\\reps\\deta.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="11">

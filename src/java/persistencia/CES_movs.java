@@ -314,15 +314,22 @@ public class CES_movs extends conBD {
     }
 
     private int tiempo(String h1, String h2) {// calculo de tiempo vol 2.0
-//        System.out.println(h1+"-"+h2);
+        System.out.println(h1+"-"+h2);
         int arr[] = new int[2];
         int arr1[] = new int[2];
-        int hora = 0;
+        String horas = "";
+        // nueva verificacion de la fecha
+        if (Integer.parseInt(h1) > 9) {// Verifica si es mayor se asignara tal cual
+                    horas = Integer.parseInt(h1) + "";
+                }
+                if (Integer.parseInt(h1) < 10) {// sino se agregara un cero en la izquierda del numero
+                    horas = "0" + Integer.parseInt(h1) + "";
+                }
+        h1=horas;
         arr[0] = Integer.parseInt(h1.charAt(0) + "" + h1.charAt(1));
         arr[1] = Integer.parseInt(h2.charAt(0) + "" + h2.charAt(1));
         arr1[0] = Integer.parseInt(h1.charAt(3) + "" + h1.charAt(4));
         arr1[1] = Integer.parseInt(h2.charAt(3) + "" + h2.charAt(4));
-        int horas = 0;
         int mins = 0;
         if (arr[0] == arr[1]) {
             mins = arr1[1] - arr1[0];
@@ -335,8 +342,6 @@ public class CES_movs extends conBD {
         if (arr[0] != arr[1]) {
             mins = mins + ((arr[1] - arr[0]) - 1) * 60;
         }
-
-        // System.out.println(hora+" min");
         return mins;
     }
 
